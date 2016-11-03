@@ -1,0 +1,741 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <!-- Bootstrap -->
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/default.css" rel="stylesheet" type="text/css" />
+    <link href="../css/coqdoc.css" rel="stylesheet">
+
+    <link href="http://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet" type="text/css">
+    <style type="text/css">
+      body {
+            font-family: 'Quicksand', sans-serif;
+      }
+    </style>
+    <meta name="google-site-verification" content="tk76yOXoIqfCyQRKkgevuj0PkOAU7Nee6tCoirFtRGI" />
+    <title>ankitku - 2016-10-30-TAL-0 Mechanized Metatheory</title>
+    </head>
+    <body class="container">
+        <nav class="navbar navbar-default" role="navigation">
+            <div class="navbar-header">
+            <a class="navbar-brand" href="../">
+                home
+            </a>
+            </div>
+            <div class="container">
+                 <ul class="nav navbar-nav">
+                   <li><a href="../about.html">about</a></li>
+                   <li><a href="../contact.html">contact</a></li>
+                   <li><a href="../archive.html">archive</a></li>
+                 </ul>
+            </div>
+        </nav>
+
+        <div id="content">
+            <h1>2016-10-30-TAL-0 Mechanized Metatheory</h1>
+
+            
+<div class="info">
+    Posted on October 30, 2016
+    
+</div>
+
+<div id="page">
+<div id="header">
+
+</div>
+<div id="main">
+<h1 class="libtitle">Library TAL</h1>
+<div class="code">
+
+</div>
+<div class="doc">
+<h1 class="section">TAL-0 Typed Assembly Language</h1>
+<div class="paragraph">
+
+</div>
+Based on paper by Greg Morrisett , TAL-0 is the design of a RISC-style typed assembly language which focuses on control-flow safety. This post provides a mechanized metatheory, particularly a machine checked proof of soundness of the TAL-0 type system as proposed by the author in section 4.2.10 of the book Advanced Topics in Types and Programming Languages.
+<div class="paragraph">
+
+</div>
+The TAL-0 language runs on an abstract machine which is represented by 3 components :
+<div class="paragraph">
+
+</div>
+1. A heap H which is a finite, partial map from labels to heap values
+<div class="paragraph">
+
+</div>
+2. a register file R which is a total map from registers to values, and
+<div class="paragraph">
+
+</div>
+3. a current instruction sequence I.
+<div class="paragraph">
+
+</div>
+<img src="http://i288.photobucket.com/albums/ll170/_ankitku/TAL0/TAl_zpsq0tw1ps8.png" alt />
+</div>
+<div class="code">
+<br />
+ <span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <span class="id" title="var">Bool</span> <span class="id" title="var">Arith</span> <span class="id" title="var">Vector</span>.<br />
+ <span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <span class="id" title="var">LibTactics</span>.<br />
+ <span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <span class="id" title="var">Maps</span>.<br />
+<br />
+ <span class="id" title="keyword">Definition</span> <span class="id" title="var">registers</span> := <span class="id" title="var">total_map</span> <span class="id" title="var">nat</span>.<br />
+ <span class="id" title="keyword">Definition</span> <span class="id" title="var">empty_regs</span> : <span class="id" title="var">registers</span> := <span class="id" title="var">t_empty</span> 0.<br />
+<br />
+ <span class="id" title="keyword">Inductive</span> <span class="id" title="var">aexp</span> : <span class="id" title="keyword">Type</span> :=<br />
+  | <span class="id" title="var">ANum</span> : <span class="id" title="var">nat</span> -&gt; <span class="id" title="var">aexp</span><br />
+  | <span class="id" title="var">AReg</span> : <span class="id" title="var">nat</span> -&gt; <span class="id" title="var">aexp</span><br />
+  | <span class="id" title="var">ALab</span> : <span class="id" title="var">nat</span> -&gt; <span class="id" title="var">aexp</span>.<br />
+<br />
+
+</div>
+<div class="doc">
+We denote addresses of instructions stored in the heap as labels. Unlike a typical machine where labels are resolved to some machine address, which are integers, we maintain a distinction between labels and arbit integers, as this complies with our goal to state and prove the control-flow safety i.e. we can only branch to a valid label, and not to any arbit integer. This will ensure that the machine never gets stuck while trying to do some invalid operation.
+</div>
+<div class="code">
+<span class="id" title="keyword">Fixpoint</span> <span class="id" title="var">aeval</span> (<span class="id" title="var">a</span> : <span class="id" title="var">aexp</span>) (<span class="id" title="var">R</span> : <span class="id" title="var">registers</span>) : <span class="id" title="var">nat</span> :=<br />
+   <span class="id" title="keyword">match</span> <span class="id" title="var">a</span> <span class="id" title="keyword">with</span><br />
+  | <span class="id" title="var">ANum</span> <span class="id" title="var">n</span> =&gt; <span class="id" title="var">n</span><br />
+  | <span class="id" title="var">AReg</span> <span class="id" title="var">d</span> =&gt; <span class="id" title="var">R</span> (<span class="id" title="var">Id</span> <span class="id" title="var">d</span>)<br />
+  | <span class="id" title="var">ALab</span> <span class="id" title="var">l</span> =&gt; <span class="id" title="var">l</span><br />
+   <span class="id" title="keyword">end</span>.<br />
+<br />
+ <span class="id" title="keyword">Inductive</span> <span class="id" title="var">instr</span> : <span class="id" title="keyword">Type</span> :=<br />
+  | <span class="id" title="var">IMov</span> : <span class="id" title="keyword">forall</span> <span class="id" title="var">d</span> : <span class="id" title="var">nat</span>,<br />
+     <span class="id" title="var">aexp</span> -&gt; <span class="id" title="var">instr</span><br />
+  | <span class="id" title="var">IAdd</span> : <span class="id" title="keyword">forall</span> <span class="id" title="var">d</span> <span class="id" title="var">s</span> : <span class="id" title="var">nat</span>,<br />
+     <span class="id" title="var">instr</span><br />
+  | <span class="id" title="var">ISub</span> : <span class="id" title="keyword">forall</span> <span class="id" title="var">d</span> <span class="id" title="var">v</span> : <span class="id" title="var">nat</span>,<br />
+     <span class="id" title="var">instr</span><br />
+  | <span class="id" title="var">IIf</span> : <span class="id" title="keyword">forall</span> <span class="id" title="var">d</span> : <span class="id" title="var">nat</span>,<br />
+     <span class="id" title="var">aexp</span> -&gt; <span class="id" title="var">instr</span><br />
+  | <span class="id" title="var">ISeq</span> : <span class="id" title="var">instr</span> -&gt; <span class="id" title="var">instr</span> -&gt; <span class="id" title="var">instr</span><br />
+  | <span class="id" title="var">IJmp</span> : <span class="id" title="var">aexp</span> -&gt; <span class="id" title="var">instr</span>.<br />
+<br />
+
+</div>
+<div class="doc">
+Simple Notations are chosen for the sake of clarity while writing programs.
+</div>
+<div class="code">
+<span class="id" title="keyword">Notation</span> “‘R(’ d ‘)’ ‘:=’ a” :=<br />
+   (<span class="id" title="var">IMov</span> <span class="id" title="var">d</span> (<span class="id" title="var">ANum</span> <span class="id" title="var">a</span>)) (<span class="id" title="tactic">at</span> <span class="id" title="keyword">level</span> 60).<br />
+ <span class="id" title="keyword">Notation</span> “‘R(’ d ‘)’ ‘+:=’ ‘R(’ s ‘)’” :=<br />
+   (<span class="id" title="var">IAdd</span> <span class="id" title="var">d</span> <span class="id" title="var">s</span>) (<span class="id" title="tactic">at</span> <span class="id" title="keyword">level</span> 60).<br />
+ <span class="id" title="keyword">Notation</span> “‘R(’ s ‘)’ ‘-:=’ v” :=<br />
+   (<span class="id" title="var">ISub</span> <span class="id" title="var">s</span> <span class="id" title="var">v</span>) (<span class="id" title="tactic">at</span> <span class="id" title="keyword">level</span> 60).<br />
+ <span class="id" title="keyword">Notation</span> “i1 ;; i2” :=<br />
+   (<span class="id" title="var">ISeq</span> <span class="id" title="var">i1</span> <span class="id" title="var">i2</span>) (<span class="id" title="tactic">at</span> <span class="id" title="keyword">level</span> 80, <span class="id" title="tactic">right</span> <span class="id" title="keyword">associativity</span>).<br />
+ <span class="id" title="keyword">Notation</span> “‘JIF’ ‘R(’ d ‘)’ v” :=<br />
+   (<span class="id" title="var">IIf</span> <span class="id" title="var">d</span> (<span class="id" title="var">ANum</span> <span class="id" title="var">v</span>)) (<span class="id" title="tactic">at</span> <span class="id" title="keyword">level</span> 70).<br />
+ <span class="id" title="keyword">Notation</span> “‘JMP’ v” :=<br />
+   (<span class="id" title="var">IJmp</span> (<span class="id" title="var">ALab</span> <span class="id" title="var">v</span>)) (<span class="id" title="tactic">at</span> <span class="id" title="keyword">level</span> 80).<br />
+ <span class="id" title="keyword">Notation</span> “‘JMP’ ‘R(’ r ‘)’” :=<br />
+   (<span class="id" title="var">IJmp</span> (<span class="id" title="var">AReg</span> <span class="id" title="var">r</span>)) (<span class="id" title="tactic">at</span> <span class="id" title="keyword">level</span> 80).<br />
+<br />
+ <span class="id" title="keyword">Check</span> <span class="id" title="var">JIF</span> <span class="id" title="var">R</span>(1) 2.<br />
+ <span class="id" title="keyword">Check</span> <span class="id" title="var">R</span>(1) := 10.<br />
+ <span class="id" title="keyword">Check</span> <span class="id" title="var">R</span>(2) +:= <span class="id" title="var">R</span>(1).<br />
+ <span class="id" title="keyword">Check</span> <span class="id" title="var">R</span>(2) -:= 1.<br />
+ <span class="id" title="keyword">Check</span> <span class="id" title="var">R</span>(2) +:= <span class="id" title="var">R</span>(1) ;; <span class="id" title="var">R</span>(2) -:= 1.<br />
+ <span class="id" title="keyword">Check</span> <span class="id" title="var">JMP</span> 2.<br />
+ <span class="id" title="keyword">Check</span> <span class="id" title="var">JMP</span> <span class="id" title="var">R</span>(2).<br />
+<br />
+<br />
+ <span class="id" title="keyword">Definition</span> <span class="id" title="var">heaps</span> := <span class="id" title="var">partial_map</span> <span class="id" title="var">instr</span>.<br />
+ <span class="id" title="keyword">Definition</span> <span class="id" title="var">empty_heap</span> : <span class="id" title="var">heaps</span> := <span class="id" title="var">empty</span>.<br />
+<br />
+ <span class="id" title="keyword">Inductive</span> <span class="id" title="var">st</span> : <span class="id" title="keyword">Type</span> :=<br />
+  | <span class="id" title="var">St</span> : <span class="id" title="var">heaps</span> -&gt; <span class="id" title="var">registers</span> -&gt; <span class="id" title="var">instr</span> -&gt; <span class="id" title="var">st</span>.<br />
+<br />
+
+</div>
+<div class="doc">
+Evaluation of instructions is supposed to change the Machine State and thus some of its components H, R or I. These changes are recorded as relations between initial and final state of the machine.
+</div>
+<div class="code">
+<span class="id" title="keyword">Inductive</span> <span class="id" title="var">ieval</span> : <span class="id" title="var">st</span> -&gt; <span class="id" title="var">st</span> -&gt; <span class="id" title="keyword">Prop</span> :=<br />
+  | <span class="id" title="var">R_IMov</span> : <span class="id" title="keyword">forall</span> <span class="id" title="var">H</span> <span class="id" title="var">R</span> <span class="id" title="var">I</span> <span class="id" title="var">d</span> <span class="id" title="var">a</span>,<br />
+     <span class="id" title="var">ieval</span> (<span class="id" title="var">St</span> <span class="id" title="var">H</span> <span class="id" title="var">R</span> (<span class="id" title="var">R</span>(<span class="id" title="var">d</span>) := <span class="id" title="var">a</span> ;; <span class="id" title="var">I</span>)) (<span class="id" title="var">St</span> <span class="id" title="var">H</span> (<span class="id" title="var">t_update</span> <span class="id" title="var">R</span> (<span class="id" title="var">Id</span> <span class="id" title="var">d</span>) <span class="id" title="var">a</span>) <span class="id" title="var">I</span>)<br />
+  | <span class="id" title="var">R_IAdd</span> : <span class="id" title="keyword">forall</span> <span class="id" title="var">H</span> <span class="id" title="var">R</span> <span class="id" title="var">I</span> <span class="id" title="var">d</span> <span class="id" title="var">s</span>,<br />
+      <span class="id" title="var">ieval</span> (<span class="id" title="var">St</span> <span class="id" title="var">H</span> <span class="id" title="var">R</span> (<span class="id" title="var">R</span>(<span class="id" title="var">d</span>) +:= <span class="id" title="var">R</span>(<span class="id" title="var">s</span>) ;; <span class="id" title="var">I</span>)) (<span class="id" title="var">St</span> <span class="id" title="var">H</span> (<span class="id" title="var">t_update</span> <span class="id" title="var">R</span> (<span class="id" title="var">Id</span> <span class="id" title="var">d</span>) (<span class="id" title="var">aeval</span> (<span class="id" title="var">AReg</span> <span class="id" title="var">d</span>) <span class="id" title="var">R</span> + <span class="id" title="var">aeval</span> (<span class="id" title="var">AReg</span> <span class="id" title="var">s</span>) <span class="id" title="var">R</span>)) <span class="id" title="var">I</span>)<br />
+  | <span class="id" title="var">R_ISub</span> : <span class="id" title="keyword">forall</span> <span class="id" title="var">H</span> <span class="id" title="var">R</span> <span class="id" title="var">I</span> <span class="id" title="var">d</span> <span class="id" title="var">v</span>,<br />
+      <span class="id" title="var">ieval</span> (<span class="id" title="var">St</span> <span class="id" title="var">H</span> <span class="id" title="var">R</span> (<span class="id" title="var">R</span>(<span class="id" title="var">d</span>) -:= <span class="id" title="var">v</span> ;; <span class="id" title="var">I</span>)) (<span class="id" title="var">St</span> <span class="id" title="var">H</span> (<span class="id" title="var">t_update</span> <span class="id" title="var">R</span> (<span class="id" title="var">Id</span> <span class="id" title="var">d</span>) (<span class="id" title="var">aeval</span> (<span class="id" title="var">AReg</span> <span class="id" title="var">d</span>) <span class="id" title="var">R</span> - <span class="id" title="var">aeval</span> (<span class="id" title="var">ANum</span> <span class="id" title="var">v</span>) <span class="id" title="var">R</span>)) <span class="id" title="var">I</span>)<br />
+  | <span class="id" title="var">R_IJmp_Succ</span> : <span class="id" title="keyword">forall</span> <span class="id" title="var">H</span> <span class="id" title="var">R</span> <span class="id" title="var">I’</span> <span class="id" title="var">a</span> <span class="id" title="var">l</span>,<br />
+      <span class="id" title="var">l</span> = (<span class="id" title="var">aeval</span> <span class="id" title="var">a</span> <span class="id" title="var">R</span>) -&gt; <span class="id" title="var">H</span> (<span class="id" title="var">Id</span> <span class="id" title="var">l</span>) = <span class="id" title="var">Some</span> <span class="id" title="var">I’</span> -&gt; <span class="id" title="var">ieval</span> (<span class="id" title="var">St</span> <span class="id" title="var">H</span> <span class="id" title="var">R</span> (<span class="id" title="var">JMP</span> <span class="id" title="var">l</span>)) (<span class="id" title="var">St</span> <span class="id" title="var">H</span> <span class="id" title="var">R</span> <span class="id" title="var">I’</span>)<br />
+  | <span class="id" title="var">R_IJmpR_Succ</span> : <span class="id" title="keyword">forall</span> <span class="id" title="var">H</span> <span class="id" title="var">R</span> <span class="id" title="var">I’</span> <span class="id" title="var">r</span>,<br />
+      <span class="id" title="var">H</span> (<span class="id" title="var">Id</span> (<span class="id" title="var">R</span> (<span class="id" title="var">Id</span> <span class="id" title="var">r</span>))) = <span class="id" title="var">Some</span> <span class="id" title="var">I’</span> -&gt; <span class="id" title="var">ieval</span> (<span class="id" title="var">St</span> <span class="id" title="var">H</span> <span class="id" title="var">R</span> (<span class="id" title="var">JMP</span> <span class="id" title="var">R</span>(<span class="id" title="var">r</span>))) (<span class="id" title="var">St</span> <span class="id" title="var">H</span> <span class="id" title="var">R</span> <span class="id" title="var">I’</span>)<br />
+  | <span class="id" title="var">R_IJmp_Fail</span> : <span class="id" title="keyword">forall</span> <span class="id" title="var">H</span> <span class="id" title="var">R</span> <span class="id" title="var">I</span> <span class="id" title="var">a</span>,<br />
+      <span class="id" title="var">H</span> (<span class="id" title="var">Id</span> (<span class="id" title="var">aeval</span> <span class="id" title="var">a</span> <span class="id" title="var">R</span>)) = <span class="id" title="var">None</span> -&gt; <span class="id" title="var">ieval</span> (<span class="id" title="var">St</span> <span class="id" title="var">H</span> <span class="id" title="var">R</span> <span class="id" title="var">I</span>) (<span class="id" title="var">St</span> <span class="id" title="var">H</span> <span class="id" title="var">R</span> <span class="id" title="var">I</span>)<br />
+  | <span class="id" title="var">R_IIf_EQ</span> : <span class="id" title="keyword">forall</span> <span class="id" title="var">H</span> <span class="id" title="var">R</span> <span class="id" title="var">I</span> <span class="id" title="var">I2</span> <span class="id" title="var">r</span> <span class="id" title="var">v</span>,<br />
+      <span class="id" title="var">aeval</span> (<span class="id" title="var">AReg</span> <span class="id" title="var">r</span>) <span class="id" title="var">R</span> = 0 -&gt; (<span class="id" title="var">H</span> (<span class="id" title="var">Id</span> <span class="id" title="var">v</span>)) = <span class="id" title="var">Some</span> <span class="id" title="var">I2</span> -&gt; <span class="id" title="var">ieval</span> (<span class="id" title="var">St</span> <span class="id" title="var">H</span> <span class="id" title="var">R</span> (<span class="id" title="var">JIF</span> <span class="id" title="var">R</span>(<span class="id" title="var">r</span>) <span class="id" title="var">v</span> ;; <span class="id" title="var">I</span>)) (<span class="id" title="var">St</span> <span class="id" title="var">H</span> <span class="id" title="var">R</span> <span class="id" title="var">I2</span>)<br />
+  | <span class="id" title="var">R_IIf_NEQ</span> : <span class="id" title="keyword">forall</span> <span class="id" title="var">H</span> <span class="id" title="var">R</span> <span class="id" title="var">I</span> <span class="id" title="var">r</span> <span class="id" title="var">v</span>,<br />
+      <span class="id" title="var">aeval</span> (<span class="id" title="var">AReg</span> <span class="id" title="var">r</span>) <span class="id" title="var">R</span> &lt;&gt; 0 -&gt; <span class="id" title="var">ieval</span> (<span class="id" title="var">St</span> <span class="id" title="var">H</span> <span class="id" title="var">R</span> (<span class="id" title="var">JIF</span> <span class="id" title="var">R</span>(<span class="id" title="var">r</span>) <span class="id" title="var">v</span> ;; <span class="id" title="var">I</span>)) (<span class="id" title="var">St</span> <span class="id" title="var">H</span> <span class="id" title="var">R</span> <span class="id" title="var">I</span>)<br />
+  | <span class="id" title="var">R_ISeq</span> : <span class="id" title="keyword">forall</span> <span class="id" title="var">st</span> <span class="id" title="var">st’</span> <span class="id" title="var">st’’</span>,<br />
+      <span class="id" title="var">ieval</span> <span class="id" title="var">st</span> <span class="id" title="var">st’</span> -&gt; <span class="id" title="var">ieval</span> <span class="id" title="var">st’</span> <span class="id" title="var">st’’</span> -&gt; <span class="id" title="var">ieval</span> <span class="id" title="var">st</span> <span class="id" title="var">st’’</span><br />
+  | <span class="id" title="var">R_IStuck</span> : <span class="id" title="keyword">forall</span> <span class="id" title="var">st</span>, <span class="id" title="var">ieval</span> <span class="id" title="var">st</span> <span class="id" title="var">st</span>.<br />
+<br />
+
+</div>
+<div class="doc">
+Example of a program fragment that multiplies 2 numbers stored in registers 1 and 2 and stores their product in register 3, before finally looping in its final state register 4.
+</div>
+<div class="code">
+<span class="id" title="keyword">Definition</span> <span class="id" title="var">init_heap</span> := <span class="id" title="var">update</span> (<span class="id" title="var">update</span> (<span class="id" title="var">update</span> <span class="id" title="var">empty_heap</span> (<span class="id" title="var">Id</span> 1) (<span class="id" title="var">R</span>(3) := 0 ;; <span class="id" title="var">JMP</span> 2)) (<span class="id" title="var">Id</span> 2) (<span class="id" title="var">JIF</span> <span class="id" title="var">R</span>(1) 3 ;; <span class="id" title="var">R</span>(2) +:= <span class="id" title="var">R</span>(3) ;; <span class="id" title="var">R</span>(1) -:= 1 ;; <span class="id" title="var">JMP</span> 2) ) (<span class="id" title="var">Id</span> 3) (<span class="id" title="var">JMP</span> <span class="id" title="var">R</span>(4)).<br />
+<br />
+ <span class="id" title="keyword">Definition</span> <span class="id" title="var">init_regs</span> : <span class="id" title="var">registers</span> := (<span class="id" title="var">t_update</span> (<span class="id" title="var">t_update</span> (<span class="id" title="var">t_update</span> (<span class="id" title="var">t_update</span> (<span class="id" title="var">t_update</span> <span class="id" title="var">empty_regs</span> (<span class="id" title="var">Id</span> 5) 1) (<span class="id" title="var">Id</span> 6) 2) (<span class="id" title="var">Id</span> 7) 3) (<span class="id" title="var">Id</span> 1) 1) (<span class="id" title="var">Id</span> 2) 2).<br />
+ <span class="id" title="keyword">Definition</span> <span class="id" title="var">final_regs</span> : <span class="id" title="var">registers</span> := (<span class="id" title="var">t_update</span> (<span class="id" title="var">t_update</span> (<span class="id" title="var">t_update</span> (<span class="id" title="var">t_update</span> (<span class="id" title="var">t_update</span> (<span class="id" title="var">t_update</span> <span class="id" title="var">empty_regs</span> (<span class="id" title="var">Id</span> 5) 1) (<span class="id" title="var">Id</span> 6) 2) (<span class="id" title="var">Id</span> 4) 1) (<span class="id" title="var">Id</span> 1) 0) (<span class="id" title="var">Id</span> 2) 2) (<span class="id" title="var">Id</span> 3) 2).<br />
+<br />
+ <span class="id" title="keyword">Eval</span> <span class="id" title="tactic">compute</span> <span class="id" title="keyword">in</span> <span class="id" title="var">init_heap</span> (<span class="id" title="var">Id</span> (<span class="id" title="var">init_regs</span> (<span class="id" title="var">Id</span> 6))).<br />
+<br />
+<br />
+ <span class="id" title="keyword">Example</span> <span class="id" title="var">ieval_example1</span> : <span class="id" title="var">ieval</span> (<span class="id" title="var">St</span> <span class="id" title="var">init_heap</span> <span class="id" title="var">init_regs</span><br />
+                           (<span class="id" title="var">R</span>(3) := 0 ;; <span class="id" title="var">JMP</span> 2))<br />
+                                (<span class="id" title="var">St</span> <span class="id" title="var">init_heap</span> (<span class="id" title="var">t_update</span> <span class="id" title="var">init_regs</span> (<span class="id" title="var">Id</span> 3) 0)<br />
+                           (<span class="id" title="var">JIF</span> <span class="id" title="var">R</span>(1) 3 ;; <span class="id" title="var">R</span>(2) +:= <span class="id" title="var">R</span>(3) ;; <span class="id" title="var">R</span>(1) -:= 1 ;; <span class="id" title="var">JMP</span> 2)).<br />
+ <span class="id" title="keyword">Proof</span>.<br />
+   <span class="id" title="tactic">apply</span> <span class="id" title="var">R_ISeq</span> <span class="id" title="keyword">with</span> (<span class="id" title="var">St</span> <span class="id" title="var">init_heap</span> (<span class="id" title="var">t_update</span> <span class="id" title="var">init_regs</span> (<span class="id" title="var">Id</span> 3) 0) (<span class="id" title="var">IJmp</span> (<span class="id" title="var">ALab</span> 2))).<br />
+   <span class="id" title="tactic">apply</span> <span class="id" title="var">R_IMov</span>.<br />
+   <span class="id" title="tactic">apply</span> <span class="id" title="var">R_IJmp_Succ</span> <span class="id" title="keyword">with</span> (<span class="id" title="var">a</span> := <span class="id" title="var">ALab</span> 2).<br />
+   <span class="id" title="tactic">simpl</span>.<br />
+   <span class="id" title="tactic">reflexivity</span>.<br />
+   <span class="id" title="tactic">unfold</span> <span class="id" title="var">init_heap</span>.<br />
+   <span class="id" title="tactic">rewrite</span> <span class="id" title="var">update_neq</span>.<br />
+   <span class="id" title="tactic">rewrite</span> <span class="id" title="var">update_eq</span>.<br />
+   <span class="id" title="tactic">reflexivity</span>.<br />
+   <span class="id" title="tactic">rewrite</span> &lt;- <span class="id" title="var">beq_id_false_iff</span>; <span class="id" title="tactic">trivial</span>.<br />
+ <span class="id" title="keyword">Qed</span>.<br />
+<br />
+
+</div>
+<div class="doc">
+The types consist of 1. int -&gt; represents arbit integer stored in a register
+<div class="paragraph">
+
+</div>
+2. reg -&gt; a type constructor. Takes as input, the type of the register, to which this register is pointing.
+<div class="paragraph">
+
+</div>
+3. code -&gt; takes as input a typing context Gamma, and gives type (code Gamma) which is the type of an instruction sequence that expects type of the Register file to be Gamma before it begins execution
+<div class="paragraph">
+
+</div>
+4. arrow -&gt; represents type of a single instruction (excluding JMP), which expects register file of type Gamma1 before execution, and changes it to Gamma2 after it has executed.
+<div class="paragraph">
+
+</div>
+5. T -&gt; It is the super type. It is used to represent the type of a register in R, which contains the label of the instruction currently executing. Because in such a case, we have the equation : Gamma (r) = code Gamma, which in the absence of subtyping or polymorphic types can’t be solved. Hence T is assigned the type for such a register as it subsumes all types including itself. When we jump through a register of type T, we forget the type assigned to it, and reassign T to it.
+<div class="paragraph">
+
+</div>
+</div>
+<div class="code">
+<br />
+ <span class="id" title="keyword">Inductive</span> <span class="id" title="var">ty</span> : <span class="id" title="keyword">Type</span> :=<br />
+  | <span class="id" title="var">int</span> : <span class="id" title="var">ty</span><br />
+  | <span class="id" title="var">reg</span> : <span class="id" title="var">ty</span> -&gt; <span class="id" title="var">ty</span><br />
+  | <span class="id" title="var">code</span> : <span class="id" title="var">partial_map</span> <span class="id" title="var">ty</span> -&gt; <span class="id" title="var">ty</span><br />
+  | <span class="id" title="var">arrow</span> : <span class="id" title="var">partial_map</span> <span class="id" title="var">ty</span> -&gt; <span class="id" title="var">partial_map</span> <span class="id" title="var">ty</span> -&gt; <span class="id" title="var">ty</span><br />
+  | <span class="id" title="var">True</span> : <span class="id" title="var">ty</span>.<br />
+<br />
+ <span class="id" title="keyword">Definition</span> <span class="id" title="keyword">context</span> := <span class="id" title="var">partial_map</span> <span class="id" title="var">ty</span>.<br />
+<br />
+ <span class="id" title="keyword">Definition</span> <span class="id" title="var">empty_Gamma</span> : <span class="id" title="keyword">context</span> := <span class="id" title="var">empty</span>.<br />
+<br />
+ <span class="id" title="keyword">Definition</span> <span class="id" title="var">empty_Psi</span> : <span class="id" title="keyword">context</span> := <span class="id" title="var">empty</span>.<br />
+<br />
+
+</div>
+<div class="doc">
+The Typing Rules Psi is a partial map containing types of instruction sequences. As all instruction sequences end in a JMP statement, all valid values in Psi are Some (code Gamma) where Gamma is the initial type state of register expected by that instruction sequence. Now, typing rules may require presence of either both Psi and Gamma, or only Psi or neither. Hence, we introduce a combined context structure, that handles all the 3 cases.
+</div>
+<div class="code">
+<span class="id" title="keyword">Inductive</span> <span class="id" title="var">cmbnd_ctx</span> :=<br />
+  | <span class="id" title="var">EmptyCtx</span> : <span class="id" title="var">cmbnd_ctx</span><br />
+  | <span class="id" title="var">PsiCtx</span> : <span class="id" title="keyword">context</span> -&gt; <span class="id" title="var">cmbnd_ctx</span><br />
+  | <span class="id" title="var">PsiGammaCtx</span> : <span class="id" title="keyword">context</span> -&gt; <span class="id" title="keyword">context</span> -&gt; <span class="id" title="var">cmbnd_ctx</span>.<br />
+<br />
+
+</div>
+<img src="http://i288.photobucket.com/albums/ll170/_ankitku/TAL0/Screen%20Shot%202016-11-03%20at%2023.46.21_zpsi2vjatvk.png" alt />
+<div class="doc">
+Typing rules for arithmetic expressions
+</div>
+<div class="code">
+<span class="id" title="keyword">Inductive</span> <span class="id" title="var">ahas_type</span> : <span class="id" title="var">cmbnd_ctx</span> -&gt; <span class="id" title="var">aexp</span> -&gt; <span class="id" title="var">ty</span> -&gt; <span class="id" title="keyword">Prop</span> :=<br />
+  | <span class="id" title="var">S_Int</span> : <span class="id" title="keyword">forall</span> <span class="id" title="var">Psi</span> <span class="id" title="var">n</span>,<br />
+      <span class="id" title="var">ahas_type</span> (<span class="id" title="var">PsiCtx</span> <span class="id" title="var">Psi</span>) (<span class="id" title="var">ANum</span> <span class="id" title="var">n</span>) <span class="id" title="var">int</span><br />
+  | <span class="id" title="var">S_Lab</span> : <span class="id" title="keyword">forall</span> <span class="id" title="var">Psi</span> <span class="id" title="var">Gamma</span> <span class="id" title="var">l</span> <span class="id" title="var">v</span> <span class="id" title="var">R</span>,<br />
+      <span class="id" title="var">Psi</span> (<span class="id" title="var">Id</span> <span class="id" title="var">l</span>) = <span class="id" title="var">Some</span> (<span class="id" title="var">code</span> <span class="id" title="var">Gamma</span>) -&gt; <span class="id" title="var">l</span> = <span class="id" title="var">aeval</span> (<span class="id" title="var">ALab</span> <span class="id" title="var">v</span>) <span class="id" title="var">R</span> -&gt; <span class="id" title="var">ahas_type</span> (<span class="id" title="var">PsiCtx</span> <span class="id" title="var">Psi</span>) (<span class="id" title="var">ALab</span> <span class="id" title="var">v</span>) (<span class="id" title="var">code</span> <span class="id" title="var">Gamma</span>)<br />
+  | <span class="id" title="var">S_Reg</span> : <span class="id" title="keyword">forall</span> <span class="id" title="var">Psi</span> <span class="id" title="var">Gamma</span> <span class="id" title="var">r</span>,<br />
+      <span class="id" title="var">Gamma</span> (<span class="id" title="var">Id</span> <span class="id" title="var">r</span>) = <span class="id" title="var">Some</span> (<span class="id" title="var">reg</span> <span class="id" title="var">int</span>) -&gt; <span class="id" title="var">ahas_type</span> (<span class="id" title="var">PsiGammaCtx</span> <span class="id" title="var">Psi</span> <span class="id" title="var">Gamma</span>) (<span class="id" title="var">AReg</span> <span class="id" title="var">r</span>) (<span class="id" title="var">reg</span> <span class="id" title="var">int</span>)<br />
+  | <span class="id" title="var">S_RegV</span> : <span class="id" title="keyword">forall</span> <span class="id" title="var">Psi</span> <span class="id" title="var">Gamma</span> <span class="id" title="var">r</span>,<br />
+      (<span class="id" title="keyword">forall</span> <span class="id" title="var">R</span>, <span class="id" title="var">Psi</span> (<span class="id" title="var">Id</span> (<span class="id" title="var">R</span> (<span class="id" title="var">Id</span> <span class="id" title="var">r</span>))) = <span class="id" title="var">Some</span> (<span class="id" title="var">code</span> <span class="id" title="var">Gamma</span>)) -&gt; <span class="id" title="var">ahas_type</span> (<span class="id" title="var">PsiGammaCtx</span> <span class="id" title="var">Psi</span> <span class="id" title="var">Gamma</span>) (<span class="id" title="var">AReg</span> <span class="id" title="var">r</span>) (<span class="id" title="var">reg</span> (<span class="id" title="var">code</span> <span class="id" title="var">Gamma</span>))<br />
+  | <span class="id" title="var">S_RegT</span> : <span class="id" title="keyword">forall</span> <span class="id" title="var">Psi</span> <span class="id" title="var">Gamma</span> <span class="id" title="var">r</span>,<br />
+      (<span class="id" title="keyword">forall</span> <span class="id" title="var">R</span>, <span class="id" title="var">Psi</span> (<span class="id" title="var">Id</span> (<span class="id" title="var">R</span> (<span class="id" title="var">Id</span> <span class="id" title="var">r</span>))) = <span class="id" title="var">Some</span> <span class="id" title="var">True</span>) -&gt; <span class="id" title="var">ahas_type</span> (<span class="id" title="var">PsiGammaCtx</span> <span class="id" title="var">Psi</span> <span class="id" title="var">Gamma</span>) (<span class="id" title="var">AReg</span> <span class="id" title="var">r</span>) <span class="id" title="var">True</span><br />
+  | <span class="id" title="var">S_Val</span> : <span class="id" title="keyword">forall</span> <span class="id" title="var">Psi</span> <span class="id" title="var">Gamma</span> <span class="id" title="var">a</span> <span class="id" title="var">tau</span>,<br />
+      <span class="id" title="var">ahas_type</span> (<span class="id" title="var">PsiCtx</span> <span class="id" title="var">Psi</span>) <span class="id" title="var">a</span> <span class="id" title="var">tau</span> -&gt; <span class="id" title="var">ahas_type</span> (<span class="id" title="var">PsiGammaCtx</span> <span class="id" title="var">Psi</span> <span class="id" title="var">Gamma</span>) <span class="id" title="var">a</span> <span class="id" title="var">tau</span>.<br />
+<br />
+ <span class="id" title="keyword">Hint Constructors</span> <span class="id" title="var">ahas_type</span>.<br />
+<br />
+
+</div>
+<div class="doc">
+Typing rules for instructions
+</div>
+<div class="code">
+<span class="id" title="keyword">Inductive</span> <span class="id" title="var">ihas_type</span> : <span class="id" title="var">cmbnd_ctx</span> -&gt; <span class="id" title="var">instr</span> -&gt; <span class="id" title="var">ty</span> -&gt; <span class="id" title="keyword">Prop</span> :=<br />
+  | <span class="id" title="var">S_Jmp</span> : <span class="id" title="keyword">forall</span> <span class="id" title="var">Psi</span> <span class="id" title="var">Gamma</span> <span class="id" title="var">v</span>,<br />
+      <span class="id" title="var">ahas_type</span> (<span class="id" title="var">PsiGammaCtx</span> <span class="id" title="var">Psi</span> <span class="id" title="var">Gamma</span>) (<span class="id" title="var">ALab</span> <span class="id" title="var">v</span>) (<span class="id" title="var">code</span> <span class="id" title="var">Gamma</span>) -&gt; <span class="id" title="var">ihas_type</span> (<span class="id" title="var">PsiCtx</span> <span class="id" title="var">Psi</span>) (<span class="id" title="var">JMP</span> <span class="id" title="var">v</span>) (<span class="id" title="var">code</span> <span class="id" title="var">Gamma</span>)<br />
+  | <span class="id" title="var">S_JmpR</span> : <span class="id" title="keyword">forall</span> <span class="id" title="var">Psi</span> <span class="id" title="var">Gamma</span> <span class="id" title="var">v</span>,<br />
+      <span class="id" title="var">ahas_type</span> (<span class="id" title="var">PsiGammaCtx</span> <span class="id" title="var">Psi</span> <span class="id" title="var">Gamma</span>) (<span class="id" title="var">AReg</span> <span class="id" title="var">v</span>) ( <span class="id" title="var">reg</span> (<span class="id" title="var">code</span> <span class="id" title="var">Gamma</span>)) -&gt; <span class="id" title="var">ihas_type</span> (<span class="id" title="var">PsiCtx</span> <span class="id" title="var">Psi</span>) (<span class="id" title="var">JMP</span> <span class="id" title="var">R</span>(<span class="id" title="var">v</span>)) (<span class="id" title="var">code</span> <span class="id" title="var">Gamma</span>)<br />
+  | <span class="id" title="var">S_JmpT</span> : <span class="id" title="keyword">forall</span> <span class="id" title="var">Psi</span> <span class="id" title="var">Gamma</span> <span class="id" title="var">v</span>,<br />
+      <span class="id" title="var">ahas_type</span> (<span class="id" title="var">PsiGammaCtx</span> <span class="id" title="var">Psi</span> <span class="id" title="var">Gamma</span>) (<span class="id" title="var">AReg</span> <span class="id" title="var">v</span>) <span class="id" title="var">True</span> -&gt; <span class="id" title="var">ihas_type</span> (<span class="id" title="var">PsiCtx</span> <span class="id" title="var">Psi</span>) (<span class="id" title="var">JMP</span> <span class="id" title="var">R</span>(<span class="id" title="var">v</span>)) (<span class="id" title="var">code</span> <span class="id" title="var">Gamma</span>)<br />
+  | <span class="id" title="var">S_Mov</span> : <span class="id" title="keyword">forall</span> <span class="id" title="var">Psi</span> <span class="id" title="var">Gamma</span> <span class="id" title="var">R</span> <span class="id" title="var">d</span> <span class="id" title="var">a</span> <span class="id" title="var">tau</span>,<br />
+     <span class="id" title="var">ahas_type</span> (<span class="id" title="var">PsiGammaCtx</span> <span class="id" title="var">Psi</span> <span class="id" title="var">Gamma</span>) <span class="id" title="var">a</span> <span class="id" title="var">tau</span> -&gt; <span class="id" title="var">ahas_type</span> (<span class="id" title="var">PsiGammaCtx</span> <span class="id" title="var">Psi</span> <span class="id" title="var">Gamma</span>) (<span class="id" title="var">AReg</span> <span class="id" title="var">d</span>) (<span class="id" title="var">reg</span> <span class="id" title="var">tau</span>) -&gt; (<span class="id" title="var">update</span> <span class="id" title="var">Gamma</span> (<span class="id" title="var">Id</span> <span class="id" title="var">d</span>) (<span class="id" title="var">reg</span> <span class="id" title="var">tau</span>)) = <span class="id" title="var">Gamma</span> -&gt; <span class="id" title="var">ihas_type</span> (<span class="id" title="var">PsiCtx</span> <span class="id" title="var">Psi</span>) (<span class="id" title="var">R</span>(<span class="id" title="var">d</span>) := <span class="id" title="var">aeval</span> <span class="id" title="var">a</span> <span class="id" title="var">R</span>) (<span class="id" title="var">arrow</span> <span class="id" title="var">Gamma</span> <span class="id" title="var">Gamma</span>)<br />
+  | <span class="id" title="var">S_Add</span> : <span class="id" title="keyword">forall</span> <span class="id" title="var">Psi</span> <span class="id" title="var">Gamma</span> <span class="id" title="var">d</span> <span class="id" title="var">s</span>,<br />
+     <span class="id" title="var">ahas_type</span> (<span class="id" title="var">PsiGammaCtx</span> <span class="id" title="var">Psi</span> <span class="id" title="var">Gamma</span>) (<span class="id" title="var">AReg</span> <span class="id" title="var">s</span>) (<span class="id" title="var">reg</span> <span class="id" title="var">int</span>) -&gt; <span class="id" title="var">ahas_type</span> (<span class="id" title="var">PsiGammaCtx</span> <span class="id" title="var">Psi</span> <span class="id" title="var">Gamma</span>) (<span class="id" title="var">AReg</span> <span class="id" title="var">d</span>) (<span class="id" title="var">reg</span> <span class="id" title="var">int</span>) -&gt; <span class="id" title="var">update</span> <span class="id" title="var">Gamma</span> (<span class="id" title="var">Id</span> <span class="id" title="var">d</span>) (<span class="id" title="var">reg</span> <span class="id" title="var">int</span>) = <span class="id" title="var">Gamma</span> -&gt; <span class="id" title="var">ihas_type</span> (<span class="id" title="var">PsiCtx</span> <span class="id" title="var">Psi</span>) (<span class="id" title="var">R</span>(<span class="id" title="var">d</span>) +:= <span class="id" title="var">R</span>(<span class="id" title="var">s</span>)) (<span class="id" title="var">arrow</span> <span class="id" title="var">Gamma</span> <span class="id" title="var">Gamma</span>)<br />
+  | <span class="id" title="var">S_Sub</span> : <span class="id" title="keyword">forall</span> <span class="id" title="var">Psi</span> <span class="id" title="var">Gamma</span> <span class="id" title="var">s</span> <span class="id" title="var">a</span> <span class="id" title="var">v</span>,<br />
+       <span class="id" title="var">ahas_type</span> (<span class="id" title="var">PsiGammaCtx</span> <span class="id" title="var">Psi</span> <span class="id" title="var">Gamma</span>) <span class="id" title="var">a</span> <span class="id" title="var">int</span> -&gt; <span class="id" title="var">ahas_type</span> (<span class="id" title="var">PsiGammaCtx</span> <span class="id" title="var">Psi</span> <span class="id" title="var">Gamma</span>) (<span class="id" title="var">AReg</span> <span class="id" title="var">s</span>) (<span class="id" title="var">reg</span> <span class="id" title="var">int</span>) -&gt; <span class="id" title="var">a</span> = <span class="id" title="var">ANum</span> <span class="id" title="var">v</span> -&gt; <span class="id" title="var">ihas_type</span> (<span class="id" title="var">PsiCtx</span> <span class="id" title="var">Psi</span>) (<span class="id" title="var">R</span>(<span class="id" title="var">s</span>) -:= <span class="id" title="var">v</span>) (<span class="id" title="var">arrow</span> <span class="id" title="var">Gamma</span> <span class="id" title="var">Gamma</span>)<br />
+  | <span class="id" title="var">S_If</span> : <span class="id" title="keyword">forall</span> <span class="id" title="var">Psi</span> <span class="id" title="var">Gamma</span> <span class="id" title="var">r</span> <span class="id" title="var">v</span>,<br />
+      <span class="id" title="var">ahas_type</span> (<span class="id" title="var">PsiGammaCtx</span> <span class="id" title="var">Psi</span> <span class="id" title="var">Gamma</span>) (<span class="id" title="var">AReg</span> <span class="id" title="var">r</span>) (<span class="id" title="var">reg</span> <span class="id" title="var">int</span>) -&gt; <span class="id" title="var">ahas_type</span> (<span class="id" title="var">PsiGammaCtx</span> <span class="id" title="var">Psi</span> <span class="id" title="var">Gamma</span>) (<span class="id" title="var">ALab</span> <span class="id" title="var">v</span>) (<span class="id" title="var">code</span> <span class="id" title="var">Gamma</span>) -&gt; <span class="id" title="var">ihas_type</span> (<span class="id" title="var">PsiCtx</span> <span class="id" title="var">Psi</span>) (<span class="id" title="var">JIF</span> <span class="id" title="var">R</span>(<span class="id" title="var">r</span>) <span class="id" title="var">v</span>) (<span class="id" title="var">arrow</span> <span class="id" title="var">Gamma</span> <span class="id" title="var">Gamma</span>)<br />
+  | <span class="id" title="var">S_Seq</span> : <span class="id" title="keyword">forall</span> <span class="id" title="var">Psi</span> <span class="id" title="var">i1</span> <span class="id" title="var">i2</span> <span class="id" title="var">Gamma</span> <span class="id" title="var">Gamma2</span>,<br />
+      <span class="id" title="var">ihas_type</span> (<span class="id" title="var">PsiCtx</span> <span class="id" title="var">Psi</span>) <span class="id" title="var">i1</span> (<span class="id" title="var">arrow</span> <span class="id" title="var">Gamma</span> <span class="id" title="var">Gamma2</span>) -&gt; <span class="id" title="var">ihas_type</span> (<span class="id" title="var">PsiCtx</span> <span class="id" title="var">Psi</span>) <span class="id" title="var">i2</span> (<span class="id" title="var">code</span> <span class="id" title="var">Gamma2</span>) -&gt; <span class="id" title="var">ihas_type</span> (<span class="id" title="var">PsiCtx</span> <span class="id" title="var">Psi</span>) (<span class="id" title="var">ISeq</span> <span class="id" title="var">i1</span> <span class="id" title="var">i2</span>) (<span class="id" title="var">code</span> <span class="id" title="var">Gamma</span>).<br />
+<br />
+ <span class="id" title="keyword">Hint Constructors</span> <span class="id" title="var">ihas_type</span>.<br />
+<br />
+
+</div>
+<div class="doc">
+Typing rules for register file
+</div>
+<div class="code">
+<span class="id" title="keyword">Inductive</span> <span class="id" title="var">Rhas_type</span> : <span class="id" title="var">cmbnd_ctx</span> -&gt; <span class="id" title="var">registers</span> -&gt; <span class="id" title="keyword">context</span> -&gt; <span class="id" title="keyword">Prop</span> :=<br />
+  | <span class="id" title="var">S_Regfile</span> : <span class="id" title="keyword">forall</span> <span class="id" title="var">Psi</span> <span class="id" title="var">Gamma</span> <span class="id" title="var">R</span> <span class="id" title="var">r</span> <span class="id" title="var">tau</span> <span class="id" title="var">a</span>, (<span class="id" title="var">Gamma</span> (<span class="id" title="var">Id</span> <span class="id" title="var">r</span>)) = <span class="id" title="var">Some</span> <span class="id" title="var">tau</span> -&gt; <span class="id" title="var">aeval</span> <span class="id" title="var">a</span> <span class="id" title="var">R</span> = <span class="id" title="var">R</span> (<span class="id" title="var">Id</span> <span class="id" title="var">r</span>) -&gt; <span class="id" title="var">ahas_type</span> (<span class="id" title="var">PsiGammaCtx</span> <span class="id" title="var">Psi</span> <span class="id" title="var">Gamma</span>) <span class="id" title="var">a</span> <span class="id" title="var">tau</span> -&gt; <span class="id" title="var">Rhas_type</span> (<span class="id" title="var">PsiCtx</span> <span class="id" title="var">Psi</span>) <span class="id" title="var">R</span> <span class="id" title="var">Gamma</span>.<br />
+<br />
+ <span class="id" title="keyword">Hint Constructors</span> <span class="id" title="var">Rhas_type</span>.<br />
+<br />
+ <span class="id" title="keyword">Definition</span> <span class="id" title="var">init_Gamma</span> : <span class="id" title="keyword">context</span> := <span class="id" title="var">update</span> (<span class="id" title="var">update</span> (<span class="id" title="var">update</span> (<span class="id" title="var">update</span> <span class="id" title="var">empty_Gamma</span> (<span class="id" title="var">Id</span> 1) (<span class="id" title="var">reg</span> <span class="id" title="var">int</span>)) (<span class="id" title="var">Id</span> 2) (<span class="id" title="var">reg</span> <span class="id" title="var">int</span>)) (<span class="id" title="var">Id</span> 3) (<span class="id" title="var">reg</span> <span class="id" title="var">int</span>)) (<span class="id" title="var">Id</span> 4) <span class="id" title="var">True</span>.<br />
+ <span class="id" title="keyword">Check</span> <span class="id" title="var">init_Gamma</span>.<br />
+<br />
+ <span class="id" title="keyword">Definition</span> <span class="id" title="var">init_Psi</span> : <span class="id" title="keyword">context</span> := <span class="id" title="var">update</span> (<span class="id" title="var">update</span> (<span class="id" title="var">update</span> <span class="id" title="var">empty_Psi</span> (<span class="id" title="var">Id</span> 1) (<span class="id" title="var">code</span> <span class="id" title="var">init_Gamma</span>))(<span class="id" title="var">Id</span> 3) (<span class="id" title="var">code</span> <span class="id" title="var">init_Gamma</span>)) (<span class="id" title="var">Id</span> 2) (<span class="id" title="var">code</span> <span class="id" title="var">init_Gamma</span>).<br />
+<br />
+ <span class="id" title="keyword">Ltac</span> <span class="id" title="var">match_map</span> := <span class="id" title="tactic">repeat</span> (<span class="id" title="tactic">try</span> <span class="id" title="tactic">rewrite</span> <span class="id" title="var">update_neq</span>; <span class="id" title="tactic">try</span> <span class="id" title="tactic">rewrite</span> <span class="id" title="var">update_eq</span>; <span class="id" title="tactic">try</span> <span class="id" title="tactic">reflexivity</span>).<br />
+ <span class="id" title="keyword">Ltac</span> <span class="id" title="var">inequality</span> := (<span class="id" title="tactic">rewrite</span> &lt;- <span class="id" title="var">beq_id_false_iff</span>; <span class="id" title="tactic">trivial</span>).<br />
+ <span class="id" title="keyword">Ltac</span> <span class="id" title="var">crush_map</span> := <span class="id" title="var">match_map</span> ; <span class="id" title="var">inequality</span>; <span class="id" title="tactic">try</span> <span class="id" title="tactic">reflexivity</span>.<br />
+<br />
+ <span class="id" title="keyword">Ltac</span> <span class="id" title="var">crush_assumptions</span> := <span class="id" title="tactic">repeat</span> (<span class="id" title="tactic">try</span> <span class="id" title="tactic">subst</span>; <span class="id" title="tactic">try</span> <span class="id" title="tactic">assumption</span>).<br />
+<br />
+ <span class="id" title="keyword">Example</span> <span class="id" title="var">heap_2_type</span> : <span class="id" title="keyword">forall</span> <span class="id" title="var">I</span> (<span class="id" title="var">R</span> : <span class="id" title="var">registers</span>), (<span class="id" title="var">init_heap</span> (<span class="id" title="var">Id</span> 2)) = <span class="id" title="var">Some</span> <span class="id" title="var">I</span> -&gt; <span class="id" title="var">ihas_type</span> (<span class="id" title="var">PsiCtx</span> <span class="id" title="var">init_Psi</span>) <span class="id" title="var">I</span> (<span class="id" title="var">code</span> <span class="id" title="var">init_Gamma</span>).<br />
+ <span class="id" title="keyword">Proof</span>.<br />
+   <span class="id" title="tactic">intros</span>.<br />
+   <span class="id" title="tactic">unfold</span> <span class="id" title="var">init_heap</span> <span class="id" title="keyword">in</span> <span class="id" title="var">H</span>.<br />
+   <span class="id" title="tactic">rewrite</span> <span class="id" title="var">update_neq</span> <span class="id" title="keyword">in</span> <span class="id" title="var">H</span>.<br />
+   <span class="id" title="tactic">rewrite</span> <span class="id" title="var">update_eq</span> <span class="id" title="keyword">in</span> <span class="id" title="var">H</span>.<br />
+   <span class="id" title="tactic">symmetry</span> <span class="id" title="keyword">in</span> <span class="id" title="var">H</span>.<br />
+   <span class="id" title="var">inverts</span> <span class="id" title="var">H</span>.<br />
+   <span class="id" title="tactic">apply</span> <span class="id" title="var">S_Seq</span> <span class="id" title="keyword">with</span> (<span class="id" title="var">Gamma2</span> := <span class="id" title="var">init_Gamma</span>).<br />
+   <span class="id" title="tactic">apply</span> <span class="id" title="var">S_If</span>.<br />
+   <span class="id" title="tactic">apply</span> <span class="id" title="var">S_Reg</span>.<br />
+   <span class="id" title="tactic">unfold</span> <span class="id" title="var">init_Gamma</span>.<br />
+   <span class="id" title="var">crush_map</span>.<br />
+   <span class="id" title="tactic">apply</span> <span class="id" title="var">S_Val</span>.<br />
+   <span class="id" title="tactic">apply</span> <span class="id" title="var">S_Lab</span> <span class="id" title="keyword">with</span> (<span class="id" title="var">l</span> := 3) (<span class="id" title="var">R</span> := <span class="id" title="var">R</span>).<br />
+   <span class="id" title="tactic">unfold</span> <span class="id" title="var">init_Psi</span>.<br />
+   <span class="id" title="var">crush_map</span>.<br />
+   <span class="id" title="tactic">trivial</span>.<br />
+   <span class="id" title="tactic">apply</span> <span class="id" title="var">S_Seq</span> <span class="id" title="keyword">with</span> (<span class="id" title="var">Gamma2</span> := <span class="id" title="var">init_Gamma</span>).<br />
+   <span class="id" title="tactic">apply</span> <span class="id" title="var">S_Add</span>.<br />
+   <span class="id" title="tactic">apply</span> <span class="id" title="var">S_Reg</span>.<br />
+   <span class="id" title="tactic">unfold</span> <span class="id" title="var">init_Gamma</span>.<br />
+   <span class="id" title="var">crush_map</span>.<br />
+   <span class="id" title="tactic">apply</span> <span class="id" title="var">S_Reg</span>.<br />
+   <span class="id" title="tactic">unfold</span> <span class="id" title="var">init_Gamma</span>.<br />
+   <span class="id" title="var">crush_map</span>.<br />
+   <span class="id" title="tactic">apply</span> <span class="id" title="var">update_same</span>.<br />
+   <span class="id" title="tactic">unfold</span> <span class="id" title="var">init_Gamma</span>.<br />
+   <span class="id" title="var">crush_map</span>.<br />
+   <span class="id" title="tactic">apply</span> <span class="id" title="var">S_Seq</span> <span class="id" title="keyword">with</span> (<span class="id" title="var">Gamma2</span> := <span class="id" title="var">init_Gamma</span>).<br />
+   <span class="id" title="tactic">unfold</span> <span class="id" title="var">init_Psi</span>.<br />
+   <span class="id" title="tactic">apply</span> <span class="id" title="var">S_Sub</span> <span class="id" title="keyword">with</span> (<span class="id" title="var">a</span> := <span class="id" title="var">ANum</span> 1).<br />
+   <span class="id" title="tactic">unfold</span> <span class="id" title="var">init_Psi</span>.<br />
+   <span class="id" title="tactic">apply</span> <span class="id" title="var">S_Val</span>.<br />
+   <span class="id" title="tactic">apply</span> <span class="id" title="var">S_Int</span>.<br />
+   <span class="id" title="tactic">apply</span> <span class="id" title="var">S_Reg</span>.<br />
+   <span class="id" title="tactic">unfold</span> <span class="id" title="var">init_Gamma</span>.<br />
+   <span class="id" title="var">crush_map</span>.<br />
+   <span class="id" title="tactic">reflexivity</span>.<br />
+   <span class="id" title="tactic">apply</span> <span class="id" title="var">S_Jmp</span>.<br />
+   <span class="id" title="tactic">apply</span> <span class="id" title="var">S_Val</span>.<br />
+   <span class="id" title="tactic">apply</span> <span class="id" title="var">S_Lab</span> <span class="id" title="keyword">with</span> (<span class="id" title="var">l</span> := 2) (<span class="id" title="var">R</span> := <span class="id" title="var">R</span>).<br />
+   <span class="id" title="tactic">unfold</span> <span class="id" title="var">init_Psi</span>.<br />
+   <span class="id" title="tactic">trivial</span>.<br />
+   <span class="id" title="tactic">trivial</span>.<br />
+   <span class="id" title="tactic">rewrite</span> &lt;- <span class="id" title="var">beq_id_false_iff</span>.<br />
+   <span class="id" title="tactic">trivial</span>.<br />
+ <span class="id" title="keyword">Qed</span>.<br />
+<br />
+
+</div>
+<div class="doc">
+Typing rule for Heap
+</div>
+<div class="code">
+<span class="id" title="keyword">Inductive</span> <span class="id" title="var">Hhas_type</span> : <span class="id" title="var">cmbnd_ctx</span> -&gt; <span class="id" title="var">heaps</span> -&gt; <span class="id" title="keyword">context</span> -&gt; <span class="id" title="keyword">Prop</span> :=<br />
+   | <span class="id" title="var">S_Heap</span> : <span class="id" title="keyword">forall</span> <span class="id" title="var">Psi</span> <span class="id" title="var">H</span>, (<span class="id" title="keyword">forall</span> <span class="id" title="var">l</span> <span class="id" title="var">tau</span>, <span class="id" title="tactic">exists</span> <span class="id" title="var">i</span>, <span class="id" title="var">Psi</span> (<span class="id" title="var">Id</span> <span class="id" title="var">l</span>) = <span class="id" title="var">Some</span> <span class="id" title="var">tau</span> /\ <span class="id" title="var">H</span> (<span class="id" title="var">Id</span> <span class="id" title="var">l</span>) = <span class="id" title="var">Some</span> <span class="id" title="var">i</span> /\ <span class="id" title="var">ihas_type</span> (<span class="id" title="var">PsiCtx</span> <span class="id" title="var">Psi</span>) <span class="id" title="var">i</span> <span class="id" title="var">tau</span>) -&gt; <span class="id" title="var">Hhas_type</span> <span class="id" title="var">EmptyCtx</span> <span class="id" title="var">H</span> <span class="id" title="var">Psi</span>.<br />
+<br />
+ <span class="id" title="keyword">Hint Constructors</span> <span class="id" title="var">Hhas_type</span>.<br />
+<br />
+
+</div>
+<div class="doc">
+Typing rule for a valid Machine State
+</div>
+<div class="code">
+<span class="id" title="keyword">Inductive</span> <span class="id" title="var">M_ok</span> : <span class="id" title="var">cmbnd_ctx</span> -&gt; <span class="id" title="var">heaps</span> -&gt; <span class="id" title="var">registers</span> -&gt; <span class="id" title="var">instr</span> -&gt; <span class="id" title="keyword">Prop</span> :=<br />
+  | <span class="id" title="var">S_Mach</span> : <span class="id" title="keyword">forall</span> <span class="id" title="var">H</span> <span class="id" title="var">R</span> <span class="id" title="var">I</span> <span class="id" title="var">Psi</span> <span class="id" title="var">Gamma</span>, <span class="id" title="var">Hhas_type</span> <span class="id" title="var">EmptyCtx</span> <span class="id" title="var">H</span> <span class="id" title="var">Psi</span> -&gt; <span class="id" title="var">Rhas_type</span> (<span class="id" title="var">PsiCtx</span> <span class="id" title="var">Psi</span>) <span class="id" title="var">R</span> <span class="id" title="var">Gamma</span> -&gt; <span class="id" title="var">ihas_type</span> (<span class="id" title="var">PsiCtx</span> <span class="id" title="var">Psi</span>) <span class="id" title="var">I</span> (<span class="id" title="var">code</span> <span class="id" title="var">Gamma</span>) -&gt; <span class="id" title="var">M_ok</span> <span class="id" title="var">EmptyCtx</span> <span class="id" title="var">H</span> <span class="id" title="var">R</span> <span class="id" title="var">I</span>.<br />
+<br />
+ <span class="id" title="keyword">Hint Constructors</span> <span class="id" title="var">M_ok</span>.<br />
+<br />
+
+</div>
+<div class="doc">
+We will require some Canonical Values Lemmas in our proof of Soundness
+</div>
+<div class="code">
+<span class="id" title="keyword">Lemma</span> <span class="id" title="var">Canonical_Values_Int</span> : <span class="id" title="keyword">forall</span> <span class="id" title="var">H</span> <span class="id" title="var">Psi</span> <span class="id" title="var">Gamma</span> <span class="id" title="var">v</span> <span class="id" title="var">tau</span>, <span class="id" title="var">Hhas_type</span> <span class="id" title="var">EmptyCtx</span> <span class="id" title="var">H</span> <span class="id" title="var">Psi</span> -&gt; <span class="id" title="var">ahas_type</span> (<span class="id" title="var">PsiGammaCtx</span> <span class="id" title="var">Psi</span> <span class="id" title="var">Gamma</span>) <span class="id" title="var">v</span> <span class="id" title="var">tau</span> -&gt; <span class="id" title="var">tau</span> = <span class="id" title="var">int</span> -&gt; <span class="id" title="tactic">exists</span> <span class="id" title="var">n</span>, <span class="id" title="var">v</span> = <span class="id" title="var">ANum</span> <span class="id" title="var">n</span>.<br />
+ <span class="id" title="keyword">Proof</span>.<br />
+   <span class="id" title="tactic">intros</span>.<br />
+   <span class="id" title="tactic">subst</span>.<br />
+   <span class="id" title="var">inverts</span> <span class="id" title="var">H1</span>.<br />
+   <span class="id" title="var">inverts</span> <span class="id" title="var">H6</span>.<br />
+   <span class="id" title="tactic">exists</span> <span class="id" title="var">n</span>.<br />
+   <span class="id" title="tactic">reflexivity</span>.<br />
+ <span class="id" title="keyword">Qed</span>.<br />
+<br />
+ <span class="id" title="keyword">Lemma</span> <span class="id" title="var">Canonical_Values_Reg</span> :<span class="id" title="keyword">forall</span> <span class="id" title="var">H</span> <span class="id" title="var">Psi</span> <span class="id" title="var">Gamma</span> <span class="id" title="var">r</span> <span class="id" title="var">R</span>, <span class="id" title="var">Hhas_type</span> <span class="id" title="var">EmptyCtx</span> <span class="id" title="var">H</span> <span class="id" title="var">Psi</span> -&gt; <span class="id" title="var">Rhas_type</span> (<span class="id" title="var">PsiCtx</span> <span class="id" title="var">Psi</span>) <span class="id" title="var">R</span> <span class="id" title="var">Gamma</span> -&gt; <span class="id" title="var">ahas_type</span> (<span class="id" title="var">PsiGammaCtx</span> <span class="id" title="var">Psi</span> <span class="id" title="var">Gamma</span>) (<span class="id" title="var">AReg</span> <span class="id" title="var">r</span>) (<span class="id" title="var">reg</span> <span class="id" title="var">int</span>) -&gt; <span class="id" title="tactic">exists</span> (<span class="id" title="var">n</span> : <span class="id" title="var">nat</span>), <span class="id" title="var">R</span> (<span class="id" title="var">Id</span> <span class="id" title="var">r</span>) = <span class="id" title="var">n</span>.<br />
+ <span class="id" title="keyword">Proof</span>.<br />
+   <span class="id" title="tactic">intros</span>.<br />
+   <span class="id" title="tactic">exists</span> (<span class="id" title="var">R</span> (<span class="id" title="var">Id</span> <span class="id" title="var">r</span>)).<br />
+   <span class="id" title="tactic">reflexivity</span>.<br />
+ <span class="id" title="keyword">Qed</span>.<br />
+<br />
+ <span class="id" title="keyword">Lemma</span> <span class="id" title="var">Canonical_Values_label1</span> : <span class="id" title="keyword">forall</span> <span class="id" title="var">H</span> <span class="id" title="var">Psi</span> <span class="id" title="var">Gamma</span> <span class="id" title="var">v</span>, <span class="id" title="var">Hhas_type</span> <span class="id" title="var">EmptyCtx</span> <span class="id" title="var">H</span> <span class="id" title="var">Psi</span> -&gt; <span class="id" title="var">ahas_type</span> (<span class="id" title="var">PsiGammaCtx</span> <span class="id" title="var">Psi</span> <span class="id" title="var">Gamma</span>) (<span class="id" title="var">ALab</span> <span class="id" title="var">v</span>) (<span class="id" title="var">code</span> <span class="id" title="var">Gamma</span>) -&gt; <span class="id" title="var">Psi</span> (<span class="id" title="var">Id</span> <span class="id" title="var">v</span>) = <span class="id" title="var">Some</span> (<span class="id" title="var">code</span> <span class="id" title="var">Gamma</span>) -&gt; <span class="id" title="tactic">exists</span> <span class="id" title="var">i</span>, <span class="id" title="var">H</span> (<span class="id" title="var">Id</span> <span class="id" title="var">v</span>) = <span class="id" title="var">Some</span> <span class="id" title="var">i</span> /\ <span class="id" title="var">ihas_type</span> (<span class="id" title="var">PsiCtx</span> <span class="id" title="var">Psi</span>) <span class="id" title="var">i</span> (<span class="id" title="var">code</span> <span class="id" title="var">Gamma</span>).<br />
+ <span class="id" title="keyword">Proof</span>.<br />
+   <span class="id" title="tactic">intros</span>.<br />
+   <span class="id" title="var">inverts</span> <span class="id" title="var">H0</span>.<br />
+   <span class="id" title="var">inverts</span> <span class="id" title="var">H1</span>.<br />
+   <span class="id" title="var">inverts</span> <span class="id" title="var">H7</span>.<br />
+   <span class="id" title="tactic">simpl</span> <span class="id" title="keyword">in</span> <span class="id" title="var">H5</span>.<br />
+   <span class="id" title="tactic">specialize</span> <span class="id" title="var">H4</span> <span class="id" title="keyword">with</span> ( <span class="id" title="var">l</span> := <span class="id" title="var">v</span>) (<span class="id" title="var">tau</span> := <span class="id" title="var">code</span> <span class="id" title="var">Gamma</span>).<br />
+   <span class="id" title="tactic">destruct</span> <span class="id" title="var">H4</span> <span class="id" title="keyword">as</span> [<span class="id" title="var">i</span> <span class="id" title="var">G</span>].<br />
+   <span class="id" title="tactic">exists</span> <span class="id" title="var">i</span>.<br />
+   <span class="id" title="tactic">apply</span> <span class="id" title="var">G</span>.<br />
+ <span class="id" title="keyword">Qed</span>.<br />
+<br />
+ <span class="id" title="keyword">Lemma</span> <span class="id" title="var">Canonical_Values_label2</span> : <span class="id" title="keyword">forall</span> <span class="id" title="var">H</span> <span class="id" title="var">Psi</span> <span class="id" title="var">Gamma</span> <span class="id" title="var">R</span> <span class="id" title="var">r</span>, <span class="id" title="var">Hhas_type</span> <span class="id" title="var">EmptyCtx</span> <span class="id" title="var">H</span> <span class="id" title="var">Psi</span> -&gt; <span class="id" title="var">ahas_type</span> (<span class="id" title="var">PsiGammaCtx</span> <span class="id" title="var">Psi</span> <span class="id" title="var">Gamma</span>) (<span class="id" title="var">AReg</span> <span class="id" title="var">r</span>) (<span class="id" title="var">reg</span> (<span class="id" title="var">code</span> <span class="id" title="var">Gamma</span>)) -&gt; <span class="id" title="var">Psi</span> (<span class="id" title="var">Id</span> (<span class="id" title="var">R</span> (<span class="id" title="var">Id</span> <span class="id" title="var">r</span>))) = <span class="id" title="var">Some</span> (<span class="id" title="var">code</span> <span class="id" title="var">Gamma</span>) -&gt; <span class="id" title="tactic">exists</span> <span class="id" title="var">i</span>, <span class="id" title="var">H</span> (<span class="id" title="var">Id</span> (<span class="id" title="var">R</span> (<span class="id" title="var">Id</span> <span class="id" title="var">r</span>))) = <span class="id" title="var">Some</span> <span class="id" title="var">i</span> /\ <span class="id" title="var">ihas_type</span> (<span class="id" title="var">PsiCtx</span> <span class="id" title="var">Psi</span>) <span class="id" title="var">i</span> (<span class="id" title="var">code</span> <span class="id" title="var">Gamma</span>).<br />
+ <span class="id" title="keyword">Proof</span>.<br />
+   <span class="id" title="tactic">intros</span>.<br />
+   <span class="id" title="var">inverts</span> <span class="id" title="var">H0</span>.<br />
+   <span class="id" title="var">inverts</span> <span class="id" title="var">H1</span>.<br />
+   <span class="id" title="tactic">specialize</span> <span class="id" title="var">H4</span> <span class="id" title="keyword">with</span> ( <span class="id" title="var">l</span> := <span class="id" title="var">R</span> (<span class="id" title="var">Id</span> <span class="id" title="var">r</span>)) (<span class="id" title="var">tau</span> := <span class="id" title="var">code</span> <span class="id" title="var">Gamma</span>).<br />
+   <span class="id" title="tactic">destruct</span> <span class="id" title="var">H4</span> <span class="id" title="keyword">as</span> [<span class="id" title="var">i</span> <span class="id" title="var">G</span>].<br />
+   <span class="id" title="tactic">exists</span> <span class="id" title="var">i</span>.<br />
+   <span class="id" title="tactic">apply</span> <span class="id" title="var">G</span>.<br />
+   <span class="id" title="tactic">specialize</span> <span class="id" title="var">H4</span> <span class="id" title="keyword">with</span> ( <span class="id" title="var">l</span> := <span class="id" title="var">R</span> (<span class="id" title="var">Id</span> <span class="id" title="var">r</span>)) (<span class="id" title="var">tau</span> := <span class="id" title="var">code</span> <span class="id" title="var">Gamma</span>).<br />
+   <span class="id" title="tactic">destruct</span> <span class="id" title="var">H4</span> <span class="id" title="keyword">as</span> [<span class="id" title="var">i</span> <span class="id" title="var">G</span>].<br />
+   <span class="id" title="tactic">exists</span> <span class="id" title="var">i</span>.<br />
+   <span class="id" title="tactic">apply</span> <span class="id" title="var">G</span>.<br />
+ <span class="id" title="keyword">Qed</span>.<br />
+<br />
+ <span class="id" title="keyword">Lemma</span> <span class="id" title="var">Canonical_Values_label3</span> : <span class="id" title="keyword">forall</span> <span class="id" title="var">H</span> <span class="id" title="var">Psi</span> <span class="id" title="var">Gamma</span> <span class="id" title="var">R</span> <span class="id" title="var">r</span>, <span class="id" title="var">Hhas_type</span> <span class="id" title="var">EmptyCtx</span> <span class="id" title="var">H</span> <span class="id" title="var">Psi</span> -&gt; <span class="id" title="var">ahas_type</span> (<span class="id" title="var">PsiGammaCtx</span> <span class="id" title="var">Psi</span> <span class="id" title="var">Gamma</span>) (<span class="id" title="var">AReg</span> <span class="id" title="var">r</span>) <span class="id" title="var">True</span> -&gt; <span class="id" title="var">Psi</span> (<span class="id" title="var">Id</span> (<span class="id" title="var">R</span> (<span class="id" title="var">Id</span> <span class="id" title="var">r</span>))) = <span class="id" title="var">Some</span> <span class="id" title="var">True</span> -&gt; <span class="id" title="tactic">exists</span> <span class="id" title="var">i</span>, <span class="id" title="var">H</span> (<span class="id" title="var">Id</span> (<span class="id" title="var">R</span> (<span class="id" title="var">Id</span> <span class="id" title="var">r</span>))) = <span class="id" title="var">Some</span> <span class="id" title="var">i</span> /\ <span class="id" title="var">ihas_type</span> (<span class="id" title="var">PsiCtx</span> <span class="id" title="var">Psi</span>) <span class="id" title="var">i</span> (<span class="id" title="var">code</span> <span class="id" title="var">Gamma</span>).<br />
+ <span class="id" title="keyword">Proof</span>.<br />
+   <span class="id" title="tactic">intros</span>.<br />
+   <span class="id" title="tactic">inversion</span> <span class="id" title="var">H0</span>.<br />
+   <span class="id" title="tactic">inversion</span> <span class="id" title="var">H1</span>.<br />
+   <span class="id" title="tactic">specialize</span> <span class="id" title="var">H4</span> <span class="id" title="keyword">with</span> ( <span class="id" title="var">l</span> := <span class="id" title="var">R</span> (<span class="id" title="var">Id</span> <span class="id" title="var">r</span>)) (<span class="id" title="var">tau</span> := (<span class="id" title="var">code</span> <span class="id" title="var">Gamma</span>)).<br />
+   <span class="id" title="tactic">destruct</span> <span class="id" title="var">H4</span> <span class="id" title="keyword">as</span> [<span class="id" title="var">i</span> <span class="id" title="var">G</span>].<br />
+   <span class="id" title="tactic">exists</span> <span class="id" title="var">i</span>.<br />
+   <span class="id" title="tactic">apply</span> <span class="id" title="var">G</span>.<br />
+   <span class="id" title="tactic">specialize</span> <span class="id" title="var">H4</span> <span class="id" title="keyword">with</span> ( <span class="id" title="var">l</span> := <span class="id" title="var">R</span> (<span class="id" title="var">Id</span> <span class="id" title="var">r</span>)) (<span class="id" title="var">tau</span> := (<span class="id" title="var">code</span> <span class="id" title="var">Gamma</span>)).<br />
+   <span class="id" title="tactic">destruct</span> <span class="id" title="var">H4</span> <span class="id" title="keyword">as</span> [<span class="id" title="var">i</span> <span class="id" title="var">G</span>].<br />
+   <span class="id" title="tactic">exists</span> <span class="id" title="var">i</span>.<br />
+   <span class="id" title="tactic">apply</span> <span class="id" title="var">G</span>.<br />
+  <span class="id" title="keyword">Qed</span>.<br />
+<br />
+
+</div>
+<div class="doc">
+Finally the proof of Soundness
+</div>
+<div class="code">
+<span class="id" title="keyword">Theorem</span> <span class="id" title="var">Soundness</span> : <span class="id" title="keyword">forall</span> <span class="id" title="var">H</span> <span class="id" title="var">R</span> <span class="id" title="var">I</span>, <span class="id" title="var">M_ok</span> <span class="id" title="var">EmptyCtx</span> <span class="id" title="var">H</span> <span class="id" title="var">R</span> <span class="id" title="var">I</span> -&gt; <span class="id" title="tactic">exists</span> <span class="id" title="var">H’</span> <span class="id" title="var">R’</span> <span class="id" title="var">I’</span>, <span class="id" title="var">ieval</span> (<span class="id" title="var">St</span> <span class="id" title="var">H</span> <span class="id" title="var">R</span> <span class="id" title="var">I</span>) (<span class="id" title="var">St</span> <span class="id" title="var">H’</span> <span class="id" title="var">R’</span> <span class="id" title="var">I’</span>) /\ <span class="id" title="var">M_ok</span> <span class="id" title="var">EmptyCtx</span> <span class="id" title="var">H’</span> <span class="id" title="var">R’</span> <span class="id" title="var">I’</span>.<br />
+ <span class="id" title="keyword">Proof</span>.<br />
+   <span class="id" title="tactic">intros</span>.<br />
+   <span class="id" title="tactic">inversion</span> <span class="id" title="var">H0</span>.<br />
+   <span class="id" title="tactic">induction</span> <span class="id" title="var">I</span>.<br />
+   <span class="id" title="tactic">inversion</span> <span class="id" title="var">H4</span>…<br />
+   <span class="id" title="tactic">inversion</span> <span class="id" title="var">H4</span>…<br />
+   <span class="id" title="tactic">inversion</span> <span class="id" title="var">H4</span>…<br />
+   <span class="id" title="tactic">inversion</span> <span class="id" title="var">H4</span>…<br />
+<br />
+   <span class="id" title="tactic">induction</span> <span class="id" title="var">I1</span>.<br />
+<br />
+   <span class="id" title="tactic">inversion</span> <span class="id" title="var">H4</span>.<br />
+   <span class="id" title="tactic">inversion</span> <span class="id" title="var">H12</span>.<br />
+<br />
+   <span class="id" title="tactic">symmetry</span> <span class="id" title="keyword">in</span> <span class="id" title="var">H18</span>.<br />
+   <span class="id" title="tactic">rewrite</span> <span class="id" title="var">H18</span> <span class="id" title="keyword">in</span> <span class="id" title="var">H13</span>.<br />
+   <span class="id" title="tactic">exists</span> <span class="id" title="var">H</span>.<br />
+   <span class="id" title="tactic">exists</span> (<span class="id" title="var">t_update</span> <span class="id" title="var">R</span> (<span class="id" title="var">Id</span> <span class="id" title="var">d</span>) (<span class="id" title="var">aeval</span> <span class="id" title="var">a0</span> <span class="id" title="var">R1</span>)).<br />
+   <span class="id" title="tactic">exists</span> <span class="id" title="var">I2</span>.<br />
+   <span class="id" title="tactic">split</span>.<br />
+   <span class="id" title="tactic">apply</span> <span class="id" title="var">R_IMov</span>.<br />
+   <span class="id" title="tactic">apply</span> <span class="id" title="var">S_Mach</span> <span class="id" title="keyword">with</span> (<span class="id" title="var">Psi</span> := <span class="id" title="var">Psi</span>) (<span class="id" title="var">Gamma</span> := <span class="id" title="var">Gamma</span>).<br />
+   <span class="id" title="tactic">assumption</span>.<br />
+   <span class="id" title="tactic">apply</span> <span class="id" title="var">S_Regfile</span> <span class="id" title="keyword">with</span> (<span class="id" title="var">r</span> := <span class="id" title="var">d</span>) (<span class="id" title="var">tau</span> := <span class="id" title="var">reg</span> <span class="id" title="var">tau</span>) (<span class="id" title="var">a</span> := <span class="id" title="var">AReg</span> <span class="id" title="var">d</span>).<br />
+<br />
+   <span class="id" title="tactic">rewrite</span> <span class="id" title="var">H18</span> <span class="id" title="keyword">in</span> <span class="id" title="var">H21</span>.<br />
+   <span class="id" title="tactic">rewrite</span> &lt;- <span class="id" title="var">H21</span>.<br />
+   <span class="id" title="tactic">intros</span>.<br />
+<br />
+   <span class="id" title="tactic">rewrite</span> <span class="id" title="var">update_eq</span>.<br />
+   <span class="id" title="tactic">reflexivity</span>.<br />
+   <span class="id" title="var">crush_assumptions</span>.<br />
+   <span class="id" title="tactic">trivial</span>.<br />
+   <span class="id" title="var">crush_assumptions</span>.<br />
+   <span class="id" title="var">crush_assumptions</span>…<br />
+<br />
+<br />
+   <span class="id" title="tactic">inversion</span> <span class="id" title="var">H4</span>.<br />
+   <span class="id" title="tactic">inversion</span> <span class="id" title="var">H12</span>.<br />
+   <span class="id" title="tactic">symmetry</span> <span class="id" title="keyword">in</span> <span class="id" title="var">H18</span>.<br />
+   <span class="id" title="tactic">rewrite</span> <span class="id" title="var">H18</span> <span class="id" title="keyword">in</span> <span class="id" title="var">H13</span>.<br />
+   <span class="id" title="tactic">exists</span> <span class="id" title="var">H</span>.<br />
+   <span class="id" title="tactic">exists</span> (<span class="id" title="var">t_update</span> <span class="id" title="var">R</span> (<span class="id" title="var">Id</span> <span class="id" title="var">d</span>) (<span class="id" title="var">aeval</span> (<span class="id" title="var">AReg</span> <span class="id" title="var">d</span>) <span class="id" title="var">R</span> + <span class="id" title="var">aeval</span> (<span class="id" title="var">AReg</span> <span class="id" title="var">s</span>) <span class="id" title="var">R</span>)).<br />
+   <span class="id" title="tactic">exists</span> <span class="id" title="var">I2</span>.<br />
+   <span class="id" title="tactic">split</span>.<br />
+   <span class="id" title="tactic">apply</span> <span class="id" title="var">R_IAdd</span>.<br />
+   <span class="id" title="tactic">apply</span> <span class="id" title="var">S_Mach</span> <span class="id" title="keyword">with</span> (<span class="id" title="var">Psi</span> := <span class="id" title="var">Psi</span>) (<span class="id" title="var">Gamma</span> := <span class="id" title="var">Gamma</span>).<br />
+   <span class="id" title="tactic">assumption</span>.<br />
+   <span class="id" title="tactic">apply</span> <span class="id" title="var">S_Regfile</span> <span class="id" title="keyword">with</span> (<span class="id" title="var">a</span> := <span class="id" title="var">AReg</span> <span class="id" title="var">d</span>) (<span class="id" title="var">r</span> := <span class="id" title="var">d</span>) (<span class="id" title="var">tau</span> := <span class="id" title="var">reg</span> <span class="id" title="var">int</span>).<br />
+   <span class="id" title="tactic">subst</span>.<br />
+   <span class="id" title="tactic">rewrite</span> &lt;- <span class="id" title="var">H21</span>.<br />
+   <span class="id" title="tactic">apply</span> <span class="id" title="var">update_eq</span>.<br />
+   <span class="id" title="var">crush_assumptions</span>.<br />
+   <span class="id" title="tactic">inversion</span> <span class="id" title="var">H20</span>.<br />
+   <span class="id" title="tactic">trivial</span>.<br />
+   <span class="id" title="tactic">trivial</span>.<br />
+   <span class="id" title="var">crush_assumptions</span>.<br />
+   <span class="id" title="var">crush_assumptions</span>…<br />
+<br />
+   <span class="id" title="tactic">inversion</span> <span class="id" title="var">H4</span>.<br />
+   <span class="id" title="tactic">inversion</span> <span class="id" title="var">H12</span>.<br />
+   <span class="id" title="tactic">symmetry</span> <span class="id" title="keyword">in</span> <span class="id" title="var">H18</span>.<br />
+   <span class="id" title="tactic">rewrite</span> <span class="id" title="var">H18</span> <span class="id" title="keyword">in</span> <span class="id" title="var">H13</span>.<br />
+   <span class="id" title="tactic">exists</span> <span class="id" title="var">H</span>.<br />
+   <span class="id" title="tactic">exists</span> (<span class="id" title="var">t_update</span> <span class="id" title="var">R</span> (<span class="id" title="var">Id</span> <span class="id" title="var">d</span>) (<span class="id" title="var">aeval</span> (<span class="id" title="var">AReg</span> <span class="id" title="var">d</span>) <span class="id" title="var">R</span> - <span class="id" title="var">aeval</span> (<span class="id" title="var">ANum</span> <span class="id" title="var">v</span>) <span class="id" title="var">R</span>)).<br />
+   <span class="id" title="tactic">exists</span> <span class="id" title="var">I2</span>.<br />
+   <span class="id" title="tactic">split</span>.<br />
+   <span class="id" title="tactic">apply</span> <span class="id" title="var">R_ISub</span>.<br />
+   <span class="id" title="tactic">apply</span> <span class="id" title="var">S_Mach</span> <span class="id" title="keyword">with</span> (<span class="id" title="var">Psi</span> := <span class="id" title="var">Psi</span>) (<span class="id" title="var">Gamma</span> := <span class="id" title="var">Gamma</span>).<br />
+   <span class="id" title="tactic">assumption</span>.<br />
+   <span class="id" title="tactic">apply</span> <span class="id" title="var">S_Regfile</span> <span class="id" title="keyword">with</span> (<span class="id" title="var">a</span> := <span class="id" title="var">AReg</span> <span class="id" title="var">d</span>) (<span class="id" title="var">r</span> := <span class="id" title="var">d</span>) (<span class="id" title="var">tau</span> := <span class="id" title="var">reg</span> <span class="id" title="var">int</span>).<br />
+   <span class="id" title="tactic">inversion</span> <span class="id" title="var">H20</span>.<br />
+   <span class="id" title="tactic">rewrite</span> <span class="id" title="var">H18</span> <span class="id" title="keyword">in</span> <span class="id" title="var">H23</span>.<br />
+   <span class="id" title="var">crush_assumptions</span>.<br />
+   <span class="id" title="tactic">inversion</span> <span class="id" title="var">H26</span>.<br />
+   <span class="id" title="tactic">trivial</span>.<br />
+<br />
+   <span class="id" title="var">crush_assumptions</span>.<br />
+   <span class="id" title="var">crush_assumptions</span>…<br />
+<br />
+   <span class="id" title="tactic">inversion</span> <span class="id" title="var">H4</span>.<br />
+   <span class="id" title="tactic">inversion</span> <span class="id" title="var">H12</span>.<br />
+   <span class="id" title="tactic">symmetry</span> <span class="id" title="keyword">in</span> <span class="id" title="var">H19</span>.<br />
+   <span class="id" title="tactic">rewrite</span> <span class="id" title="var">H19</span> <span class="id" title="keyword">in</span> <span class="id" title="var">H13</span>.<br />
+   <span class="id" title="tactic">subst</span>.<br />
+   <span class="id" title="tactic">inversion</span> <span class="id" title="var">H20</span>.<br />
+   <span class="id" title="tactic">inversion</span> <span class="id" title="var">H8</span>.<br />
+   <span class="id" title="tactic">subst</span>.<br />
+   <span class="id" title="tactic">simpl</span> <span class="id" title="keyword">in</span> <span class="id" title="var">H14</span>.<br />
+   <span class="id" title="var">remember</span> (<span class="id" title="var">R</span> (<span class="id" title="var">Id</span> <span class="id" title="var">d</span>)) <span class="id" title="keyword">as</span> <span class="id" title="var">rd</span>; <span class="id" title="tactic">destruct</span> <span class="id" title="var">rd</span>.<br />
+   <span class="id" title="tactic">pose</span> <span class="id" title="var">proof</span> <span class="id" title="var">Canonical_Values_label1</span> <span class="id" title="var">H</span> <span class="id" title="var">Psi</span> <span class="id" title="var">Gamma</span> <span class="id" title="var">v</span> <span class="id" title="var">H2</span> <span class="id" title="var">H20</span> <span class="id" title="var">H14</span> <span class="id" title="keyword">as</span> <span class="id" title="var">CVL1</span>.<br />
+   <span class="id" title="tactic">destruct</span> <span class="id" title="var">CVL1</span> <span class="id" title="keyword">as</span> [<span class="id" title="var">I’</span> <span class="id" title="var">G</span>].<br />
+   <span class="id" title="tactic">exists</span> <span class="id" title="var">H</span>.<br />
+   <span class="id" title="tactic">exists</span> <span class="id" title="var">R</span>.<br />
+   <span class="id" title="tactic">exists</span> <span class="id" title="var">I’</span>.<br />
+   <span class="id" title="tactic">split</span>.<br />
+   <span class="id" title="tactic">apply</span> <span class="id" title="var">R_IIf_EQ</span>.<br />
+   <span class="id" title="tactic">simpl</span>.<br />
+   <span class="id" title="tactic">symmetry</span> <span class="id" title="keyword">in</span> <span class="id" title="var">Heqrd</span>; <span class="id" title="tactic">assumption</span>.<br />
+   <span class="id" title="tactic">apply</span> <span class="id" title="var">G</span>.<br />
+<br />
+   <span class="id" title="tactic">apply</span> <span class="id" title="var">S_Mach</span> <span class="id" title="keyword">with</span> (<span class="id" title="var">Psi</span> := <span class="id" title="var">Psi</span>) (<span class="id" title="var">Gamma</span> := <span class="id" title="var">Gamma</span>).<br />
+   <span class="id" title="tactic">assumption</span>.<br />
+   <span class="id" title="tactic">assumption</span>.<br />
+   <span class="id" title="tactic">apply</span> <span class="id" title="var">G</span>.<br />
+<br />
+   <span class="id" title="tactic">exists</span> <span class="id" title="var">H</span>.<br />
+   <span class="id" title="tactic">exists</span> <span class="id" title="var">R</span>.<br />
+   <span class="id" title="tactic">exists</span> <span class="id" title="var">I2</span>.<br />
+   <span class="id" title="tactic">split</span>.<br />
+   <span class="id" title="tactic">apply</span> <span class="id" title="var">R_IIf_NEQ</span>.<br />
+   <span class="id" title="tactic">simpl</span>.<br />
+   <span class="id" title="tactic">symmetry</span> <span class="id" title="keyword">in</span> <span class="id" title="var">Heqrd</span>; <span class="id" title="tactic">rewrite</span> <span class="id" title="var">Heqrd</span>.<br />
+   <span class="id" title="tactic">apply</span> <span class="id" title="var">beq_nat_false_iff</span>.<br />
+   <span class="id" title="tactic">trivial</span>.<br />
+   <span class="id" title="tactic">apply</span> <span class="id" title="var">S_Mach</span> <span class="id" title="keyword">with</span> (<span class="id" title="var">Psi</span> := <span class="id" title="var">Psi</span>) (<span class="id" title="var">Gamma</span> := <span class="id" title="var">Gamma</span>).<br />
+   <span class="id" title="tactic">assumption</span>.<br />
+   <span class="id" title="tactic">assumption</span>.<br />
+   <span class="id" title="tactic">assumption</span>…<br />
+<br />
+   <span class="id" title="tactic">inversion</span> <span class="id" title="var">H4</span>.<br />
+   <span class="id" title="tactic">inversion</span> <span class="id" title="var">H12</span>…<br />
+<br />
+   <span class="id" title="tactic">inversion</span> <span class="id" title="var">H4</span>.<br />
+   <span class="id" title="tactic">inversion</span> <span class="id" title="var">H12</span>…<br />
+<br />
+   <span class="id" title="tactic">inversion</span> <span class="id" title="var">H4</span>.<br />
+   <span class="id" title="tactic">inversion</span> <span class="id" title="var">H11</span>.<br />
+   <span class="id" title="tactic">inversion</span> <span class="id" title="var">H16</span>.<br />
+   <span class="id" title="tactic">simpl</span> <span class="id" title="keyword">in</span> <span class="id" title="var">H21</span>.<br />
+   <span class="id" title="tactic">subst</span>.<br />
+<br />
+   <span class="id" title="tactic">pose</span> <span class="id" title="var">proof</span> <span class="id" title="var">Canonical_Values_label1</span> <span class="id" title="var">H</span> <span class="id" title="var">Psi</span> <span class="id" title="var">Gamma</span> <span class="id" title="var">v</span> <span class="id" title="var">H2</span> <span class="id" title="var">H11</span> <span class="id" title="var">H20</span> <span class="id" title="keyword">as</span> <span class="id" title="var">CVL1</span>.<br />
+   <span class="id" title="tactic">destruct</span> <span class="id" title="var">CVL1</span> <span class="id" title="keyword">as</span> [<span class="id" title="var">i</span> <span class="id" title="var">G</span>].<br />
+<br />
+   <span class="id" title="tactic">exists</span> <span class="id" title="var">H</span>.<br />
+   <span class="id" title="tactic">exists</span> <span class="id" title="var">R</span>.<br />
+   <span class="id" title="tactic">exists</span> <span class="id" title="var">i</span>.<br />
+<br />
+   <span class="id" title="tactic">split</span>.<br />
+<br />
+   <span class="id" title="tactic">apply</span> <span class="id" title="var">R_IJmp_Succ</span> <span class="id" title="keyword">with</span> (<span class="id" title="var">a</span> := <span class="id" title="var">ALab</span> <span class="id" title="var">v</span>).<br />
+   <span class="id" title="tactic">simpl</span>.<br />
+   <span class="id" title="tactic">reflexivity</span>.<br />
+   <span class="id" title="tactic">apply</span> <span class="id" title="var">G</span>.<br />
+<br />
+   <span class="id" title="tactic">apply</span> <span class="id" title="var">S_Mach</span> <span class="id" title="keyword">with</span> (<span class="id" title="var">Psi</span> := <span class="id" title="var">Psi</span>) (<span class="id" title="var">Gamma</span> := <span class="id" title="var">Gamma</span>).<br />
+   <span class="id" title="tactic">assumption</span>.<br />
+   <span class="id" title="tactic">assumption</span>.<br />
+<br />
+   <span class="id" title="tactic">apply</span> <span class="id" title="var">G</span>…<br />
+<br />
+   <span class="id" title="tactic">inversion</span> <span class="id" title="var">H11</span>.<br />
+<br />
+   <span class="id" title="tactic">inversion</span> <span class="id" title="var">H3</span>.<br />
+   <span class="id" title="tactic">specialize</span> (<span class="id" title="var">H13</span> <span class="id" title="var">R</span>).<br />
+   <span class="id" title="tactic">subst</span>.<br />
+<br />
+   <span class="id" title="tactic">pose</span> <span class="id" title="var">proof</span> <span class="id" title="var">Canonical_Values_label2</span> <span class="id" title="var">H</span> <span class="id" title="var">Psi</span> <span class="id" title="var">Gamma</span> <span class="id" title="var">R</span> <span class="id" title="var">v</span> <span class="id" title="var">H2</span> <span class="id" title="var">H11</span> <span class="id" title="var">H13</span> <span class="id" title="keyword">as</span> <span class="id" title="var">CVL2</span>.<br />
+   <span class="id" title="tactic">destruct</span> <span class="id" title="var">CVL2</span> <span class="id" title="keyword">as</span> [<span class="id" title="var">i</span> <span class="id" title="var">G</span>].<br />
+<br />
+   <span class="id" title="tactic">exists</span> <span class="id" title="var">H</span>.<br />
+   <span class="id" title="tactic">exists</span> <span class="id" title="var">R</span>.<br />
+   <span class="id" title="tactic">exists</span> <span class="id" title="var">i</span>.<br />
+<br />
+   <span class="id" title="tactic">split</span>.<br />
+<br />
+   <span class="id" title="tactic">apply</span> <span class="id" title="var">R_IJmpR_Succ</span>.<br />
+   <span class="id" title="tactic">apply</span> <span class="id" title="var">G</span>.<br />
+<br />
+   <span class="id" title="tactic">apply</span> <span class="id" title="var">S_Mach</span> <span class="id" title="keyword">with</span> (<span class="id" title="var">Psi</span> := <span class="id" title="var">Psi</span>) (<span class="id" title="var">Gamma</span> := <span class="id" title="var">Gamma</span>).<br />
+   <span class="id" title="tactic">assumption</span>.<br />
+   <span class="id" title="tactic">assumption</span>.<br />
+   <span class="id" title="tactic">apply</span> <span class="id" title="var">G</span>…<br />
+<br />
+   <span class="id" title="tactic">inversion</span> <span class="id" title="var">H16</span>…<br />
+<br />
+   <span class="id" title="tactic">inversion</span> <span class="id" title="var">H11</span>.<br />
+   <span class="id" title="tactic">specialize</span> <span class="id" title="var">H13</span> <span class="id" title="keyword">with</span> (<span class="id" title="var">R</span> := <span class="id" title="var">R</span>).<br />
+<br />
+   <span class="id" title="tactic">pose</span> <span class="id" title="var">proof</span> <span class="id" title="var">Canonical_Values_label3</span> <span class="id" title="var">H</span> <span class="id" title="var">Psi</span> <span class="id" title="var">Gamma</span> <span class="id" title="var">R</span> <span class="id" title="var">v</span> <span class="id" title="var">H2</span> <span class="id" title="var">H11</span> <span class="id" title="var">H13</span> <span class="id" title="keyword">as</span> <span class="id" title="var">CVL3</span>.<br />
+   <span class="id" title="tactic">destruct</span> <span class="id" title="var">CVL3</span> <span class="id" title="keyword">as</span> [<span class="id" title="var">i</span> <span class="id" title="var">G</span>].<br />
+<br />
+   <span class="id" title="tactic">exists</span> <span class="id" title="var">H</span>.<br />
+   <span class="id" title="tactic">exists</span> <span class="id" title="var">R</span>.<br />
+   <span class="id" title="tactic">exists</span> <span class="id" title="var">i</span>.<br />
+<br />
+   <span class="id" title="tactic">split</span>.<br />
+<br />
+   <span class="id" title="tactic">apply</span> <span class="id" title="var">R_IJmpR_Succ</span>.<br />
+   <span class="id" title="tactic">apply</span> <span class="id" title="var">G</span>.<br />
+<br />
+   <span class="id" title="tactic">apply</span> <span class="id" title="var">S_Mach</span> <span class="id" title="keyword">with</span> (<span class="id" title="var">Psi</span> := <span class="id" title="var">Psi</span>) (<span class="id" title="var">Gamma</span> := <span class="id" title="var">Gamma</span>).<br />
+   <span class="id" title="tactic">assumption</span>.<br />
+   <span class="id" title="tactic">assumption</span>.<br />
+   <span class="id" title="tactic">apply</span> <span class="id" title="var">G</span>.<br />
+<br />
+   <span class="id" title="tactic">inversion</span> <span class="id" title="var">H16</span>…<br />
+ <span class="id" title="keyword">Qed</span>.<br />
+
+</div>
+</div>
+<div id="footer">
+<hr />
+<a href="index.html">Index</a>
+<hr />
+This page has been generated by <a href="http://coq.inria.fr/">coqdoc</a>
+</div>
+</div>
+
+
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = 'ankitkublog';
+    
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = 'ankitkublog';
+    
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function () {
+        var s = document.createElement('script'); s.async = true;
+        s.type = 'text/javascript';
+        s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+</script>
+
+
+        </div>
+        <div id="footer">
+            Site proudly generated by
+            <a href="http://jaspervdj.be/hakyll">Hakyll</a>
+        </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-65031131-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+    </body>
+</html>
