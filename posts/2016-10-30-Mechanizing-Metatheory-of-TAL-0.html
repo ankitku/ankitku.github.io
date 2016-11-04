@@ -125,8 +125,10 @@ Fixpoint aeval (a : aexp) (R : registers) : nat :=
  | EmptyCtx : cmbnd_ctx
  | PsiCtx : context -&gt; cmbnd_ctx
  | PsiGammaCtx : context -&gt; context -&gt; cmbnd_ctx.</code></pre>
-<p><img src="http://i288.photobucket.com/albums/ll170/_ankitku/TAL0/Screen%20Shot%202016-11-03%20at%2023.46.21_zpsi2vjatvk.png"></p>
-<p>Typing rules for arithmetic expressions :</p>
+<p><img src="http://i288.photobucket.com/albums/ll170/_ankitku/TAL0/Screen%20Shot%202016-11-03%20at%2023.46.21_zpsi2vjatvk.png">
+    image taken from Greg Morrisett's paper Typed Assembly Language</p>
+    
+    <p>Typing rules for arithmetic expressions :</p>
 <pre class="coq"><code>Inductive ahas_type : cmbnd_ctx -&gt; aexp -&gt; ty -&gt; Prop :=
  | S_Int : forall Psi n,
      ahas_type (PsiCtx Psi) (ANum n) int
