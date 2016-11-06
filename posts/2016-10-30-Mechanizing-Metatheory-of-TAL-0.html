@@ -104,12 +104,13 @@ Fixpoint aeval (a : aexp) (R : registers) : nat :=
      ieval st st' -&gt; ieval st' st'' -&gt; ieval st st''
  | R_IStuck : forall st, ieval st st.</code></pre>
 <h2 id="the-type-system-of-tal-0">The Type System of TAL-0</h2>
-<p>The types consist of 1. int -&gt; represents arbit integer stored in a register</p>
-<ol start="2" style="list-style-type: decimal">
+<p>The types consist of</p>
+<ol style="list-style-type: decimal">
+<li><p>int -&gt; represents arbit integer stored in a register</p></li>
 <li><p>reg -&gt; a type constructor. Takes as input, the type of the register, to which this register is pointing.</p></li>
 <li><p>code -&gt; takes as input a typing context Gamma, and gives type (code Gamma) which is the type of an instruction sequence that expects type of the Register file to be Gamma before it begins execution</p></li>
 <li><p>arrow -&gt; represents type of a single instruction (excluding JMP), which expects register file of type Gamma1 before execution, and changes it to Gamma2 after it has executed.</p></li>
-<li><p>T -&gt; It is the super type. It is used to represent the type of a register in R, which contains the label of the instruction currently executing. Because in such a case, we have the equation : Gamma (r) = code Gamma, which in the absence of subtyping or polymorphic types can’t be solved. Hence T is assigned the type for such a register as it subsumes all types including itself. When we jump through a register of type T, we forget the type assigned to it, and reassign T to it.</p></li>
+<li><p>True (T in unicode) -&gt; It is the super type. It is used to represent the type of a register in R, which contains the label of the instruction currently executing. Because in such a case, we have the equation : Gamma (r) = code Gamma, which in the absence of subtyping or polymorphic types can’t be solved. Hence T is assigned the type for such a register as it subsumes all types including itself. When we jump through a register of type T, we forget the type assigned to it, and reassign T to it. Morrisett’s paper uses the polymorphic type for due to some more benefits it affords. However we have used T type for its simplicity.</p></li>
 </ol>
 <pre class="coq"><code>Inductive ty : Type :=
  | int : ty
@@ -126,6 +127,7 @@ Fixpoint aeval (a : aexp) (R : registers) : nat :=
  | PsiCtx : context -&gt; cmbnd_ctx
  | PsiGammaCtx : context -&gt; context -&gt; cmbnd_ctx.</code></pre>
 <p><img src="http://i288.photobucket.com/albums/ll170/_ankitku/TAL0/Screen%20Shot%202016-11-03%20at%2023.46.21_zpsi2vjatvk.png"></p>
+<p>(the above image is taken from Morrisett’s paper, defining the typing rules for TAL-0)</p>
 <p>Typing rules for arithmetic expressions :</p>
 <pre class="coq"><code>Inductive ahas_type : cmbnd_ctx -&gt; aexp -&gt; ty -&gt; Prop :=
  | S_Int : forall Psi n,
@@ -135,9 +137,9 @@ Fixpoint aeval (a : aexp) (R : registers) : nat :=
  | S_Reg : forall Psi Gamma r,
      Gamma (Id r) = Some (reg int) -&gt; ahas_type (PsiGammaCtx Psi Gamma) (AReg r) (reg int)
  | S_RegV : forall Psi Gamma r,
-     (forall R, Psi (Id (R (Id r))) = Some (code Gamma)) -&gt; ahas_type (PsiGammaCtx Psi Gamma) (AReg r) (reg (code Gamma))
+     ahas_type (PsiGammaCtx Psi Gamma) (AReg r) (reg (code Gamma))
  | S_RegT : forall Psi Gamma r,
-     (forall R, Psi (Id (R (Id r))) = Some True) -&gt; ahas_type (PsiGammaCtx Psi Gamma) (AReg r) True
+     ahas_type (PsiGammaCtx Psi Gamma) (AReg r) True
  | S_Val : forall Psi Gamma a tau,
      ahas_type (PsiCtx Psi) a tau -&gt; ahas_type (PsiGammaCtx Psi Gamma) a tau.</code></pre>
 <p>Typing rules for instructions :</p>
@@ -182,7 +184,7 @@ EmptyCtx H Psi -&gt; ahas_type (PsiGammaCtx Psi Gamma) (ALab v) (code
 Gamma) -&gt;  Psi (Id v) = Some (code Gamma) -&gt; exists i, H (Id v) = Some
 i /\ ihas_type (PsiCtx Psi) i (code Gamma).
 
-Lemma Canonical_Values_label3 : forall H Psi Gamma R r, Hhas_type EmptyCtx H Psi -&gt; ahas_type (PsiGammaCtx Psi Gamma) (AReg r) True -&gt;  Psi (Id (R (Id r))) = Some True -&gt; exists i, H (Id (R (Id r))) = Some i /\ ihas_type (PsiCtx Psi) i (code Gamma).</code></pre>
+Lemma Canonical_Values_label2 : forall H Psi Gamma R r, Hhas_type EmptyCtx H Psi -&gt; ahas_type (PsiGammaCtx Psi Gamma) (AReg r) True -&gt; exists i, H (Id (R (Id r))) = Some i /\ ihas_type (PsiCtx Psi) i (code Gamma).</code></pre>
 <p>Proving safety of the type system requires proving</p>
 <ol style="list-style-type: decimal">
 <li>Progress : A well typed machine state (M_ok M(H,R,I)) doesn’t get stuck. eg. It will never try to jump to an arbit integer, which we wanted as part of control flow safety.</li>
@@ -191,7 +193,7 @@ Lemma Canonical_Values_label3 : forall H Psi Gamma R r, Hhas_type EmptyCtx H Psi
 <p>Hence the soundness theorem is stated as follows :</p>
 <pre class="coq"><code>Theorem Soundness : forall H R I, M_ok EmptyCtx H R I -&gt; exists H' R'
 I', ieval (St H R I) (St H' R' I') /\ M_ok EmptyCtx H' R' I'.</code></pre>
-<p>Complete proofs can be found <a href="https://github.com/ankitku/awotap">here</a>.</p>
+<p>Complete proofs can be found <a href="https://github.com/ankitku/awotap/blob/master/TAL.v">here</a>.</p>
 <ul>
 <li></li>
 </ul>
