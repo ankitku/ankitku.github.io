@@ -193,6 +193,7 @@ Lemma Canonical_Values_label2 : forall H Ψ Γ R r,
 <p>Hence the soundness theorem is stated as follows :</p>
 <pre class="coq"><code>Theorem Soundness : forall H R Is,
     M_ok EmptyCtx H R Is -&gt; exists H' R' Is', ieval (St H R Is) (St H' R' Is') /\ M_ok EmptyCtx H' R' Is'.</code></pre>
+<p>I would like to thank <a href="http://tyconmismatch.com/">Chris Casinghino</a> for his feedback on the first version of this post.</p>
 <p>Complete proofs can be found <a href="https://github.com/ankitku/awotap/blob/master/TAL.v">here</a>.</p>
 <ul>
 <li></li>
