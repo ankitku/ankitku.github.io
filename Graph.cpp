@@ -1,20 +1,29 @@
+// smaller the theorem, bigger the proof ~ sup3rcod3r
+
 #include<bits/stdc++.h>
+
 using namespace std;
  
-#define SC scanf
-#define PF printf
-#define F first
-#define S second
-#define PB push_back
-#define MP make_pair
-#define FR(i,m,n) for(i=m;i<n;i++)
-#define IFR(i,m,n) for(i=m;i>n;i--)
-#define ALL(c) c.begin(), c.end() 
-#define BR cout<<"\n"
-typedef long long ll;
+#define SC            scanf
+#define PF            printf
+#define F             first
+#define S             second
+#define PB            push_back
+#define MP            make_pair
+#define FR(i,m,n)     for(i=m;i<n;i++)
+#define ALL(c)        c.begin(), c.end()
+#define EACH(it,v)    for(auto it = v.begin(); it != v.end(); ++it)
+#define SORTA(v)      sort(ALL(v))
+#define SORTD(v)      sort(ALL(v), greater<auto>())
+#define BR            cout<<"\n"
+
+typedef long long     ll;
 typedef pair<int,int> pii;
-typedef vector<int> vi;
-const int INF = 1e9;
+typedef vector<int>   vi;
+
+const int INF =       1e9;
+const int MOD =       (INF+(1<<3)-1);
+const int SZ =        300;
 
 class Matrix
 {
