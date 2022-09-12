@@ -7,6 +7,10 @@
 
 #+TITLE: About me
 
+#+begin_export html
+ <br style="clear:both;" />
+#+end_export
+
 #+NAME: me
 #+CAPTION: In Akko, during [[https://www.floc2022.org][Federated Logic Conference]] 2022.
 #+ATTR_HTML: :alt me.jpeg display:inline;margin:10px;
