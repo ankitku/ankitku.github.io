@@ -1,0 +1,59 @@
+ 
+  :PROPERTIES:
+  :CATEGORY: blog
+  :date:     <2022-09-09 Fri>
+  :updated:  <2022-09-09 Fri>
+  :END:
+
+#+TITLE: About me
+
+#+NAME: me
+#+CAPTION: In Akko, during [[https://www.floc2022.org][Federated Logic Conference]] 2022.
+#+ATTR_HTML: :alt me.jpeg display:inline;margin:10px;
+#+ATTR_HTML: :width 250 :style float:top; border:1px solid black;
+[[./me.jpeg]]
+
+I am Ankit Kumar, fifth year PhD student in Khoury College,
+Northeastern University. My research interests lie in Formal Methods,
+Theorem Proving and Disproving, Decision Procedures, Type Theory,
+Programming Languages and Distributed systems.
+
+* News
+- Internship @ Amazon during Summer 2022
+- Volunteered @ FLoC, trip-report
+- Paper accepted at FMCAD 2021
+
+
+* Publications
+- Formal Model-Driven Analysis of Resilience of GossipSub to Sybil Attacks
+- Mathematical Programming Modulo Strings
+
+
+* Talks
+** [[./stuff/ATOC.pdf][Automated Grading of Automata with ACL2s]]
+Presentation for a talk on automatic grading and feedback generation
+for Theory of Computation assignments using the ACL2s theorem
+prover. The talk was delivered on Zoom during [[https://www.uc.pt/en/congressos/thedu/ThEdu21/programme][ThEdu '21]].
+** [[./stuff/APLnotes.pdf][History of Rank Polymorphic Type Systems in Array Programming Languages]]
+Lecture notes for a seminar on type systems for array programming
+languages covering APL, implicit scaling, Haskell and Remora.
+** [[./stuff/DTProofAsst.pdf][Dependently Typed Proof Assistants]]
+Lecture notes for a seminar on the implementation of dependently typed proof
+assistants, comparing and contrasting NuPRL and Coq proof assistants.
+
+* Teaching
+I have been a TA for the following courses:
+
+| Term \ Course | Algorithms | Logic and Computation | Theory of Computation | Computer Aided Reasoning |
+|---------------+------------+-----------------------+-----------------------+--------------------------|
+| Fall'18       |            |                       | X                     |                          |
+| Spring'19     |            | X                     |                       |                          |
+| Fall'19       | X          |                       |                       |                          |
+| Spring'20     |            | X                     |                       |                          |
+| Fall'20       |            |                       | X                     |                          |
+| Spring'21     |            | X                     |                       |                          |
+| Fall'21       |            |                       | X                     |                          |
+| Spring'22     |            | X                     |                       |                          |
+| Fall'22       |            | X                     |                       | X                        |
+|---------------+------------+-----------------------+-----------------------+--------------------------|
+
