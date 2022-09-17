@@ -8,10 +8,15 @@
   <style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
-    span.underline{text-decoration: underline;}
-    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
     .display.math{display: block; text-align: center; margin: 0.5rem auto;}
   </style>
   <link rel="stylesheet" href="css/pandoc.css" />
@@ -26,36 +31,76 @@
 <br style="clear:both;" />
 
 <figure>
-<img src="./me.jpeg" title="me" alt="me.jpeg display:inline;margin:10px;" style="float:top; border:1px solid black;" width="250" /><figcaption>In Akko, during <a href="https://www.floc2022.org">Federated Logic Conference</a> 2022.</figcaption>
+<img src="./me.jpeg" title="me"
+style="float:top; border:1px solid black;"
+alt="me.jpeg display:inline;margin:10px;" width="250" />
+<figcaption>In Akko, during <a href="https://www.floc2022.org">Federated
+Logic Conference</a> 2022.</figcaption>
 </figure>
-<p>I am Ankit Kumar, a fifth year PhD student working with <a href="https://www.ccs.neu.edu/~pete/">Prof. Pete Manolios</a> at Khoury College, Northeastern University. My research interests lie in Formal Methods, Theorem Proving and Disproving, Decision Procedures, Type Theory, Programming Languages and Distributed systems.</p>
-<h1 id="cv"><a href="./stuff/Ankit_CV.pdf">CV</a></h1>
+<p>I am Ankit Kumar, a fifth year PhD student working with <a
+href="https://www.ccs.neu.edu/~pete/">Prof. Pete Manolios</a> at Khoury
+College, Northeastern University. My research interests lie in Formal
+Methods, Theorem Proving and Disproving, Decision Procedures, Type
+Theory, Programming Languages and Distributed systems.</p>
+<p>In my free time, I like to dabble in astrophotography, play chess and
+tabletennis.</p>
+<h2 id="cv-github"><a href="./stuff/Ankit_CV.pdf">CV</a> | <a
+href="https://github.com/ankitku">github </a></h2>
 <h1 id="news">News</h1>
 <ul>
-<li>Successfully completed an internship @ Amazon during Summer 2022</li>
-<li>Volunteered @ FLoC 2022</li>
-<li>Paper accepted @ FMCAD 2021</li>
+<li>&lt;2022-09-02 Fri&gt; Successfully completed an internship @ Amazon
+during Summer 2022</li>
+<li>&lt;2022-07-30 Sat&gt; Attending and Volunteering at FLoC 2022</li>
+<li>&lt;2021-07-09 Fri&gt; Our paper: Mathematical Programming Modulo
+Strings got accepted at FMCAD 2021</li>
 </ul>
 <h1 id="publications">Publications</h1>
-<h2 id="mathematical-programming-modulo-strings"><a href="./stuff/MPMS-fmcad-2021.pdf">Mathematical Programming Modulo Strings</a></h2>
-<p>The key idea is a sound, complete and terminating transition system TranSeq for the existential theory of string equations, which, instead of using a SAT solver as a backend to guide search for a solution, it uses a LIA solver.</p>
+<h2 id="mathematical-programming-modulo-strings"><a
+href="./stuff/MPMS-fmcad-2021.pdf">Mathematical Programming Modulo
+Strings</a></h2>
+<p>The key idea is a sound, complete and terminating transition system
+TranSeq for the existential theory of string equations which, instead of
+using a SAT solver as a backend, uses a LIA solver to guide search for a
+solution.</p>
 <h1 id="talks">Talks</h1>
-<h2 id="automated-grading-of-automata-with-acl2s"><a href="./stuff/ATOC.pdf">Automated Grading of Automata with ACL2s</a></h2>
-<p>Presentation for a talk on automatic grading and feedback generation for Theory of Computation assignments using the ACL2s theorem prover. The talk was delivered on Zoom during <a href="https://www.uc.pt/en/congressos/thedu/ThEdu21/postproceedings">ThEdu '21</a>.</p>
-<h2 id="history-of-rank-polymorphic-type-systems-in-array-programming-languages"><a href="./stuff/APLnotes.pdf">History of Rank Polymorphic Type Systems in Array Programming Languages</a></h2>
-<p>Lecture notes for a seminar on type systems for array programming languages covering APL, implicit scaling, Haskell and Remora.</p>
-<h2 id="dependently-typed-proof-assistants"><a href="./stuff/DTProofAsst.pdf">Dependently Typed Proof Assistants</a></h2>
-<p>Lecture notes for a seminar on the implementation of dependently typed proof assistants, comparing and contrasting NuPRL and Coq proof assistants.</p>
+<h2 id="caraxes-tracking-critical-data-in-the-cloud">Caraxes: Tracking
+Critical Data in the Cloud</h2>
+<p>End of internship talk where Drew and I showed how to "lift" taint
+analysis from code level to cloud level, and also demoed a prototype
+tool we developed called Caraxes. The slides and video of this talk are
+available in the Amazon internal network.</p>
+<h2 id="automated-grading-of-automata-with-acl2s"><a
+href="./stuff/ATOC.pdf">Automated Grading of Automata with
+ACL2s</a></h2>
+<p>Presentation for a talk on automatic grading and feedback generation
+for Theory of Computation assignments using the ACL2s theorem prover.
+The talk was delivered on Zoom during <a
+href="https://www.uc.pt/en/congressos/thedu/ThEdu21/postproceedings">ThEdu
+'21</a>.</p>
+<h2
+id="history-of-rank-polymorphic-type-systems-in-array-programming-languages"><a
+href="./stuff/APLnotes.pdf">History of Rank Polymorphic Type Systems in
+Array Programming Languages</a></h2>
+<p>Lecture notes for a seminar on type systems for array programming
+languages covering APL, implicit scaling, Haskell and Remora.</p>
+<h2 id="dependently-typed-proof-assistants"><a
+href="./stuff/DTProofAsst.pdf">Dependently Typed Proof
+Assistants</a></h2>
+<p>Lecture notes for a seminar on the implementation of dependently
+typed proof assistants, comparing and contrasting NuPRL and Coq proof
+assistants.</p>
 <h1 id="teaching">Teaching</h1>
-<p>I have been a TA for the following courses:</p>
-<table>
+<p>I have been a TA for the following courses: Algorithms (A), Logic and
+Computation (LC), Theory of Computation (TC) and Computer Aided
+Reasoning (CAR).</p>
+<table data-center="t">
 <thead>
 <tr class="header">
 <th>Term \ Course</th>
-<th>Algorithms</th>
-<th>Logic and Computation</th>
-<th>Theory of Computation</th>
-<th>Computer Aided Reasoning</th>
+<th>A</th>
+<th>LC</th>
+<th>TC</th>
+<th>CAR</th>
 </tr>
 </thead>
 <tbody>

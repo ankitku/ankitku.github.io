@@ -23,24 +23,33 @@ interests lie in Formal Methods, Theorem Proving and Disproving,
 Decision Procedures, Type Theory, Programming Languages and
 Distributed systems.
 
-* [[./stuff/Ankit_CV.pdf][CV]]
+In my free time, I like to dabble in astrophotography, play chess and
+tabletennis.
 
+** [[./stuff/Ankit_CV.pdf][CV]] | [[https://github.com/ankitku][github ]]
+  
 * News
-- Successfully completed an internship @ Amazon during Summer 2022
-- Volunteered @ FLoC 2022
-- Paper accepted @ FMCAD 2021
-
+- <2022-09-02 Fri> Successfully completed an internship @ Amazon during Summer 2022
+- <2022-07-30 Sat> Attending and Volunteering at FLoC 2022
+- <2021-07-09 Fri> Our paper: Mathematical Programming Modulo Strings
+  got accepted at FMCAD 2021
+  
 
 * Publications
  # ** [[][Formal Model-Driven Analysis of Resilience of GossipSub to Sybil Attacks]]
 ** [[./stuff/MPMS-fmcad-2021.pdf][Mathematical Programming Modulo Strings]]
-
+   
    The key idea is a sound, complete and terminating transition system
-   TranSeq for the existential theory of string equations, which,
-   instead of using a SAT solver as a backend to guide search for a
-   solution, it uses a LIA solver.
+   TranSeq for the existential theory of string equations which,
+   instead of using a SAT solver as a backend, uses a LIA solver to
+   guide search for a solution.
 
 * Talks
+** Caraxes: Tracking Critical Data in the Cloud
+End of internship talk where Drew and I showed how to "lift" taint
+analysis from code level to cloud level, and also demoed a
+prototype tool we developed called Caraxes. The slides and video of
+this talk are available in the Amazon internal network.
 ** [[./stuff/ATOC.pdf][Automated Grading of Automata with ACL2s]]
 Presentation for a talk on automatic grading and feedback generation
 for Theory of Computation assignments using the ACL2s theorem
@@ -53,18 +62,21 @@ Lecture notes for a seminar on the implementation of dependently typed proof
 assistants, comparing and contrasting NuPRL and Coq proof assistants.
 
 * Teaching
-I have been a TA for the following courses:
+I have been a TA for the following courses: Algorithms (A), Logic and
+Computation (LC), Theory of Computation (TC) and Computer Aided
+Reasoning (CAR).
 
-| Term \ Course | Algorithms | Logic and Computation | Theory of Computation | Computer Aided Reasoning |
-|---------------+------------+-----------------------+-----------------------+--------------------------|
-| Fall'18       |            |                       | X                     |                          |
-| Spring'19     |            | X                     |                       |                          |
-| Fall'19       | X          |                       |                       |                          |
-| Spring'20     |            | X                     |                       |                          |
-| Fall'20       |            |                       | X                     |                          |
-| Spring'21     |            | X                     |                       |                          |
-| Fall'21       |            |                       | X                     |                          |
-| Spring'22     |            | X                     |                       |                          |
-| Fall'22       |            | X                     |                       | X                        |
-|---------------+------------+-----------------------+-----------------------+--------------------------|
+#+ATTR_HTML: :center t
+| Term \ Course | A | LC | TC | CAR |
+|---------------+---+----+----+-----|
+| Fall'18       |   |    | X  |     |
+| Spring'19     |   | X  |    |     |
+| Fall'19       | X |    |    |     |
+| Spring'20     |   | X  |    |     |
+| Fall'20       |   |    | X  |     |
+| Spring'21     |   | X  |    |     |
+| Fall'21       |   |    | X  |     |
+| Spring'22     |   | X  |    |     |
+| Fall'22       |   | X  |    | X   |
+|---------------+---+----+----+-----|
 
