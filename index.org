@@ -31,8 +31,8 @@ interests lie in Formal Methods, Theorem Proving and Disproving,
 Decision Procedures, Type Theory, Programming Languages and
 Distributed systems.
 
-In my free time, I like to dabble in astrophotography, play chess and
-tabletennis.
+In my free time, I like to dabble in astrophotography as well as play
+chess and tabletennis.
 
 ** [[./stuff/Ankit_CV.pdf][CV]] | [[https://github.com/ankitku][github ]]
   
@@ -88,3 +88,12 @@ Reasoning (CAR).
 | Fall'22       |   | X  |    | X   |
 |---------------+---+----+----+-----|
 
+
+
+
+
+
+
+
+----------------------------------------------------
+*** Copyright 2022 Ankit Kumar. Powered by [[https://orgmode.org][Org mode]].
