@@ -1,7 +1,6 @@
  
   :PROPERTIES:
   :CATEGORY: blog
-  :date:     <2022-09-09 Fri>
   :updated:  <2022-09-09 Fri>
   :END:
 
@@ -26,10 +25,9 @@
 [[./me.jpeg]]
 
 I am Ankit Kumar, a fifth year PhD student working with [[https://www.ccs.neu.edu/~pete/][Prof. Pete
-Manolios]] at Khoury College, Northeastern University. My research
+Manolios]] at [[https://www.khoury.northeastern.edu][Khoury College, Northeastern University]]. My research
 interests lie in Formal Methods, Theorem Proving and Disproving,
-Decision Procedures, Type Theory, Programming Languages and
-Distributed systems.
+Decision Procedures, Programming Languages and Distributed systems.
 
 In my free time, I like to dabble in astrophotography as well as play
 chess and tabletennis.
