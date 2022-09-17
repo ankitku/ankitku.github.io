@@ -8,7 +8,15 @@
 #+TITLE: About me
 
 #+begin_export html
- <br style="clear:both;" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-65031131-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-65031131-1');
+</script>
+<br style="clear:both;" />
 #+end_export
 
 #+NAME: me
