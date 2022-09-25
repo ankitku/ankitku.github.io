@@ -39,6 +39,7 @@ chess and tabletennis.
 - <2022-07-30 Sat> Attending and Volunteering at FLoC 2022
 - <2021-07-09 Fri> Our paper: Mathematical Programming Modulo Strings
   got accepted at FMCAD 2021
+- <2019-10-21 Mon> Selected to attend [[https://popl20.sigplan.org/home/PLMW-POPL-2020][PLMW @ POPL 2019]] in New Orleans
   
 
 * Publications
@@ -52,14 +53,17 @@ chess and tabletennis.
 
 * Talks
 ** Caraxes: Tracking Critical Data in the Cloud
-End of internship talk where Drew and I showed how to "lift" taint
+<2022-09-02 Fri> End of internship talk where Drew and I showed how to "lift" taint
 analysis from code level to cloud level, and also demoed a
 prototype tool we developed called Caraxes. The slides and video of
 this talk are available in the Amazon internal network.
+** [[https://www.youtube.com/watch?v=doeauZv3JrE][Mathematical Programming Modulo Strings]] (Invited Talk at Boston Computational Club)
+<2021-10-15 Fri> Talked about my first FMCAD paper on Mathematical
+Programming Modulo Strings.
 ** [[./stuff/ATOC.pdf][Automated Grading of Automata with ACL2s]]
-Presentation for a talk on automatic grading and feedback generation
-for Theory of Computation assignments using the ACL2s theorem
-prover. The talk was delivered on Zoom during [[https://www.uc.pt/en/congressos/thedu/ThEdu21/postproceedings][ThEdu '21]].
+<2022-07-11 Mon> Talk on automatic grading and feedback generation for
+Theory of Computation assignments using the ACL2s theorem prover,
+during [[https://www.uc.pt/en/congressos/thedu/ThEdu21/postproceedings][ThEdu '21]].
 ** [[./stuff/APLnotes.pdf][History of Rank Polymorphic Type Systems in Array Programming Languages]]
 Lecture notes for a seminar on type systems for array programming
 languages covering APL, implicit scaling, Haskell and Remora.
