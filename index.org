@@ -38,7 +38,8 @@ chess and tabletennis.
 - <2023-01-28 Sat> Selected to chair the session on "Forming and
   Evaluating Student GroupsPapers" at [[https://sigcse2023.sigcse.org/track/sigcse-ts-2023-papers#program][SIGCSE 2023]]
 - <2022-11-09 Wed> Presented our work on verification of GossipSub
-  protocol in an [[https://youtu.be/T3QLhijHAwA][invited talk]] on LibP2P day @ [[https://2022.ipfs.camp][IPFS Camp 2022]], Lisbon, Portugal.
+  protocol in an [[https://youtu.be/T3QLhijHAwA][invited talk]] on LibP2P day @ [[https://2022.ipfs.camp][IPFS Camp 2022]], Lisbon,
+  Portugal, and at [[https://khoury-srg.github.io/Northeastern-Systems-Day-2023/][Khoury Systems Day, 2023]]
 - <2022-09-02 Fri> Successfully completed an internship @ Amazon during Summer 2022
 - <2022-07-30 Sat> Attending and Volunteering at FLoC 2022
 - <2021-07-09 Fri> Our paper: Mathematical Programming Modulo Strings
