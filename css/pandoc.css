@@ -114,6 +114,14 @@ blockquote {
   border-left: 0.5em #EEE solid;
 }
 
+.fa {
+    font-size: 36px;
+}
+
+.social-media-bar a {
+  margin-right: 20px;
+}
+
 hr {
   display: block;
   height: 2px;
