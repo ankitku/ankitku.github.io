@@ -3,44 +3,44 @@
 :updated:  <2022-09-09 Fri>
 :END:
 
-#+begin_export HTML
+#+TITLE: Ankit Kumar
+#+HTML_HEAD_EXTRA: <link rel="stylesheet" href="fawesome/css/fork-awesome.min.css">
+
+
+#+BEGIN_EXPORT HTML
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
   gtag('config', 'UA-65031131-1');
 </script>
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-65031131-1"></script>
-<script src="https://kit.fontawesome.com/f03fc502d0.js"
-  crossorigin="anonymous"></script>
+<script async
+  src="https://www.googletagmanager.com/gtag/js?id=UA-65031131-1"></script>
 
-<div class="social-media-bar">
+<div class="social">
   <a href="https://scholar.google.com/citations?user=8f9-QK4AAAAJ&hl=en" target="_blank">
-    <i class="fa fa-graduation-cap"></i>
+    <i class="fa fa-lg fa-graduation-cap"></i>
   </a>
   <a href="https://github.com/ankitku" target="_blank">
-    <i class="fa fa-github"></i>
+    <i class="fa fa-lg fa-github-square"></i>
   </a>
   <a href="https://www.linkedin.com/in/ankitkumar1988/" target="_blank">
-    <i class="fa fa-linkedin"></i>
+    <i class="fa fa-lg fa-linkedin-square"></i>
   </a>
   <a href="https://twitter.com/_ankitku" target="_blank">
-    <i class="fa fa-twitter"></i>
+    <i class="fa fa-lg fa-twitter-square"></i>
   </a>
   <a href="./stuff/Ankit_CV.pdf" target="_blank">
-    <i class="fa fa-file-lines"></i>
+    <i class="fa fa-file"></i>
   </a>
 </div>
 <br style="clear:both;" />
 #+END_EXPORT
 
-
-#+TITLE: Ankit Kumar
-
 #+NAME: me
 #+CAPTION: In Akko, during [[https://www.floc2022.org][Federated Logic Conference]] 2022.
 #+ATTR_HTML: :alt me.jpeg display:inline;margin:10px;
-#+ATTR_HTML: :width 250 :style float:top; border:1px solid black;
+#+ATTR_HTML: :style float:top;
 [[./me.jpeg]]
 
 I am Ankit Kumar, a fifth year PhD student working with [[https://www.ccs.neu.edu/~pete/][Prof. Pete
@@ -64,8 +64,16 @@ chess and tabletennis.
 - <2019-10-21 Mon> Selected to attend [[https://popl20.sigplan.org/home/PLMW-POPL-2020][PLMW @ POPL 2019]] in New Orleans
   
 
+* Honors and Awards
+ - Student Travel Fellowship to attend PLMW at POPL 2019
 * Publications
- # ** [[][Formal Model-Driven Analysis of Resilience of GossipSub to Sybil Attacks]]
+
+** [[https://arxiv.org/abs/2307.12224][Calculational Proofs in ACL2s]]
+
+** [[https://arxiv.org/abs/2212.05197][Formal Model-Driven Analysis of Resilience of GossipSub to Sybil Attacks]]
+   
+** [[https://arxiv.org/abs/2303.05867v1][Automated grading of automata with ACL2s]]
+
 ** [[./stuff/MPMS-fmcad-2021.pdf][Mathematical Programming Modulo Strings]]
    
    The key idea is a sound, complete and terminating transition system
