@@ -11,8 +11,11 @@
     div.columns{display: flex; gap: min(4vw, 1.5em);}
     div.column{flex: auto; overflow-x: auto;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-    ul.task-list{list-style: none;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
     ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
       width: 0.8em;
       margin: 0 0.8em 0.2em -1.6em;
       vertical-align: middle;
@@ -20,6 +23,7 @@
     .display.math{display: block; text-align: center; margin: 0.5rem auto;}
   </style>
   <link rel="stylesheet" href="css/pandoc.css" />
+  <link rel="stylesheet" href="fawesome/css/fork-awesome.min.css">
   <!--[if lt IE 9]>
     <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
   <![endif]-->
@@ -34,42 +38,40 @@
   gtag('js', new Date());
   gtag('config', 'UA-65031131-1');
 </script>
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-65031131-1"></script>
-<script src="https://kit.fontawesome.com/f03fc502d0.js"
-  crossorigin="anonymous"></script>
+<script async
+  src="https://www.googletagmanager.com/gtag/js?id=UA-65031131-1"></script>
 
-<div class="social-media-bar">
+<div class="social">
   <a href="https://scholar.google.com/citations?user=8f9-QK4AAAAJ&hl=en" target="_blank">
-    <i class="fa fa-graduation-cap"></i>
+    <i class="fa fa-lg fa-graduation-cap"></i>
   </a>
   <a href="https://github.com/ankitku" target="_blank">
-    <i class="fa fa-github"></i>
+    <i class="fa fa-lg fa-github-square"></i>
   </a>
   <a href="https://www.linkedin.com/in/ankitkumar1988/" target="_blank">
-    <i class="fa fa-linkedin"></i>
+    <i class="fa fa-lg fa-linkedin-square"></i>
   </a>
   <a href="https://twitter.com/_ankitku" target="_blank">
-    <i class="fa fa-twitter"></i>
+    <i class="fa fa-lg fa-twitter-square"></i>
   </a>
   <a href="./stuff/Ankit_CV.pdf" target="_blank">
-    <i class="fa fa-file-lines"></i>
+    <i class="fa fa-file"></i>
   </a>
 </div>
 <br style="clear:both;" />
 
-<figure>
-<img src="./me.jpeg" title="me"
-style="float:top; border:1px solid black;"
-alt="me.jpeg display:inline;margin:10px;" width="250" />
+<figure id="me" alt="me.jpeg display:inline;margin:10px;"
+style="float:top;">
+<img src="./me.jpeg" />
 <figcaption>In Akko, during <a href="https://www.floc2022.org">Federated
 Logic Conference</a> 2022.</figcaption>
 </figure>
 <p>I am Ankit Kumar, a fifth year PhD student working with <a
-href="https://www.ccs.neu.edu/~pete/">Prof. Pete Manolios</a> at <a
-href="https://www.khoury.northeastern.edu">Khoury College, Northeastern
-University</a>. My research interests lie in Formal Methods, Theorem
-Proving and Disproving, Decision Procedures, Programming Languages and
-Distributed systems.</p>
+href="https://www.ccs.neu.edu/~pete/">Prof. Panagiotis Manolios</a> at
+<a href="https://www.khoury.northeastern.edu">Khoury College,
+Northeastern University</a>. My research interests lie in Formal
+Methods, Theorem Proving and Disproving, Decision Procedures,
+Programming Languages and Distributed systems.</p>
 <p>In my free time, I like to dabble in astrophotography as well as play
 chess and tabletennis.</p>
 <h1 id="news">News</h1>
@@ -94,13 +96,30 @@ href="https://popl20.sigplan.org/home/PLMW-POPL-2020">PLMW @ POPL
 2019</a> in New Orleans</li>
 </ul>
 <h1 id="publications">Publications</h1>
-<h2 id="mathematical-programming-modulo-strings"><a
-href="./stuff/MPMS-fmcad-2021.pdf">Mathematical Programming Modulo
-Strings</a></h2>
-<p>The key idea is a sound, complete and terminating transition system
-TranSeq for the existential theory of string equations which, instead of
-using a SAT solver as a backend, uses a LIA solver to guide search for a
-solution.</p>
+<ul>
+<li><p>Calculational Proofs in ACL2s</p>
+<p><a href="https://www.atwalter.com/">Drew Walter</a>, Ankit Kumar and
+<a href="https://www.ccs.neu.edu/~pete/">Panagiotis Manolios</a></p>
+<p>arXiv Preprint 2023 [<a
+href="https://arxiv.org/abs/2307.12224">pdf</a>]</p></li>
+<li><p>Formal Model-Driven Analysis of Resilience of GossipSub to Sybil
+Attacks</p>
+<p>Ankit Kumar, <a href="https://mxvh.pl/">Max von Hippel</a>, <a
+href="https://cnitarot.github.io/">Cristina Nita-Rotaru</a> and <a
+href="https://www.ccs.neu.edu/~pete/">Panagiotis Manolios</a></p>
+<p>arXiv Preprint 2022 [<a
+href="https://arxiv.org/abs/2212.05197">pdf</a>]</p></li>
+<li><p>Automated grading of automata with ACL2s</p>
+<p>Ankit Kumar, <a href="https://www.atwalter.com/">Drew Walter</a> and
+<a href="https://www.ccs.neu.edu/~pete/">Panagiotis Manolios</a></p>
+<p>ThEdu 2022 [<a href="https://arxiv.org/abs/2303.05867v1">pdf</a>] [<a
+href="https://github.com/ankitku/A2C">code</a>]</p></li>
+<li><p>Mathematical Programming Modulo Strings</p>
+<p>Ankit Kumar and <a href="https://www.ccs.neu.edu/~pete/">Panagiotis
+Manolios</a></p>
+<p>FMCAD 2021 [<a href="./stuff/MPMS-fmcad-2021.pdf">pdf</a>] [<a
+href="https://github.com/ankitku/SeqSolve">code</a>]</p></li>
+</ul>
 <h1 id="talks">Talks</h1>
 <h2 id="caraxes-tracking-critical-data-in-the-cloud">Caraxes: Tracking
 Critical Data in the Cloud</h2>
@@ -135,6 +154,10 @@ Assistants</a></h2>
 <p>Lecture notes for a seminar on the implementation of dependently
 typed proof assistants, comparing and contrasting NuPRL and Coq proof
 assistants.</p>
+<h1 id="honors-and-awards">Honors and Awards</h1>
+<ul>
+<li>Student Travel Fellowship to attend PLMW at POPL 2019</li>
+</ul>
 <h1 id="teaching">Teaching</h1>
 <p>I have been a TA for the following courses: Algorithms (A), Logic and
 Computation (LC), Theory of Computation (TC) and Computer Aided
@@ -216,7 +239,6 @@ Reasoning (CAR).</p>
 </tbody>
 </table>
 <hr />
-<h3 id="copyright-2022-ankit-kumar.-powered-by-org-mode.">Copyright 2022
-Ankit Kumar. Powered by <a href="https://orgmode.org">Org mode</a>.</h3>
+<i class="fa fa-copyright"></i> 2023 Ankit Kumar. Powered by <a href="https://orgmode.org">Org-mode</a>.
 </body>
 </html>

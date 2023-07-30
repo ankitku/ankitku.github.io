@@ -43,8 +43,8 @@
 #+ATTR_HTML: :style float:top;
 [[./me.jpeg]]
 
-I am Ankit Kumar, a fifth year PhD student working with [[https://www.ccs.neu.edu/~pete/][Prof. Pete
-Manolios]] at [[https://www.khoury.northeastern.edu][Khoury College, Northeastern University]]. My research
+I am Ankit Kumar, a fifth year PhD student working with
+[[https://www.ccs.neu.edu/~pete/][Prof. Panagiotis Manolios]] at [[https://www.khoury.northeastern.edu][Khoury College, Northeastern University]]. My research
 interests lie in Formal Methods, Theorem Proving and Disproving,
 Decision Procedures, Programming Languages and Distributed systems.
 
@@ -64,22 +64,32 @@ chess and tabletennis.
 - <2019-10-21 Mon> Selected to attend [[https://popl20.sigplan.org/home/PLMW-POPL-2020][PLMW @ POPL 2019]] in New Orleans
   
 
-* Honors and Awards
- - Student Travel Fellowship to attend PLMW at POPL 2019
 * Publications
 
-** [[https://arxiv.org/abs/2307.12224][Calculational Proofs in ACL2s]]
+- Calculational Proofs in ACL2s
 
-** [[https://arxiv.org/abs/2212.05197][Formal Model-Driven Analysis of Resilience of GossipSub to Sybil Attacks]]
-   
-** [[https://arxiv.org/abs/2303.05867v1][Automated grading of automata with ACL2s]]
+  [[https://www.atwalter.com/][Drew Walter]], Ankit Kumar and [[https://www.ccs.neu.edu/~pete/][Panagiotis Manolios]]
 
-** [[./stuff/MPMS-fmcad-2021.pdf][Mathematical Programming Modulo Strings]]
+  arXiv Preprint 2023 [[[https://arxiv.org/abs/2307.12224][pdf]]] 
+
+- Formal Model-Driven Analysis of Resilience of GossipSub to Sybil
+  Attacks
+
+  Ankit Kumar, [[https://mxvh.pl/][Max von Hippel]], [[https://cnitarot.github.io/][Cristina Nita-Rotaru]] and [[https://www.ccs.neu.edu/~pete/][Panagiotis Manolios]]
+
+  arXiv Preprint 2022 [[[https://arxiv.org/abs/2212.05197][pdf]]]
    
-   The key idea is a sound, complete and terminating transition system
-   TranSeq for the existential theory of string equations which,
-   instead of using a SAT solver as a backend, uses a LIA solver to
-   guide search for a solution.
+- Automated grading of automata with ACL2s
+
+  Ankit Kumar, [[https://www.atwalter.com/][Drew Walter]] and [[https://www.ccs.neu.edu/~pete/][Panagiotis Manolios]]
+
+  ThEdu 2022 [[[https://arxiv.org/abs/2303.05867v1][pdf]]] [[[https://github.com/ankitku/A2C][code]]]
+
+- Mathematical Programming Modulo Strings
+
+  Ankit Kumar and [[https://www.ccs.neu.edu/~pete/][Panagiotis Manolios]]
+
+  FMCAD 2021 [[[./stuff/MPMS-fmcad-2021.pdf][pdf]]] [[[https://github.com/ankitku/SeqSolve][code]]]
 
 * Talks
 ** Caraxes: Tracking Critical Data in the Cloud
@@ -100,6 +110,11 @@ languages covering APL, implicit scaling, Haskell and Remora.
 ** [[./stuff/DTProofAsst.pdf][Dependently Typed Proof Assistants]]
 Lecture notes for a seminar on the implementation of dependently typed proof
 assistants, comparing and contrasting NuPRL and Coq proof assistants.
+
+
+
+* Honors and Awards
+ - Student Travel Fellowship to attend PLMW at POPL 2019
 
 * Teaching
 I have been a TA for the following courses: Algorithms (A), Logic and
@@ -128,4 +143,6 @@ Reasoning (CAR).
 
 
 ----------------------------------------------------
-*** Copyright 2022 Ankit Kumar. Powered by [[https://orgmode.org][Org mode]].
+#+BEGIN_EXPORT HTML
+<i class="fa fa-copyright"></i> 2023 Ankit Kumar. Powered by <a href="https://orgmode.org">Org-mode</a>.
+#+END_EXPORT
