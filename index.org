@@ -1,12 +1,11 @@
 :PROPERTIES:
 :CATEGORY: blog
-:updated:  <2022-09-09 Fri>
+:updated:  <2023-07-29 Sat>
 :END:
 
-#+TITLE: Ankit Kumar
-#+HTML_HEAD_EXTRA: <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fork-awesome@1.2.0/css/fork-awesome.min.css" integrity="sha256-XoaMnoYC5TH6/+ihMEnospgm0J1PM/nioxbOUdnM8HY=" crossorigin="anonymous">
+#+HTML_HEAD_EXTRA: <link rel="stylesheet" href="fawesome/css/fork-awesome.min.css">
 
-
+#+TITLE: Hello, I am Ankit Kumar ...
 #+BEGIN_EXPORT HTML
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -18,20 +17,29 @@
   src="https://www.googletagmanager.com/gtag/js?id=UA-65031131-1"></script>
 
 <div class="social">
-  <a href="https://scholar.google.com/citations?user=8f9-QK4AAAAJ&hl=en" target="_blank">
+  <a href="mailto:ankitkumar.itbhu@gmail.com">
+    <i class="fa fa-envelope"></i>
+  </a>
+  <a href="https://scholar.google.com/citations?user=8f9-QK4AAAAJ&hl=en">
     <i class="fa fa-lg fa-graduation-cap"></i>
   </a>
+  <a href="https://gitlab.com/ankitku" target="_blank">
+    <i class="fa fa-lg fa-gitlab"></i>
+  </a>
   <a href="https://github.com/ankitku" target="_blank">
-    <i class="fa fa-lg fa-github-square"></i>
+    <i class="fa fa-lg fa-github-alt"></i>
   </a>
   <a href="https://www.linkedin.com/in/ankitkumar1988/" target="_blank">
-    <i class="fa fa-lg fa-linkedin-square"></i>
-  </a>
-  <a href="https://twitter.com/_ankitku" target="_blank">
-    <i class="fa fa-lg fa-twitter-square"></i>
+    <i class="fa fa-lg fa-linkedin"></i>
   </a>
   <a href="./stuff/Ankit_CV.pdf" target="_blank">
     <i class="fa fa-file"></i>
+  </a>
+  <a href="https://twitter.com/_ankitku" target="_blank">
+    X
+  </a>
+  <a href="https://goo.gl/maps/rTPd7JEWsbr8JjZt7" target="_blank">
+    <i class="fa fa-lg fa-location-arrow"></i>
   </a>
 </div>
 <br style="clear:both;" />
@@ -43,7 +51,7 @@
 #+ATTR_HTML: :style float:top;
 [[./me.jpeg]]
 
-I am Ankit Kumar, a fifth year PhD student working with
+... a sixth year PhD student working with
 [[https://www.ccs.neu.edu/~pete/][Prof. Panagiotis Manolios]] at [[https://www.khoury.northeastern.edu][Khoury College, Northeastern University]]. My research
 interests lie in Formal Methods, Theorem Proving and Disproving,
 Decision Procedures, Programming Languages and Distributed systems.
@@ -52,12 +60,14 @@ In my free time, I like to dabble in astrophotography as well as play
 chess and tabletennis.
 
 * News
+- <2023-06-07 Wed> Started an internship at Rivos Inc in Portlad, Oregon.
 - <2023-01-28 Sat> Selected to chair the session on "Forming and
   Evaluating Student Groups Papers" at [[https://sigcse2023.sigcse.org/track/sigcse-ts-2023-papers#program][SIGCSE 2023]]
 - <2022-11-09 Wed> Presented our work on verification of GossipSub
   protocol in an [[https://youtu.be/T3QLhijHAwA][invited talk]] on LibP2P day @ [[https://2022.ipfs.camp][IPFS Camp 2022]], Lisbon,
   Portugal, and at [[https://khoury-srg.github.io/Northeastern-Systems-Day-2023/][Khoury Systems Day, 2023]]
-- <2022-09-02 Fri> Successfully completed an internship @ Amazon during Summer 2022
+- <2022-09-02 Fri> Successfully completed an internship @ Amazon
+  Minneapolis, during Summer 2022
 - <2022-07-30 Sat> Attending and Volunteering at FLoC 2022
 - <2021-07-09 Fri> Our paper: Mathematical Programming Modulo Strings
   got accepted at FMCAD 2021
@@ -93,7 +103,7 @@ chess and tabletennis.
 
 * Talks
 ** Caraxes: Tracking Critical Data in the Cloud
-<2022-09-02 Fri> End of internship talk where Drew and I showed how to "lift" taint
+<2022-09-02 Fri> End of internship talk at Amazon, where [[https://www.atwalter.com/][Drew Walter]] and I showed how to "lift" taint
 analysis from code level to cloud level, and also demoed a
 prototype tool we developed called Caraxes. The slides and video of
 this talk are available in the Amazon internal network.
