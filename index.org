@@ -3,7 +3,7 @@
 :updated:  <2023-07-29 Sat>
 :END:
 
-#+HTML_HEAD_EXTRA: <link rel="stylesheet" href="fawesome/css/fork-awesome.min.css">
+#+HTML_HEAD_EXTRA: <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fork-awesome@1.2.0/css/fork-awesome.min.css" integrity="sha256-XoaMnoYC5TH6/+ihMEnospgm0J1PM/nioxbOUdnM8HY=" crossorigin="anonymous">
 
 #+TITLE: Hello, I am Ankit Kumar ...
 #+BEGIN_EXPORT HTML
