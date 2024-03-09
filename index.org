@@ -60,6 +60,10 @@ In my free time, I like to dabble in astrophotography as well as play
 chess and tabletennis.
 
 * News
+- <2024-02-19 Mon> Successfully proposed my thesis : "Refinement based
+  reasoning of P2P pubsub protocols is feasible and useful" 
+- <2023-11-14 Tue> Our paper "Verification of Gossipsub in ACL2s" won
+  the best student paper award at ACL2 Workshop 2023.
 - <2023-06-07 Wed> Started an internship at Rivos Inc in Portlad, Oregon.
 - <2023-01-28 Sat> Selected to chair the session on "Forming and
   Evaluating Student Groups Papers" at [[https://sigcse2023.sigcse.org/track/sigcse-ts-2023-papers#program][SIGCSE 2023]]
@@ -80,14 +84,26 @@ chess and tabletennis.
 
   [[https://www.atwalter.com/][Drew Walter]], Ankit Kumar and [[https://www.ccs.neu.edu/~pete/][Panagiotis Manolios]]
 
-  arXiv Preprint 2023 [[[https://arxiv.org/abs/2307.12224][pdf]]] 
+  arXiv Preprint 2023 [[[https://arxiv.org/abs/2307.12224][pdf]]] [[[https://github.com/acl2/acl2/tree/master/books/workshops/2023/walter-etal][code]]]
 
 - Formal Model-Driven Analysis of Resilience of GossipSub to Sybil
   Attacks
 
   Ankit Kumar, [[https://mxvh.pl/][Max von Hippel]], [[https://cnitarot.github.io/][Cristina Nita-Rotaru]] and [[https://www.ccs.neu.edu/~pete/][Panagiotis Manolios]]
 
-  arXiv Preprint 2022 [[[https://arxiv.org/abs/2212.05197][pdf]]]
+  IEEE Symposium on Security and Privacy 2024 [[[https://arxiv.org/abs/2212.05197][pdf]]] [[[https://github.com/gossipsubfm][code]]]
+
+- Verification of GossipSub in ACL2s 🏆 *Best student paper award*
+
+  Ankit Kumar, [[https://mxvh.pl/][Max von Hippel]], [[https://cnitarot.github.io/][Cristina Nita-Rotaru]] and [[https://www.ccs.neu.edu/~pete/][Panagiotis Manolios]]
+  
+  ACL2 Workshop 2023 [[[./stuff/gossipsub-acl2ws.pdf][pdf]]] [[[https://github.com/acl2/acl2/tree/master/books/workshops/2023/kumar-etal][code]]]
+
+- Proving Calculational Proofs Correct 🏆 *Second best student paper award*
+
+  Ankit Kumar, [[https://www.atwalter.com/][Drew Walter]] and [[https://www.ccs.neu.edu/~pete/][Panagiotis Manolios]]
+
+  ACL2 Workshop 2023 [[[https://cgi.cse.unsw.edu.au/~eptcs/Published/ACL22023/Proceedings.pdf][pdf]]] [[[https://github.com/acl2/acl2/tree/master/books/workshops/2023/walter-etal][code]]]
    
 - Automated grading of automata with ACL2s
 
@@ -124,7 +140,9 @@ assistants, comparing and contrasting NuPRL and Coq proof assistants.
 
 
 * Honors and Awards
- - Student Travel Fellowship to attend PLMW at POPL 2019
+- Won Best Student Paper Award at ACL2 Workshop 2023 for our paper :
+  Verification of GossipSub in ACL2s
+- Student Travel Fellowship to attend PLMW at POPL 2019
 
 * Teaching
 I have been a TA for the following courses: Algorithms (A), Logic and
@@ -143,13 +161,10 @@ Reasoning (CAR).
 | Fall'21       |   |    | X  |     |
 | Spring'22     |   | X  |    |     |
 | Fall'22       |   | X  |    | X   |
+| Spring'23     |   | X  |    |     |
+| Fall'23       |   | X  |    |     |
+| Spring'24     |   |    | X  |     |
 |---------------+---+----+----+-----|
-
-
-
-
-
-
 
 
 ----------------------------------------------------
