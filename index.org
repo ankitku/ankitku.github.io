@@ -51,7 +51,7 @@
 #+ATTR_HTML: :style float:top;
 [[./me.jpeg]]
 
-... a sixth year PhD student working with
+... a PhD candidate working with
 [[https://www.ccs.neu.edu/~pete/][Prof. Panagiotis Manolios]] at [[https://www.khoury.northeastern.edu][Khoury College, Northeastern University]]. My research
 interests lie in Formal Methods, Theorem Proving and Disproving,
 Decision Procedures, Programming Languages and Distributed systems.
@@ -60,6 +60,9 @@ In my free time, I like to dabble in astrophotography as well as play
 chess and tabletennis.
 
 * News
+- <2025-05-14 Wed> Our paper "A Formalization of the Correctness of
+  the Floodsub Protocol" won the best student paper award at ACL2
+  Workshop 2025.
 - <2024-02-19 Mon> Successfully proposed my thesis : "Refinement based
   reasoning of P2P pubsub protocols is feasible and useful" 
 - <2023-11-14 Tue> Our paper "Verification of Gossipsub in ACL2s" won
@@ -80,11 +83,11 @@ chess and tabletennis.
 
 * Publications
 
-- Calculational Proofs in ACL2s
+- A Formalization of the Correctness of the Floodsub Protocol 🏆 *Best student paper award*
 
-  [[https://www.atwalter.com/][Drew Walter]], Ankit Kumar and [[https://www.ccs.neu.edu/~pete/][Panagiotis Manolios]]
+  Ankit Kumar and [[https://www.ccs.neu.edu/~pete/][Panagiotis Manolios]]
 
-  arXiv Preprint 2023 [[[https://arxiv.org/abs/2307.12224][pdf]]] [[[https://github.com/acl2/acl2/tree/master/books/workshops/2023/walter-etal][code]]]
+  ACL2 Workshop 2025 [[[./stuff/floodsub-acl2ws.pdf][pdf]]] [[[https://github.com/ankitku/FloodsubRef][code]]]
 
 - Formal Model-Driven Analysis of Resilience of GossipSub to Sybil
   Attacks
@@ -105,6 +108,12 @@ chess and tabletennis.
 
   ACL2 Workshop 2023 [[[https://cgi.cse.unsw.edu.au/~eptcs/Published/ACL22023/Proceedings.pdf][pdf]]] [[[https://github.com/acl2/acl2/tree/master/books/workshops/2023/walter-etal][code]]]
    
+- Calculational Proofs in ACL2s
+
+  [[https://www.atwalter.com/][Drew Walter]], Ankit Kumar and [[https://www.ccs.neu.edu/~pete/][Panagiotis Manolios]]
+
+  arXiv Preprint 2023 [[[https://arxiv.org/abs/2307.12224][pdf]]] [[[https://github.com/acl2/acl2/tree/master/books/workshops/2023/walter-etal][code]]]
+
 - Automated grading of automata with ACL2s
 
   Ankit Kumar, [[https://www.atwalter.com/][Drew Walter]] and [[https://www.ccs.neu.edu/~pete/][Panagiotis Manolios]]
