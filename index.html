@@ -47,8 +47,38 @@
             }
         });
     </script>
+    <script>
+        // Typing animation for title
+        function typeWriter() {
+            const text = 'Hello, I am Ankit Kumar...';
+            const element = document.querySelector('h1');
+            element.innerHTML = '';
+            let i = 0;
+            function type() {
+                if (i < text.length) {
+                    element.innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(type, 100);
+                } else {
+                    element.classList.add('typing-done');
+                }
+            }
+            type();
+        }
+        
+        // Initialize animations
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(typeWriter, 500);
+            
+            if (localStorage.getItem('theme') === 'dark') {
+                document.body.classList.add('dark-mode');
+                document.querySelector('.theme-toggle i').className = 'fa fa-sun-o';
+            }
+        });
+    </script>
 </head>
 <body>
+    <div class="bg-animation"></div>
     <div class="container">
         <header>
             <h1>Hello, I am Ankit Kumar...</h1>
