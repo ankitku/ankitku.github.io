@@ -39,9 +39,18 @@
             }
         }
         
-        // Load saved theme
+        // Detect system dark mode and initialize theme
         document.addEventListener('DOMContentLoaded', function() {
-            if (localStorage.getItem('theme') === 'dark') {
+            const systemDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const savedTheme = localStorage.getItem('theme');
+            const themeToggle = document.querySelector('.theme-toggle');
+            
+            if (systemDarkMode && !savedTheme) {
+                // System is in dark mode and user hasn't set preference - hide toggle and use dark mode
+                document.body.classList.add('dark-mode');
+                themeToggle.style.display = 'none';
+            } else if (savedTheme === 'dark') {
+                // User has explicitly chosen dark mode
                 document.body.classList.add('dark-mode');
                 document.querySelector('.theme-toggle i').className = 'fa fa-sun-o';
             }
@@ -69,11 +78,6 @@
         // Initialize animations
         document.addEventListener('DOMContentLoaded', function() {
             setTimeout(typeWriter, 500);
-            
-            if (localStorage.getItem('theme') === 'dark') {
-                document.body.classList.add('dark-mode');
-                document.querySelector('.theme-toggle i').className = 'fa fa-sun-o';
-            }
         });
     </script>
 </head>
