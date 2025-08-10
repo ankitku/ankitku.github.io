@@ -6,6 +6,7 @@
     <title>Ankit Kumar - PhD Candidate</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fork-awesome@1.2.0/css/fork-awesome.min.css" integrity="sha256-XoaMnoYC5TH6/+ihMEnospgm0J1PM/nioxbOUdnM8HY=" crossorigin="anonymous">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/maps.css">
     
     <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-65031131-1"></script>
@@ -119,8 +120,27 @@
                 </div>
             </section>
 
-            <section id="contact" class="content-section">
+            <section id="contact" class="content-section contact-section-with-map">
                 <h2>Contact</h2>
+                
+                <!-- Location Map Section -->
+                <div class="location-section">
+                    <h3>Current Location</h3>
+                    <div class="map-container">
+                        <iframe 
+                            class="map-embed"
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d101723.77796239378!2d-122.11553655!3d37.354108!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x808fb4571bd377ab%3A0x394d3fe1a3e178b4!2sSanta%20Clara%2C%20CA!5e0!3m2!1sen!2sus!4v1691234567890!5m2!1sen!2sus"
+                            allowfullscreen="" 
+                            loading="lazy" 
+                            referrerpolicy="no-referrer-when-downgrade"
+                            title="Santa Clara, CA Location">
+                        </iframe>
+                    </div>
+                    <div class="location-info">
+                        <p>Currently based in <span class="location-highlight">Santa Clara, California</span> - Heart of Silicon Valley</p>
+                    </div>
+                </div>
+                
                 <div class="contact-grid">
                     <a href="mailto:ankitkumar.itbhu@gmail.com" class="contact-item">
                         <i class="fa fa-envelope"></i>
@@ -154,10 +174,10 @@
                         <i class="fa fa-youtube-play"></i>
                         <span>YouTube</span>
                     </a>
-                    <a href="https://goo.gl/maps/rTPd7JEWsbr8JjZt7" target="_blank" class="contact-item">
+                    <div class="contact-item location-item" onclick="document.querySelector('.map-container').scrollIntoView({behavior: 'smooth'})" style="cursor: pointer;">
                         <i class="fa fa-location-arrow"></i>
-                        <span>Location</span>
-                    </a>
+                        <span>View Map</span>
+                    </div>
                 </div>
             </section>
 

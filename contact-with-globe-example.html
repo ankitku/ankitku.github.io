@@ -1,0 +1,136 @@
+<!-- Example: Enhanced Contact Section with 3D Globe -->
+<!-- Add this to your index.html head section: -->
+<!--
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<link rel="stylesheet" href="css/globe.css">
+<script src="js/globe.js"></script>
+-->
+
+<section id="contact" class="content-section">
+    <h2>Contact</h2>
+    
+    <!-- Enhanced location display with 3D globe -->
+    <div class="location-showcase">
+        <h3>Current Location</h3>
+        <div id="contact-globe" class="globe-container" style="height: 300px; margin-bottom: 20px;">
+            <div class="globe-loading">Loading globe...</div>
+            <div class="globe-info">
+                <div>📍 Boston, MA</div>
+                <div>🏫 Northeastern University</div>
+            </div>
+            <div class="globe-controls">
+                <button class="globe-btn" id="contact-auto-rotate">Auto Rotate</button>
+            </div>
+        </div>
+        <p style="text-align: center; color: var(--text-light); font-size: 0.9em;">
+            Currently pursuing PhD at Khoury College, Northeastern University
+        </p>
+    </div>
+    
+    <!-- Existing contact grid -->
+    <div class="contact-grid">
+        <a href="mailto:ankitkumar.itbhu@gmail.com" class="contact-item">
+            <i class="fa fa-envelope"></i>
+            <span>Email</span>
+        </a>
+        <a href="https://scholar.google.com/citations?user=8f9-QK4AAAAJ&hl=en" class="contact-item">
+            <i class="fa fa-graduation-cap"></i>
+            <span>Google Scholar</span>
+        </a>
+        <a href="https://gitlab.com/ankitku" target="_blank" class="contact-item">
+            <i class="fa fa-gitlab"></i>
+            <span>GitLab</span>
+        </a>
+        <a href="https://github.com/ankitku" target="_blank" class="contact-item">
+            <i class="fa fa-github-alt"></i>
+            <span>GitHub</span>
+        </a>
+        <a href="https://www.linkedin.com/in/ankitkumar1988/" target="_blank" class="contact-item">
+            <i class="fa fa-linkedin"></i>
+            <span>LinkedIn</span>
+        </a>
+        <a href="./stuff/Ankit_CV.pdf" target="_blank" class="contact-item">
+            <i class="fa fa-file"></i>
+            <span>CV</span>
+        </a>
+        <a href="https://twitter.com/_ankitku" target="_blank" class="contact-item">
+            <span class="x-icon">𝕏</span>
+            <span>Twitter/X</span>
+        </a>
+        <a href="https://www.youtube.com/@mrankitku" target="_blank" class="contact-item">
+            <i class="fa fa-youtube-play"></i>
+            <span>YouTube</span>
+        </a>
+        <!-- Enhanced location item with globe reference -->
+        <div class="contact-item location-item" onclick="document.getElementById('contact-globe').scrollIntoView({behavior: 'smooth'})">
+            <i class="fa fa-location-arrow"></i>
+            <span>Interactive Location</span>
+        </div>
+    </div>
+</section>
+
+<!-- Add this JavaScript before closing </body> tag -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize contact globe
+    if (document.getElementById('contact-globe')) {
+        // Boston/Northeastern University coordinates
+        const bostonLocation = { lat: 42.3601, lng: -71.0589 };
+        
+        const contactGlobe = new Globe3D('contact-globe', {
+            location: bostonLocation,
+            autoRotate: true,
+            rotationSpeed: 0.002
+        });
+        
+        // Remove loading message
+        setTimeout(() => {
+            const loading = document.querySelector('#contact-globe .globe-loading');
+            if (loading) loading.style.display = 'none';
+        }, 1000);
+        
+        // Auto rotate toggle for contact globe
+        const autoRotateBtn = document.getElementById('contact-auto-rotate');
+        if (autoRotateBtn) {
+            let autoRotateEnabled = true;
+            autoRotateBtn.addEventListener('click', function() {
+                autoRotateEnabled = !autoRotateEnabled;
+                contactGlobe.options.autoRotate = autoRotateEnabled;
+                this.textContent = autoRotateEnabled ? 'Auto Rotate' : 'Manual';
+                this.classList.toggle('active', autoRotateEnabled);
+            });
+        }
+    }
+});
+</script>
+
+<!-- Add this CSS to your existing CSS or in a <style> tag -->
+<style>
+.location-showcase {
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.location-showcase h3 {
+    color: var(--primary-color);
+    margin-bottom: 15px;
+    font-size: 1.2em;
+}
+
+.location-item {
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.location-item:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .location-showcase #contact-globe {
+        height: 250px !important;
+    }
+}
+</style>
