@@ -1,323 +1,580 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Ankit Kumar - PhD Candidate</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fork-awesome@1.2.0/css/fork-awesome.min.css" integrity="sha256-XoaMnoYC5TH6/+ihMEnospgm0J1PM/nioxbOUdnM8HY=" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/maps.css">
-    
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/fork-awesome@1.2.0/css/fork-awesome.min.css"
+      integrity="sha256-XoaMnoYC5TH6/+ihMEnospgm0J1PM/nioxbOUdnM8HY="
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/maps.css" />
+
     <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-65031131-1"></script>
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=UA-65031131-1"
+    ></script>
     <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'UA-65031131-1');
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "UA-65031131-1");
     </script>
     <script>
-        function showSection(sectionId) {
-            document.querySelectorAll('.content-section').forEach(section => {
-                section.classList.remove('active');
-            });
-            document.querySelectorAll('.nav-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            document.getElementById(sectionId).classList.add('active');
-            event.target.classList.add('active');
-        }
-        
-        function toggleTheme() {
-            document.body.classList.toggle('dark-mode');
-            const icon = document.querySelector('.theme-toggle i');
-            if (document.body.classList.contains('dark-mode')) {
-                icon.className = 'fa fa-sun-o';
-                localStorage.setItem('theme', 'dark');
-            } else {
-                icon.className = 'fa fa-moon-o';
-                localStorage.setItem('theme', 'light');
-            }
-        }
-        
-        // Detect system dark mode and initialize theme
-        document.addEventListener('DOMContentLoaded', function() {
-            const systemDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
-            const savedTheme = localStorage.getItem('theme');
-            const themeToggle = document.querySelector('.theme-toggle');
-            
-            if (systemDarkMode && !savedTheme) {
-                // System is in dark mode and user hasn't set preference - hide toggle and use dark mode
-                document.body.classList.add('dark-mode');
-                themeToggle.style.display = 'none';
-            } else if (savedTheme === 'dark') {
-                // User has explicitly chosen dark mode
-                document.body.classList.add('dark-mode');
-                document.querySelector('.theme-toggle i').className = 'fa fa-sun-o';
-            }
+      function showSection(sectionId) {
+        document.querySelectorAll(".content-section").forEach((section) => {
+          section.classList.remove("active");
         });
+        document.querySelectorAll(".nav-btn").forEach((btn) => {
+          btn.classList.remove("active");
+        });
+        document.getElementById(sectionId).classList.add("active");
+        event.target.classList.add("active");
+      }
+
+      function toggleTheme() {
+        document.body.classList.toggle("dark-mode");
+        const icon = document.querySelector(".theme-toggle i");
+        if (document.body.classList.contains("dark-mode")) {
+          icon.className = "fa fa-sun-o";
+          localStorage.setItem("theme", "dark");
+        } else {
+          icon.className = "fa fa-moon-o";
+          localStorage.setItem("theme", "light");
+        }
+      }
+
+      // Detect system dark mode and initialize theme
+      document.addEventListener("DOMContentLoaded", function () {
+        const systemDarkMode = window.matchMedia(
+          "(prefers-color-scheme: dark)"
+        ).matches;
+        const savedTheme = localStorage.getItem("theme");
+        const themeToggle = document.querySelector(".theme-toggle");
+
+        if (systemDarkMode && !savedTheme) {
+          // System is in dark mode and user hasn't set preference - hide toggle and use dark mode
+          document.body.classList.add("dark-mode");
+          themeToggle.style.display = "none";
+        } else if (savedTheme === "dark") {
+          // User has explicitly chosen dark mode
+          document.body.classList.add("dark-mode");
+          document.querySelector(".theme-toggle i").className = "fa fa-sun-o";
+        }
+      });
     </script>
     <script>
-        // Typing animation for title
-        function typeWriter() {
-            const text = 'Hello, I am Ankit Kumar...';
-            const element = document.querySelector('h1');
-            element.innerHTML = '';
-            let i = 0;
-            function type() {
-                if (i < text.length) {
-                    element.innerHTML += text.charAt(i);
-                    i++;
-                    setTimeout(type, 100);
-                } else {
-                    element.classList.add('typing-done');
-                }
-            }
-            type();
+      // Typing animation for title
+      function typeWriter() {
+        const text = "Hello, I am Ankit Kumar...";
+        const element = document.querySelector("h1");
+        element.innerHTML = "";
+        let i = 0;
+        function type() {
+          if (i < text.length) {
+            element.innerHTML += text.charAt(i);
+            i++;
+            setTimeout(type, 100);
+          } else {
+            element.classList.add("typing-done");
+          }
         }
-        
-        // Initialize animations
-        document.addEventListener('DOMContentLoaded', function() {
-            setTimeout(typeWriter, 500);
-        });
+        type();
+      }
+
+      // Initialize animations
+      document.addEventListener("DOMContentLoaded", function () {
+        setTimeout(typeWriter, 500);
+      });
     </script>
-</head>
-<body>
+  </head>
+  <body>
     <div class="bg-animation"></div>
     <div class="container">
-        <header>
-            <h1>Hello, I am Ankit Kumar...</h1>
-            
-            <nav class="section-nav">
-                <a href="#" onclick="showSection('intro')" class="nav-btn active">About</a>
-                <a href="#" onclick="showSection('contact')" class="nav-btn">Contact</a>
-                <a href="#" onclick="showSection('news')" class="nav-btn">News</a>
-                <a href="#" onclick="showSection('publications')" class="nav-btn">Publications</a>
-                <a href="#" onclick="showSection('talks')" class="nav-btn">Talks</a>
-                <a href="#" onclick="showSection('teaching')" class="nav-btn">Teaching</a>
-                <a href="./stuff/Ankit_CV.pdf" download="Ankit_Kumar_CV.pdf" class="nav-btn job-market-btn" title="Download CV">
-                    <i class="fa fa-download"></i> Job Market
-                </a>
-                <button class="theme-toggle nav-btn" onclick="toggleTheme()" title="Toggle Dark Mode">
-                    <i class="fa fa-moon-o"></i>
-                </button>
-            </nav>
-        </header>
+      <header>
+        <h1>Hello, I am Ankit Kumar...</h1>
 
-        <main>
-            <section id="intro" class="content-section active">
-                <div class="profile-section">
-                    <figure class="profile-image">
-                        <img src="./me.jpeg" alt="Ankit Kumar at FLoC 2022">
-                        <figcaption>In Akko, during <a href="https://www.floc2022.org">Federated Logic Conference</a> 2022.</figcaption>
-                    </figure>
-                    
-                    <div class="bio">
-                        <p>... a PhD candidate working with <a href="https://www.ccs.neu.edu/~pete/">Prof. Panagiotis Manolios</a> at <a href="https://www.khoury.northeastern.edu">Khoury College, Northeastern University</a>. My research interests lie in Formal Methods, Theorem Proving and Disproving, Decision Procedures, Programming Languages and Distributed systems.</p>
-                        
-                        <p>In my free time, I like to dabble in astrophotography as well as play chess and tabletennis.</p>
-                    </div>
-                </div>
-            </section>
+        <nav class="section-nav">
+          <a href="#" onclick="showSection('intro')" class="nav-btn active"
+            >About</a
+          >
+          <a href="#" onclick="showSection('contact')" class="nav-btn"
+            >Contact</a
+          >
+          <a href="#" onclick="showSection('news')" class="nav-btn">News</a>
+          <a href="#" onclick="showSection('publications')" class="nav-btn"
+            >Publications</a
+          >
+          <a href="#" onclick="showSection('talks')" class="nav-btn">Talks</a>
+          <a href="#" onclick="showSection('teaching')" class="nav-btn"
+            >Teaching</a
+          >
+          <a
+            href="./stuff/Ankit_CV.pdf"
+            download="Ankit_Kumar_CV.pdf"
+            class="nav-btn job-market-btn"
+            title="Download CV"
+          >
+            <i class="fa fa-download"></i> Job Market
+          </a>
+          <button
+            class="theme-toggle nav-btn"
+            onclick="toggleTheme()"
+            title="Toggle Dark Mode"
+          >
+            <i class="fa fa-moon-o"></i>
+          </button>
+        </nav>
+      </header>
 
-            <section id="contact" class="content-section contact-section-with-map">
-                <h2>Contact</h2>
-                
-                <!-- Location Map Section -->
-                <div class="location-section">
-                    <h3>Current Location</h3>
-                    <div class="map-container">
-                        <iframe 
-                            class="map-embed"
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d101723.77796239378!2d-122.11553655!3d37.354108!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x808fb4571bd377ab%3A0x394d3fe1a3e178b4!2sSanta%20Clara%2C%20CA!5e0!3m2!1sen!2sus!4v1691234567890!5m2!1sen!2sus"
-                            allowfullscreen="" 
-                            loading="lazy" 
-                            referrerpolicy="no-referrer-when-downgrade"
-                            title="Santa Clara, CA Location">
-                        </iframe>
-                    </div>
-                    <div class="location-info">
-                        <p>Currently based in <span class="location-highlight">Santa Clara, California</span> - Heart of Silicon Valley</p>
-                    </div>
-                </div>
-                
-                <div class="contact-grid">
-                    <a href="mailto:ankitkumar.itbhu@gmail.com" class="contact-item">
-                        <i class="fa fa-envelope"></i>
-                        <span>Email</span>
-                    </a>
-                    <a href="https://scholar.google.com/citations?user=8f9-QK4AAAAJ&hl=en" class="contact-item">
-                        <i class="fa fa-graduation-cap"></i>
-                        <span>Google Scholar</span>
-                    </a>
-                    <a href="https://gitlab.com/ankitku" target="_blank" class="contact-item">
-                        <i class="fa fa-gitlab"></i>
-                        <span>GitLab</span>
-                    </a>
-                    <a href="https://github.com/ankitku" target="_blank" class="contact-item">
-                        <i class="fa fa-github-alt"></i>
-                        <span>GitHub</span>
-                    </a>
-                    <a href="https://www.linkedin.com/in/ankitkumar1988/" target="_blank" class="contact-item">
-                        <i class="fa fa-linkedin"></i>
-                        <span>LinkedIn</span>
-                    </a>
-                    <a href="./stuff/Ankit_CV.pdf" target="_blank" class="contact-item">
-                        <i class="fa fa-file"></i>
-                        <span>CV</span>
-                    </a>
-                    <a href="https://twitter.com/_ankitku" target="_blank" class="contact-item">
-                        <span class="x-icon">𝕏</span>
-                        <span>Twitter/X</span>
-                    </a>
-                    <a href="https://www.youtube.com/@mrankitku" target="_blank" class="contact-item">
-                        <i class="fa fa-youtube-play"></i>
-                        <span>YouTube</span>
-                    </a>
-                    <div class="contact-item location-item" onclick="document.querySelector('.map-container').scrollIntoView({behavior: 'smooth'})" style="cursor: pointer;">
-                        <i class="fa fa-location-arrow"></i>
-                        <span>View Map</span>
-                    </div>
-                </div>
-            </section>
+      <main>
+        <section id="intro" class="content-section active">
+          <div class="profile-section">
+            <figure class="profile-image">
+              <img src="./me.jpeg" alt="Ankit Kumar at FLoC 2022" />
+              <figcaption>
+                In Akko, during
+                <a href="https://www.floc2022.org"
+                  >Federated Logic Conference</a
+                >
+                2022.
+              </figcaption>
+            </figure>
 
-            <section id="news" class="content-section">
-                <h2>News</h2>
-                <ul class="news-list">
-                    <li><span class="date">2025-05-19</span> 🚀 Returning as an Applied Scientist Intern at Amazon Web Services.</li>
-                    <li><span class="date">2025-05-14</span> 🏆 Our paper "A Formalization of the Correctness of the Floodsub Protocol" won the best student paper award at ACL2 Workshop 2025.</li>
-                    <li><span class="date">2024-12-10</span> 💍 Got married :)</li>
-                    <li><span class="date">2024-04-30</span> 🎖️ Won the Dissertation Completion Fellowship for Summer 2024.</li>
-                    <li><span class="date">2024-02-19</span> 🎓 Successfully proposed my thesis: "Refinement based reasoning of P2P pubsub protocols is feasible and useful"</li>
-                    <li><span class="date">2023-11-14</span> 🏆 Our paper "Verification of Gossipsub in ACL2s" won the best student paper award at ACL2 Workshop 2023.</li>
-                    <li><span class="date">2023-06-07</span> 💼 Started an internship at Rivos Inc in Portland, Oregon.</li>
-                    <li><span class="date">2023-01-28</span> 🎤 Selected to chair the session on "Forming and Evaluating Student Groups Papers" at <a href="https://sigcse2023.sigcse.org/track/sigcse-ts-2023-papers#program">SIGCSE 2023</a></li>
-                    <li><span class="date">2022-11-09</span> 🎙️ Presented our work on verification of GossipSub protocol in an <a href="https://youtu.be/T3QLhijHAwA">invited talk</a> on LibP2P day @ <a href="https://2022.ipfs.camp">IPFS Camp 2022</a>, Lisbon, Portugal, and at <a href="https://khoury-srg.github.io/Northeastern-Systems-Day-2023/">Khoury Systems Day, 2023</a></li>
-                    <li><span class="date">2022-09-02</span> ✅ Successfully completed an internship @ Amazon Minneapolis, during Summer 2022</li>
-                    <li><span class="date">2022-07-30</span> 🌟 Attending and Volunteering at FLoC 2022</li>
-                    <li><span class="date">2021-07-09</span> 📄 Our paper: Mathematical Programming Modulo Strings got accepted at FMCAD 2021</li>
-                    <li><span class="date">2019-10-21</span> 🎯 Selected to attend <a href="https://popl20.sigplan.org/home/PLMW-POPL-2020">PLMW @ POPL 2019</a> in New Orleans</li>
-                </ul>
-            </section>
+            <div class="bio">
+              <p>
+                ... a PhD candidate working with
+                <a href="https://www.ccs.neu.edu/~pete/"
+                  >Prof. Panagiotis Manolios</a
+                >
+                at
+                <a href="https://www.khoury.northeastern.edu"
+                  >Khoury College, Northeastern University</a
+                >. My research interests lie in Formal Methods, Theorem Proving
+                and Disproving, Decision Procedures, Programming Languages and
+                Distributed systems.
+              </p>
 
-            <section id="publications" class="content-section">
-                <h2>Publications</h2>
-                <div class="publication-list">
-                    <article class="publication">
-                        <h3>A Formalization of the Correctness of the Floodsub Protocol <span class="award">🏆 Best student paper award</span></h3>
-                        <p class="authors">Ankit Kumar and <a href="https://www.ccs.neu.edu/~pete/">Panagiotis Manolios</a></p>
-                        <p class="venue">ACL2 Workshop 2025</p>
-                        <div class="links">
-                            <a href="./stuff/floodsub-acl2ws.pdf" class="link-btn">PDF</a>
-                            <a href="https://github.com/ankitku/FloodsubRef" class="link-btn">Code</a>
-                        </div>
-                    </article>
+              <p>
+                In my free time, I like to dabble in astrophotography as well as
+                play chess and tabletennis.
+              </p>
+            </div>
+          </div>
+        </section>
 
-                    <article class="publication">
-                        <h3>Formal Model-Driven Analysis of Resilience of GossipSub to Sybil Attacks</h3>
-                        <p class="authors">Ankit Kumar, <a href="https://mxvh.pl/">Max von Hippel</a>, <a href="https://cnitarot.github.io/">Cristina Nita-Rotaru</a> and <a href="https://www.ccs.neu.edu/~pete/">Panagiotis Manolios</a></p>
-                        <p class="venue">IEEE Symposium on Security and Privacy 2024</p>
-                        <div class="links">
-                            <a href="https://arxiv.org/abs/2212.05197" class="link-btn">PDF</a>
-                            <a href="https://github.com/gossipsubfm" class="link-btn">Code</a>
-                        </div>
-                    </article>
+        <section id="contact" class="content-section contact-section-with-map">
+          <h2>Contact</h2>
 
-                    <article class="publication">
-                        <h3>Verification of GossipSub in ACL2s <span class="award">🏆 Best student paper award</span></h3>
-                        <p class="authors">Ankit Kumar, <a href="https://mxvh.pl/">Max von Hippel</a>, <a href="https://cnitarot.github.io/">Cristina Nita-Rotaru</a> and <a href="https://www.ccs.neu.edu/~pete/">Panagiotis Manolios</a></p>
-                        <p class="venue">ACL2 Workshop 2023</p>
-                        <div class="links">
-                            <a href="./stuff/gossipsub-acl2ws.pdf" class="link-btn">PDF</a>
-                            <a href="https://github.com/acl2/acl2/tree/master/books/workshops/2023/kumar-etal" class="link-btn">Code</a>
-                        </div>
-                    </article>
+          <!-- Location Map Section -->
+          <div class="location-section">
+            <h3>Current Location</h3>
+            <div class="map-container">
+              <iframe
+                class="map-embed"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2948.544!2d-71.0589!3d42.3601!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89e37016848ac9bd%3A0x4e0d1f3b3b3b3b!2sBoston%2C%20MA!5e0!3m2!1sen!2sus!4v1691234567890!5m2!1sen!2sus"
+                allowfullscreen=""
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+                title="Boston, MA Location"
+              >
+              </iframe>
+            </div>
+            <div class="location-info">
+              <p>
+                Currently based in
+                <span class="location-highlight">Boston, USA</span>
+              </p>
+            </div>
+          </div>
 
-                    <article class="publication">
-                        <h3>Proving Calculational Proofs Correct <span class="award">🏆 Second best student paper award</span></h3>
-                        <p class="authors">Ankit Kumar, <a href="https://www.atwalter.com/">Drew Walter</a> and <a href="https://www.ccs.neu.edu/~pete/">Panagiotis Manolios</a></p>
-                        <p class="venue">ACL2 Workshop 2023</p>
-                        <div class="links">
-                            <a href="https://cgi.cse.unsw.edu.au/~eptcs/Published/ACL22023/Proceedings.pdf" class="link-btn">PDF</a>
-                            <a href="https://github.com/acl2/acl2/tree/master/books/workshops/2023/walter-etal" class="link-btn">Code</a>
-                        </div>
-                    </article>
+          <div class="contact-grid">
+            <a href="mailto:ankitkumar.itbhu@gmail.com" class="contact-item">
+              <i class="fa fa-envelope"></i>
+              <span>Email</span>
+            </a>
+            <a
+              href="https://scholar.google.com/citations?user=8f9-QK4AAAAJ&hl=en"
+              class="contact-item"
+            >
+              <i class="fa fa-graduation-cap"></i>
+              <span>Google Scholar</span>
+            </a>
+            <a
+              href="https://gitlab.com/ankitku"
+              target="_blank"
+              class="contact-item"
+            >
+              <i class="fa fa-gitlab"></i>
+              <span>GitLab</span>
+            </a>
+            <a
+              href="https://github.com/ankitku"
+              target="_blank"
+              class="contact-item"
+            >
+              <i class="fa fa-github-alt"></i>
+              <span>GitHub</span>
+            </a>
+            <a
+              href="https://www.linkedin.com/in/ankitkumar1988/"
+              target="_blank"
+              class="contact-item"
+            >
+              <i class="fa fa-linkedin"></i>
+              <span>LinkedIn</span>
+            </a>
+            <a href="./stuff/Ankit_CV.pdf" target="_blank" class="contact-item">
+              <i class="fa fa-file"></i>
+              <span>CV</span>
+            </a>
+            <a
+              href="https://twitter.com/_ankitku"
+              target="_blank"
+              class="contact-item"
+            >
+              <span class="x-icon">𝕏</span>
+              <span>Twitter/X</span>
+            </a>
+            <a
+              href="https://www.youtube.com/@mrankitku"
+              target="_blank"
+              class="contact-item"
+            >
+              <i class="fa fa-youtube-play"></i>
+              <span>YouTube</span>
+            </a>
+            <div
+              class="contact-item location-item"
+              onclick="document.querySelector('.map-container').scrollIntoView({behavior: 'smooth'})"
+              style="cursor: pointer"
+            >
+              <i class="fa fa-location-arrow"></i>
+              <span>View Map</span>
+            </div>
+          </div>
+        </section>
 
-                    <article class="publication">
-                        <h3>Calculational Proofs in ACL2s</h3>
-                        <p class="authors"><a href="https://www.atwalter.com/">Drew Walter</a>, Ankit Kumar and <a href="https://www.ccs.neu.edu/~pete/">Panagiotis Manolios</a></p>
-                        <p class="venue">arXiv Preprint 2023</p>
-                        <div class="links">
-                            <a href="https://arxiv.org/abs/2307.12224" class="link-btn">PDF</a>
-                            <a href="https://github.com/acl2/acl2/tree/master/books/workshops/2023/walter-etal" class="link-btn">Code</a>
-                        </div>
-                    </article>
+        <section id="news" class="content-section">
+          <h2>News</h2>
+          <ul class="news-list">
+            <li>
+              <span class="date">2025-05-19</span> 🚀 Returning as an Applied
+              Scientist Intern at Amazon Web Services.
+            </li>
+            <li>
+              <span class="date">2025-05-14</span> 🏆 Our paper "A Formalization
+              of the Correctness of the Floodsub Protocol" won the best student
+              paper award at ACL2 Workshop 2025.
+            </li>
+            <li><span class="date">2024-12-10</span> 💍 Got married :)</li>
+            <li>
+              <span class="date">2024-04-30</span> 🎖️ Won the Dissertation
+              Completion Fellowship for Summer 2024.
+            </li>
+            <li>
+              <span class="date">2024-02-19</span> 🎓 Successfully proposed my
+              thesis: "Refinement based reasoning of P2P pubsub protocols is
+              feasible and useful"
+            </li>
+            <li>
+              <span class="date">2023-11-14</span> 🏆 Our paper "Verification of
+              Gossipsub in ACL2s" won the best student paper award at ACL2
+              Workshop 2023.
+            </li>
+            <li>
+              <span class="date">2023-06-07</span> 💼 Started an internship at
+              Rivos Inc in Portland, Oregon.
+            </li>
+            <li>
+              <span class="date">2023-01-28</span> 🎤 Selected to chair the
+              session on "Forming and Evaluating Student Groups Papers" at
+              <a
+                href="https://sigcse2023.sigcse.org/track/sigcse-ts-2023-papers#program"
+                >SIGCSE 2023</a
+              >
+            </li>
+            <li>
+              <span class="date">2022-11-09</span> 🎙️ Presented our work on
+              verification of GossipSub protocol in an
+              <a href="https://youtu.be/T3QLhijHAwA">invited talk</a> on LibP2P
+              day @ <a href="https://2022.ipfs.camp">IPFS Camp 2022</a>, Lisbon,
+              Portugal, and at
+              <a
+                href="https://khoury-srg.github.io/Northeastern-Systems-Day-2023/"
+                >Khoury Systems Day, 2023</a
+              >
+            </li>
+            <li>
+              <span class="date">2022-09-02</span> ✅ Successfully completed an
+              internship @ Amazon Minneapolis, during Summer 2022
+            </li>
+            <li>
+              <span class="date">2022-07-30</span> 🌟 Attending and Volunteering
+              at FLoC 2022
+            </li>
+            <li>
+              <span class="date">2021-07-09</span> 📄 Our paper: Mathematical
+              Programming Modulo Strings got accepted at FMCAD 2021
+            </li>
+            <li>
+              <span class="date">2019-10-21</span> 🎯 Selected to attend
+              <a href="https://popl20.sigplan.org/home/PLMW-POPL-2020"
+                >PLMW @ POPL 2019</a
+              >
+              in New Orleans
+            </li>
+          </ul>
+        </section>
 
-                    <article class="publication">
-                        <h3>Automated grading of automata with ACL2s</h3>
-                        <p class="authors">Ankit Kumar, <a href="https://www.atwalter.com/">Drew Walter</a> and <a href="https://www.ccs.neu.edu/~pete/">Panagiotis Manolios</a></p>
-                        <p class="venue">ThEdu 2022</p>
-                        <div class="links">
-                            <a href="https://arxiv.org/abs/2303.05867v1" class="link-btn">PDF</a>
-                            <a href="https://github.com/ankitku/A2C" class="link-btn">Code</a>
-                        </div>
-                    </article>
+        <section id="publications" class="content-section">
+          <h2>Publications</h2>
+          <div class="publication-list">
+            <article class="publication">
+              <h3>
+                A Formalization of the Correctness of the Floodsub Protocol
+                <span class="award">🏆 Best student paper award</span>
+              </h3>
+              <p class="authors">
+                Ankit Kumar and
+                <a href="https://www.ccs.neu.edu/~pete/">Panagiotis Manolios</a>
+              </p>
+              <p class="venue">ACL2 Workshop 2025</p>
+              <div class="links">
+                <a href="./stuff/floodsub-acl2ws.pdf" class="link-btn">PDF</a>
+                <a
+                  href="https://github.com/ankitku/FloodsubRef"
+                  class="link-btn"
+                  >Code</a
+                >
+              </div>
+            </article>
 
-                    <article class="publication">
-                        <h3>Mathematical Programming Modulo Strings</h3>
-                        <p class="authors">Ankit Kumar and <a href="https://www.ccs.neu.edu/~pete/">Panagiotis Manolios</a></p>
-                        <p class="venue">FMCAD 2021</p>
-                        <div class="links">
-                            <a href="./stuff/MPMS-fmcad-2021.pdf" class="link-btn">PDF</a>
-                            <a href="https://github.com/ankitku/SeqSolve" class="link-btn">Code</a>
-                        </div>
-                    </article>
-                </div>
-            </section>
+            <article class="publication">
+              <h3>
+                Formal Model-Driven Analysis of Resilience of GossipSub to Sybil
+                Attacks
+              </h3>
+              <p class="authors">
+                Ankit Kumar, <a href="https://mxvh.pl/">Max von Hippel</a>,
+                <a href="https://cnitarot.github.io/">Cristina Nita-Rotaru</a>
+                and
+                <a href="https://www.ccs.neu.edu/~pete/">Panagiotis Manolios</a>
+              </p>
+              <p class="venue">IEEE Symposium on Security and Privacy 2024</p>
+              <div class="links">
+                <a href="https://arxiv.org/abs/2212.05197" class="link-btn"
+                  >PDF</a
+                >
+                <a href="https://github.com/gossipsubfm" class="link-btn"
+                  >Code</a
+                >
+              </div>
+            </article>
 
-            <section id="talks" class="content-section">
-                <h2>Talks</h2>
-                <div class="talk-list">
-                    <article class="talk">
-                        <h3>Caraxes: Tracking Critical Data in the Cloud</h3>
-                        <p class="date">September 2, 2022</p>
-                        <p>End of internship talk at Amazon, where <a href="https://www.atwalter.com/">Drew Walter</a> and I showed how to "lift" taint analysis from code level to cloud level, and also demoed a prototype tool we developed called Caraxes. The slides and video of this talk are available in the Amazon internal network.</p>
-                    </article>
+            <article class="publication">
+              <h3>
+                Verification of GossipSub in ACL2s
+                <span class="award">🏆 Best student paper award</span>
+              </h3>
+              <p class="authors">
+                Ankit Kumar, <a href="https://mxvh.pl/">Max von Hippel</a>,
+                <a href="https://cnitarot.github.io/">Cristina Nita-Rotaru</a>
+                and
+                <a href="https://www.ccs.neu.edu/~pete/">Panagiotis Manolios</a>
+              </p>
+              <p class="venue">ACL2 Workshop 2023</p>
+              <div class="links">
+                <a href="./stuff/gossipsub-acl2ws.pdf" class="link-btn">PDF</a>
+                <a
+                  href="https://github.com/acl2/acl2/tree/master/books/workshops/2023/kumar-etal"
+                  class="link-btn"
+                  >Code</a
+                >
+              </div>
+            </article>
 
-                    <article class="talk">
-                        <h3><a href="https://www.youtube.com/watch?v=doeauZv3JrE">Mathematical Programming Modulo Strings</a> (Invited Talk at Boston Computational Club)</h3>
-                        <p class="date">October 15, 2021</p>
-                        <p>Talked about my first FMCAD paper on Mathematical Programming Modulo Strings.</p>
-                    </article>
+            <article class="publication">
+              <h3>
+                Proving Calculational Proofs Correct
+                <span class="award">🏆 Second best student paper award</span>
+              </h3>
+              <p class="authors">
+                Ankit Kumar,
+                <a href="https://www.atwalter.com/">Drew Walter</a> and
+                <a href="https://www.ccs.neu.edu/~pete/">Panagiotis Manolios</a>
+              </p>
+              <p class="venue">ACL2 Workshop 2023</p>
+              <div class="links">
+                <a
+                  href="https://cgi.cse.unsw.edu.au/~eptcs/Published/ACL22023/Proceedings.pdf"
+                  class="link-btn"
+                  >PDF</a
+                >
+                <a
+                  href="https://github.com/acl2/acl2/tree/master/books/workshops/2023/walter-etal"
+                  class="link-btn"
+                  >Code</a
+                >
+              </div>
+            </article>
 
-                    <article class="talk">
-                        <h3><a href="./stuff/ATOC.pdf">Automated Grading of Automata with ACL2s</a></h3>
-                        <p class="date">July 11, 2022</p>
-                        <p>Talk on automatic grading and feedback generation for Theory of Computation assignments using the ACL2s theorem prover, during <a href="https://www.uc.pt/en/congressos/thedu/ThEdu21/postproceedings">ThEdu '21</a>.</p>
-                    </article>
+            <article class="publication">
+              <h3>Calculational Proofs in ACL2s</h3>
+              <p class="authors">
+                <a href="https://www.atwalter.com/">Drew Walter</a>, Ankit Kumar
+                and
+                <a href="https://www.ccs.neu.edu/~pete/">Panagiotis Manolios</a>
+              </p>
+              <p class="venue">arXiv Preprint 2023</p>
+              <div class="links">
+                <a href="https://arxiv.org/abs/2307.12224" class="link-btn"
+                  >PDF</a
+                >
+                <a
+                  href="https://github.com/acl2/acl2/tree/master/books/workshops/2023/walter-etal"
+                  class="link-btn"
+                  >Code</a
+                >
+              </div>
+            </article>
 
-                    <article class="talk">
-                        <h3><a href="./stuff/APLnotes.pdf">History of Rank Polymorphic Type Systems in Array Programming Languages</a></h3>
-                        <p>Lecture notes for a seminar on type systems for array programming languages covering APL, implicit scaling, Haskell and Remora.</p>
-                    </article>
+            <article class="publication">
+              <h3>Automated grading of automata with ACL2s</h3>
+              <p class="authors">
+                Ankit Kumar,
+                <a href="https://www.atwalter.com/">Drew Walter</a> and
+                <a href="https://www.ccs.neu.edu/~pete/">Panagiotis Manolios</a>
+              </p>
+              <p class="venue">ThEdu 2022</p>
+              <div class="links">
+                <a href="https://arxiv.org/abs/2303.05867v1" class="link-btn"
+                  >PDF</a
+                >
+                <a href="https://github.com/ankitku/A2C" class="link-btn"
+                  >Code</a
+                >
+              </div>
+            </article>
 
-                    <article class="talk">
-                        <h3><a href="./stuff/DTProofAsst.pdf">Dependently Typed Proof Assistants</a></h3>
-                        <p>Lecture notes for a seminar on the implementation of dependently typed proof assistants, comparing and contrasting NuPRL and Coq proof assistants.</p>
-                    </article>
-                </div>
-            </section>
+            <article class="publication">
+              <h3>Mathematical Programming Modulo Strings</h3>
+              <p class="authors">
+                Ankit Kumar and
+                <a href="https://www.ccs.neu.edu/~pete/">Panagiotis Manolios</a>
+              </p>
+              <p class="venue">FMCAD 2021</p>
+              <div class="links">
+                <a href="./stuff/MPMS-fmcad-2021.pdf" class="link-btn">PDF</a>
+                <a href="https://github.com/ankitku/SeqSolve" class="link-btn"
+                  >Code</a
+                >
+              </div>
+            </article>
+          </div>
+        </section>
 
-            <section id="teaching" class="content-section">
-                <h2>Teaching</h2>
-                <p>I have been a TA for the following courses: Algorithms, Logic and Computation, Theory of Computation, and Computer Aided Reasoning. Over the years, I've taught these courses across multiple semesters, helping students understand fundamental concepts in computer science and formal methods.</p>
-            </section>
-        </main>
+        <section id="talks" class="content-section">
+          <h2>Talks</h2>
+          <div class="talk-list">
+            <article class="talk">
+              <h3>Caraxes: Tracking Critical Data in the Cloud</h3>
+              <p class="date">September 2, 2022</p>
+              <p>
+                End of internship talk at Amazon, where
+                <a href="https://www.atwalter.com/">Drew Walter</a> and I showed
+                how to "lift" taint analysis from code level to cloud level, and
+                also demoed a prototype tool we developed called Caraxes. The
+                slides and video of this talk are available in the Amazon
+                internal network.
+              </p>
+            </article>
 
-        <footer>
-            <hr>
-            <p><i class="fa fa-copyright"></i> 2025 Ankit Kumar. Now powered by pure HTML & CSS.</p>
-        </footer>
+            <article class="talk">
+              <h3>
+                <a href="https://www.youtube.com/watch?v=doeauZv3JrE"
+                  >Mathematical Programming Modulo Strings</a
+                >
+                (Invited Talk at Boston Computational Club)
+              </h3>
+              <p class="date">October 15, 2021</p>
+              <p>
+                Talked about my first FMCAD paper on Mathematical Programming
+                Modulo Strings.
+              </p>
+            </article>
+
+            <article class="talk">
+              <h3>
+                <a href="./stuff/ATOC.pdf"
+                  >Automated Grading of Automata with ACL2s</a
+                >
+              </h3>
+              <p class="date">July 11, 2022</p>
+              <p>
+                Talk on automatic grading and feedback generation for Theory of
+                Computation assignments using the ACL2s theorem prover, during
+                <a
+                  href="https://www.uc.pt/en/congressos/thedu/ThEdu21/postproceedings"
+                  >ThEdu '21</a
+                >.
+              </p>
+            </article>
+
+            <article class="talk">
+              <h3>
+                <a href="./stuff/APLnotes.pdf"
+                  >History of Rank Polymorphic Type Systems in Array Programming
+                  Languages</a
+                >
+              </h3>
+              <p>
+                Lecture notes for a seminar on type systems for array
+                programming languages covering APL, implicit scaling, Haskell
+                and Remora.
+              </p>
+            </article>
+
+            <article class="talk">
+              <h3>
+                <a href="./stuff/DTProofAsst.pdf"
+                  >Dependently Typed Proof Assistants</a
+                >
+              </h3>
+              <p>
+                Lecture notes for a seminar on the implementation of dependently
+                typed proof assistants, comparing and contrasting NuPRL and Coq
+                proof assistants.
+              </p>
+            </article>
+          </div>
+        </section>
+
+        <section id="teaching" class="content-section">
+          <h2>Teaching</h2>
+          <p>
+            I have been a TA for the following courses: Algorithms, Logic and
+            Computation, Theory of Computation, and Computer Aided Reasoning.
+            Over the years, I've taught these courses across multiple semesters,
+            helping students understand fundamental concepts in computer science
+            and formal methods.
+          </p>
+        </section>
+      </main>
+
+      <footer>
+        <hr />
+        <p>
+          <i class="fa fa-copyright"></i> 2025 Ankit Kumar. Now powered by pure
+          HTML & CSS.
+        </p>
+      </footer>
     </div>
-</body>
+  </body>
 </html>
