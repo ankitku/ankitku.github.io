@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Refinement Based Reasoning of P2P Protocols is Feasible and Effective</title>
+    <style>
+        body {
+            font-family: Georgia, "Times New Roman", serif;
+            max-width: 720px;
+            margin: 80px auto;
+            line-height: 1.7;
+            padding: 0 20px;
+            color: #111;
+        }
+        h1 {
+            font-weight: normal;
+            margin-bottom: 0.2em;
+        }
+        .meta {
+            font-size: 0.95em;
+            color: #444;
+            margin-bottom: 2em;
+        }
+        .section {
+            margin-top: 3em;
+        }
+        ul {
+            padding-left: 1.2em;
+        }
+        .current {
+            font-weight: bold;
+        }
+        a {
+            text-decoration: none;
+            color: black;
+            border-bottom: 1px solid #999;
+        }
+        a:hover {
+            border-bottom: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Refinement Based Reasoning of P2P Protocols is Feasible and Effective</h1>
+
+    <div class="meta">
+        Version f5d3258<br>
+        Built on 2026-02-18<br>
+        Defense Date: TBD
+    </div>
+
+    <div>
+        <a href="Ankit_Kumar_Dissertation.pdf" target="_blank">Download PDF</a>
+    </div>
+
+    <div class="section">
+        <h2>Abstract</h2>
+        <p>% From mitthesis package
+% Version: 1.01, 2023/06/19
+% Documentation: https://ctan.org/pkg/mitthesis
+%
+% The abstract environment creates all the required headers and footnote. 
+% You only need to add the text of the abstract itself.
+%
+% Approximately 500 words or less; try not to use formulas or special characters
+% If you don't want an initial indentation, do \noindent at the start of the abstract
+
+Gossipsub is the message dissemination protocol underlying Ethereum, IPFS, and Filecoin—systems with a combined market capitalization exceeding \$280 billion. Despite its critical role in Web3 infrastructure, Gossipsub lacks a formal specification; its security mechanisms have been evaluated primarily through ad hoc testing; and its operational parameters were selected heuristically, with limited quantitative justification.
+
+This dissertation develops a compositional, refinement-based methodology for the rigorous analysis of peer-to-peer (P2P) publish--subscribe protocols and applies it to Gossipsub. The work makes three principal contributions: (1) the first formal, executable specification of Gossipsub, now recognized as the official reference model; (2) the discovery and responsible disclosure of novel attacks against Gossipsub v1.1 (CVE-2022-47547); and (3) a systematic analysis demonstrating that Ethereum's deployed parameter configuration is Pareto-dominated by leaner alternatives under realistic network churn.
+
+We construct a refinement hierarchy spanning four protocol layers: Broadcastsub (an abstract specification of ideal dissemination), Floodsub (a flooding-based realization), Meshsub (Gossipsub v1.0 with bounded-degree mesh overlays), and Gossipsub v1.1 (which introduces scoring-based mesh management). We prove that Meshsub refines Floodsub and Floodsub refines Broadcastsub; by compositional refinement, Meshsub refines Broadcastsub. Central to this hierarchy is a dissemination guarantee: once a message is committed at its source, every subscribed peer eventually receives it. This property holds deterministically for Broadcastsub and Floodsub, and with arbitrarily high probability for Meshsub under identified network conditions.
+
+Applying property-based testing and counterexample generation to Gossipsub v1.1, we demonstrate that this dissemination guarantee is violated. The protocol admits executions in which committed messages are never delivered to subscribed peers. We use these counterexamples to construct concrete eclipse and network-partition attack gadgets. Simulation experiments confirm the feasibility of these attacks; following responsible disclosure, the vulnerability was assigned CVE-2022-47547 and acknowledged by the Gossipsub and Ethereum developers.
+
+Finally, we conduct a systematic exploration of the Gossipsub parameter space under network churn. Pareto analysis over delivery reliability and bandwidth cost yields three findings: (1) Gossipsub strictly dominates Floodsub across churn regimes; (2) minimal-gossip configurations lie on the Pareto frontier and dominate Ethereum's deployed parameters under worst-case delivery; and (3) gossip-based recovery, rather than eager-push redundancy, is the primary driver of reliable dissemination under churn. These results provide the first principled foundation for parameter selection in production Gossipsub networks.
+
+Taken together, this work demonstrates that compositional refinement---combined with property-based testing, counterexample generation, and simulation---constitutes a practical and scalable methodology for analyzing complex, real-world P2P protocols. Beyond certifying correctness, it enables the discovery of previously unknown vulnerabilities and the principled optimization of deployed systems. All models, proofs, and simulation artifacts are publicly available and fully executable to support reproducibility and reuse.</p>
+    </div>
+
+    <div class="section">
+        <h2>Version History</h2>
+        <ul>
+            <li class="current">v0.0 — 2026-02-17 (current)</li>
+        </ul>
+    </div>
+
+</body>
+</html>
