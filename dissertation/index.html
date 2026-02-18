@@ -45,8 +45,8 @@
     <h1>Refinement Based Reasoning of P2P Protocols is Feasible and Effective</h1>
 
     <div class="meta">
-        Version daf739e<br>
-        Built on 2026-02-17 08:40 PM EST<br>
+        Version 7b5e2b2<br>
+        Built on 2026-02-18 03:57 AM EST<br>
         Defense Date: TBD
     </div>
 
@@ -57,11 +57,11 @@
     <div class="abstract">
     <p>Gossipsub is the message dissemination protocol underlying Ethereum, IPFS, and Filecoin—systems with a combined market capitalization exceeding \$280 billion. Despite its critical role in Web3 infrastructure, Gossipsub lacks a formal specification; its security mechanisms have been evaluated primarily through ad hoc testing; and its operational parameters were selected heuristically, with limited quantitative justification.</p>
 
-<p>This dissertation develops a compositional, refinement-based methodology for the rigorous analysis of peer-to-peer (P2P) publish-subscribe protocols and applies it to Gossipsub. The work makes three principal contributions: (1) the first formal, executable specification of Gossipsub, now recognized as the official reference model; (2) the discovery and responsible disclosure of novel attacks against Gossipsub v1.1 (CVE-2022-47547); and (3) a systematic analysis demonstrating that Ethereum's deployed parameter configuration is Pareto-dominated by leaner alternatives under realistic network churn.</p>
+<p>This dissertation develops a compositional, refinement-based methodology for the rigorous analysis of peer-to-peer (P2P) publish-subscribe protocols and applies it to Gossipsub, making the following three principal contributions: (1) the first formal, executable specification of Gossipsub, now recognized as the official reference model; (2) the discovery and responsible disclosure of novel attacks against Gossipsub v1.1 based consensus layer of Ethereum (CVE-2022-47547); and (3) a systematic analysis demonstrating that Ethereum's deployed parameter configuration for Gossipsub is Pareto-dominated by leaner alternatives under realistic network churn.</p>
 
 <p>We construct a refinement hierarchy spanning four protocol layers: Broadcastsub (an abstract specification of ideal dissemination), Floodsub (a flooding-based realization), Meshsub (Gossipsub v1.0 with bounded-degree mesh overlays), and Gossipsub v1.1 (which introduces scoring-based mesh management). We prove that Meshsub refines Floodsub and Floodsub refines Broadcastsub; by compositional refinement, Meshsub refines Broadcastsub. Central to this hierarchy is a dissemination guarantee: once a message is committed at its source, every subscribed peer eventually receives it. This property holds deterministically for Broadcastsub and Floodsub, and with arbitrarily high probability for Meshsub under identified network conditions.</p>
 
-<p>Applying property-based testing and counterexample generation to Gossipsub v1.1, we demonstrate that this dissemination guarantee is violated. The protocol admits executions in which committed messages are never delivered to subscribed peers. We use these counterexamples to construct concrete eclipse and network-partition attack gadgets. Simulation experiments confirm the feasibility of these attacks; following responsible disclosure, the vulnerability was assigned CVE-2022-47547 and acknowledged by the Gossipsub and Ethereum developers.</p>
+<p>Applying property-based testing and counterexample generation to Gossipsub v1.1, we demonstrate that this dissemination guarantee is violated. The protocol admits executions in which committed messages are never delivered to subscribed peers. We use these counterexamples to construct concrete eclipse and network-partition attack gadgets. Simulation experiments confirm the feasibility of these attacks; following responsible disclosure, the vulnerability was assigned CVE-2022-47547 and acknowledged by the Gossipsub and Ethereum developers. As a result, Ethereum have moved away from using Gossipsub as their consensus protocol.</p>
 
 <p>Finally, we conduct a systematic exploration of the Gossipsub parameter space under network churn. Pareto analysis over delivery reliability and bandwidth cost yields three findings: (1) Gossipsub strictly dominates Floodsub across churn regimes; (2) minimal-gossip configurations lie on the Pareto frontier and dominate Ethereum's deployed parameters under worst-case delivery; and (3) gossip-based recovery, rather than eager-push redundancy, is the primary driver of reliable dissemination under churn. These results provide the first principled foundation for parameter selection in production Gossipsub networks.</p>
 
