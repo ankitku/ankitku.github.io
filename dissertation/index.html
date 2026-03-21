@@ -45,8 +45,8 @@
     <h1>Refinement Based Reasoning of P2P Protocols is Feasible and Effective</h1>
 
     <div class="meta">
-        Version v1.1<br>
-        Built on 2026-02-28 04:04 AM EST<br>
+        Version v1.2<br>
+        Built on 2026-03-20 09:55 PM EDT<br>
         Defense Date: 23rd March, 2026
     </div>
 
@@ -61,7 +61,7 @@
 
 <p>We construct a refinement hierarchy spanning four protocol layers, each one building on top of the previous: Broadcastsub (an abstract specification of instant message delivery to all subscribing peers), Floodsub (a flooding-based realization over an underlying graph), Meshsub (controlled flooding via bounded-degree mesh overlays, and gossip to non-mesh neighbors), and Gossipsub v1.1 (scoring-based mesh management to guard against misbehaving peers).</p>
 
-<p>We use a synergistic combination of theorem proving, property-based testing and counter-example generation to analyze this hierarchy. We prove that Meshsub implements Floodsub and Floodsub implements Broadcastsub; by compositional refinement, Meshsub implements Broadcastsub. Central to this hierarchy is a dissemination guarantee: once a message is committed at its source, every eligible (non-faulty, active, and subscribed) peer eventually receives it. This property holds deterministically for Broadcastsub and Floodsub, and with arbitrarily high probability for Meshsub under identified network conditions. We show that this dissemination guarantee is violated for Gossipsub v1.1 using property-based testing and counter-example generation. The protocol admits executions in which committed messages are never delivered to subscribed peers. We use these counterexamples to construct concrete eclipse and network-partition attack gadgets. Simulation experiments confirm the feasibility of these attacks; following responsible disclosure, the vulnerability was assigned CVE-2022-47547 and acknowledged by the Gossipsub and Ethereum developers. These findings prompted protocol revisions and contributed to ongoing efforts to strengthen consensus-layer message dissemination in Ethereum and related systems.</p>
+<p>We use a synergistic combination of theorem proving, property-based testing and counter-example generation to analyze this hierarchy. We prove that Meshsub implements Floodsub and Floodsub implements Broadcastsub; by compositional refinement, Meshsub implements Broadcastsub. Central to this hierarchy is a dissemination guarantee: once a message is committed at its source, every eligible (non-faulty, active, and subscribed) peer eventually receives it. This property holds deterministically for Broadcastsub, Floodsub, and for Meshsub under identified network and parametric conditions. We show that this dissemination guarantee is violated for Gossipsub v1.1 using property-based testing and counter-example generation. The protocol admits executions in which committed messages are never delivered to subscribed peers. We use these counterexamples to construct concrete eclipse and network-partition attack gadgets. Simulation experiments confirm the feasibility of these attacks; following responsible disclosure, the vulnerability was assigned CVE-2022-47547 and acknowledged by the Gossipsub and Ethereum developers. These findings prompted protocol revisions and contributed to ongoing efforts to strengthen consensus-layer message dissemination in Ethereum and related systems.</p>
 
 <p>Finally, we conduct a systematic exploration of the Gossipsub parameter space under network churn. Pareto analysis over delivery reliability and bandwidth cost yields three findings: (1) Gossipsub strictly dominates Floodsub across churn regimes; (2) minimal-gossip configurations lie on the Pareto frontier and dominate Ethereum's deployed parameters under worst-case delivery; and (3) gossip-based recovery, rather than eager-push redundancy, is the primary driver of reliable dissemination under churn. These results provide the first principled foundation for parameter selection in production Gossipsub networks.</p>
 
@@ -72,7 +72,8 @@
     <div class="section">
         <h2>Version History</h2>
         <ul>
-            <li class="current">v1.1 — 2026-02-28 (current)</li>
+            <li class="current">v1.2 — 2026-03-20 (current)</li>
+<li>v1.1 — 2026-02-28</li>
 <li>v1.0 — 2026-02-27</li>
 <li>v0.0 — 2026-02-17</li>
         </ul>
