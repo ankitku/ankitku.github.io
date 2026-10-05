@@ -68,6 +68,24 @@
           document.querySelector(".theme-toggle i").className = "fa fa-sun-o";
         }
       });
+      // Open the tab matching the URL hash (e.g. index.html#blog)
+      document.addEventListener("DOMContentLoaded", function () {
+        const hash = window.location.hash.replace("#", "");
+        const section = hash && document.getElementById(hash);
+        if (section && section.classList.contains("content-section")) {
+          document
+            .querySelectorAll(".content-section")
+            .forEach((s) => s.classList.remove("active"));
+          document
+            .querySelectorAll(".nav-btn")
+            .forEach((b) => b.classList.remove("active"));
+          section.classList.add("active");
+          document.querySelectorAll(".nav-btn").forEach((b) => {
+            const onclick = b.getAttribute("onclick") || "";
+            if (onclick.includes("'" + hash + "'")) b.classList.add("active");
+          });
+        }
+      });
     </script>
     <script>
       // Typing animation for title
@@ -108,6 +126,7 @@
             >Contact</a
           >
           <a href="#" onclick="showSection('news')" class="nav-btn">News</a>
+          <a href="#" onclick="showSection('blog')" class="nav-btn">Blog</a>
           <a href="#" onclick="showSection('publications')" class="nav-btn"
             >Publications</a
           >
@@ -334,6 +353,84 @@
                 >PLMW @ POPL 2019</a
               >
               in New Orleans
+            </li>
+          </ul>
+        </section>
+
+        <section id="blog" class="content-section">
+          <h2>Blog</h2>
+          <p>
+            Old posts from the pre-2022 blog (2012&ndash;2017), recovered from
+            the site's git history after the 2022 redesign dropped them.
+          </p>
+          <ul class="news-list">
+            <li>
+              <span class="date">2017-01-27</span>
+              <a href="posts/2017-01-27-Online%20Course%20Lectures.html"
+                >Online Course Lectures for ESC101 (Introduction to
+                Computing)</a
+              >
+            </li>
+            <li>
+              <span class="date">2017-01-21</span>
+              <a href="posts/2017-01-21-I%20am%20a%20Mentor%20now.html"
+                >I am a Mentor now</a
+              >
+            </li>
+            <li>
+              <span class="date">2016-10-30</span>
+              <a href="posts/2016-10-30-Mechanizing-Metatheory-of-TAL-0.html"
+                >Mechanizing the Metatheory of TAL-0</a
+              >
+            </li>
+            <li>
+              <span class="date">2016-10-30</span>
+              <a href="posts/2016-10-30-TAL-0%20Mechanized%20Metatheory.html"
+                >TAL-0 Mechanized Metatheory (earlier draft)</a
+              >
+            </li>
+            <li>
+              <span class="date">2016-09-28</span>
+              <a
+                href="posts/2016-09-28-%20Dependently%20Typed%20Graph.html"
+                >Dependently Typed Graph (Coq)</a
+              >
+            </li>
+            <li>
+              <span class="date">2016-08-02</span>
+              <a href="posts/2016-08-02-BhabhaPassTrek.html"
+                >Pin Bhabha Pass Trek</a
+              >
+            </li>
+            <li>
+              <span class="date">2015-08-09</span>
+              <a href="posts/2015-08-09-FreshersNight.html"
+                >First Prize at Fresher's Night 2015, IITK</a
+              >
+            </li>
+            <li>
+              <span class="date">2013-12-01</span>
+              <a href="posts/2013-12-01-Droidcon.html"
+                >My Experience at Droidcon India 2013</a
+              >
+            </li>
+            <li>
+              <span class="date">2012-12-07</span>
+              <a href="posts/2012-12-07-tu-quoque.html">Tu Quoque</a>
+            </li>
+            <li>
+              <span class="date">2012-11-28</span>
+              <a href="posts/2012-11-28-carpe-diem.html">Carpe Diem</a>
+            </li>
+            <li>
+              <span class="date">2012-10-07</span>
+              <a href="posts/2012-10-07-rosa-rosa-rosam.html"
+                >Rosa, Rosa, Rosam</a
+              >
+            </li>
+            <li>
+              <span class="date">2012-08-12</span>
+              <a href="posts/2012-08-12-spqr.html">S.P.Q.R.</a>
             </li>
           </ul>
         </section>
