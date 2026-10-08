@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+<channel>
+  <title>Ankit Kumar's Blog</title>
+  <link>https://ankitku.github.io/archive.html</link>
+  <description>Posts on formal methods, theorem proving, distributed systems, and the occasional trek.</description>
+  <language>en-us</language>
+  <item>
+    <title>The GossipSub Story</title>
+    <link>https://ankitku.github.io/posts/2026-10-08-gossipsub-story.html</link>
+    <guid>https://ankitku.github.io/posts/2026-10-08-gossipsub-story.html</guid>
+    <pubDate>Thu, 08 Oct 2026 00:00:00 +0000</pubDate>
+    <description>How formal modeling found censoring attacks in GossipSub, Ethereum's gossip protocol: from disclosure and CVE to the IEEE S&amp;P paper and the EF grant.</description>
+  </item>
+  <item>
+    <title>Online Course Lectures for ESC101 (Introduction to Computing)</title>
+    <link>https://ankitku.github.io/posts/2017-01-27-Online%20Course%20Lectures.html</link>
+    <guid>https://ankitku.github.io/posts/2017-01-27-Online%20Course%20Lectures.html</guid>
+    <pubDate>Fri, 27 Jan 2017 00:00:00 +0000</pubDate>
+    <description>Lecture videos for ESC101 (Introduction to Computing) at IIT Kanpur.</description>
+  </item>
+  <item>
+    <title>I am a Mentor now</title>
+    <link>https://ankitku.github.io/posts/2017-01-21-I%20am%20a%20Mentor%20now.html</link>
+    <guid>https://ankitku.github.io/posts/2017-01-21-I%20am%20a%20Mentor%20now.html</guid>
+    <pubDate>Sat, 21 Jan 2017 00:00:00 +0000</pubDate>
+    <description>On becoming a mentor.</description>
+  </item>
+  <item>
+    <title>Mechanizing the Metatheory of TAL-0</title>
+    <link>https://ankitku.github.io/posts/2016-10-30-Mechanizing-Metatheory-of-TAL-0.html</link>
+    <guid>https://ankitku.github.io/posts/2016-10-30-Mechanizing-Metatheory-of-TAL-0.html</guid>
+    <pubDate>Sun, 30 Oct 2016 00:00:00 +0000</pubDate>
+    <description>Mechanizing the metatheory of the TAL-0 language.</description>
+  </item>
+  <item>
+    <title>TAL-0 Mechanized Metatheory (earlier draft)</title>
+    <link>https://ankitku.github.io/posts/2016-10-30-TAL-0%20Mechanized%20Metatheory.html</link>
+    <guid>https://ankitku.github.io/posts/2016-10-30-TAL-0%20Mechanized%20Metatheory.html</guid>
+    <pubDate>Sun, 30 Oct 2016 00:00:00 +0000</pubDate>
+    <description>An earlier draft of the TAL-0 mechanized metatheory work.</description>
+  </item>
+  <item>
+    <title>Dependently Typed Graph (Coq)</title>
+    <link>https://ankitku.github.io/posts/2016-09-28-%20Dependently%20Typed%20Graph.html</link>
+    <guid>https://ankitku.github.io/posts/2016-09-28-%20Dependently%20Typed%20Graph.html</guid>
+    <pubDate>Wed, 28 Sep 2016 00:00:00 +0000</pubDate>
+    <description>A dependently typed graph formalization in Coq.</description>
+  </item>
+  <item>
+    <title>Pin Bhabha Pass Trek</title>
+    <link>https://ankitku.github.io/posts/2016-08-02-BhabhaPassTrek.html</link>
+    <guid>https://ankitku.github.io/posts/2016-08-02-BhabhaPassTrek.html</guid>
+    <pubDate>Tue, 02 Aug 2016 00:00:00 +0000</pubDate>
+    <description>Trekking across Pin Bhabha pass.</description>
+  </item>
+  <item>
+    <title>First Prize at Fresher's Night 2015, IITK</title>
+    <link>https://ankitku.github.io/posts/2015-08-09-FreshersNight.html</link>
+    <guid>https://ankitku.github.io/posts/2015-08-09-FreshersNight.html</guid>
+    <pubDate>Sun, 09 Aug 2015 00:00:00 +0000</pubDate>
+    <description>First prize at Fresher's Night 2015, IIT Kanpur.</description>
+  </item>
+  <item>
+    <title>My Experience at Droidcon India 2013</title>
+    <link>https://ankitku.github.io/posts/2013-12-01-Droidcon.html</link>
+    <guid>https://ankitku.github.io/posts/2013-12-01-Droidcon.html</guid>
+    <pubDate>Sun, 01 Dec 2013 00:00:00 +0000</pubDate>
+    <description>My experience at Droidcon India 2013, with an app demo.</description>
+  </item>
+</channel>
+</rss>

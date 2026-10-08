@@ -782,3 +782,25 @@ footer hr {
     font-size: 0.9rem;
     margin-bottom: 1.5rem;
 }
+
+/* Post navigation (prev/next) */
+.post-nav {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-color);
+}
+.post-nav a {
+    text-decoration: none;
+    color: var(--primary-color);
+    font-weight: 500;
+}
+.post-nav a:hover {
+    text-decoration: underline;
+}
+.post-nav .nav-older {
+    margin-left: auto;
+    text-align: right;
+}
