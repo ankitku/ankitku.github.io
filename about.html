@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ankit Kumar - About</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/fork-awesome@1.2.0/css/fork-awesome.min.css"
+      integrity="sha256-XoaMnoYC5TH6/+ihMEnospgm0J1PM/nioxbOUdnM8HY="
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/maps.css" />
+
+    <!-- Google Analytics -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=UA-65031131-1"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "UA-65031131-1");
+    </script>
+    <script>
+      function showSection(sectionId) {
+        document.querySelectorAll(".content-section").forEach((section) => {
+          section.classList.remove("active");
+        });
+        document.querySelectorAll(".nav-btn").forEach((btn) => {
+          btn.classList.remove("active");
+        });
+        document.getElementById(sectionId).classList.add("active");
+        event.target.classList.add("active");
+      }
+
+      function toggleTheme() {
+        document.body.classList.toggle("dark-mode");
+        const icon = document.querySelector(".theme-toggle i");
+        if (document.body.classList.contains("dark-mode")) {
+          icon.className = "fa fa-sun-o";
+          localStorage.setItem("theme", "dark");
+        } else {
+          icon.className = "fa fa-moon-o";
+          localStorage.setItem("theme", "light");
+        }
+      }
+
+      // Detect system dark mode and initialize theme
+      document.addEventListener("DOMContentLoaded", function () {
+        const systemDarkMode = window.matchMedia(
+          "(prefers-color-scheme: dark)"
+        ).matches;
+        const savedTheme = localStorage.getItem("theme");
+        const themeToggle = document.querySelector(".theme-toggle");
+
+        if (systemDarkMode && !savedTheme) {
+          // System is in dark mode and user hasn't set preference - hide toggle and use dark mode
+          document.body.classList.add("dark-mode");
+          themeToggle.style.display = "none";
+        } else if (savedTheme === "dark") {
+          // User has explicitly chosen dark mode
+          document.body.classList.add("dark-mode");
+          document.querySelector(".theme-toggle i").className = "fa fa-sun-o";
+        }
+      });
+      // Open the tab matching the URL hash (e.g. index.html#blog)
+      document.addEventListener("DOMContentLoaded", function () {
+        const hash = window.location.hash.replace("#", "");
+        const section = hash && document.getElementById(hash);
+        if (section && section.classList.contains("content-section")) {
+          document
+            .querySelectorAll(".content-section")
+            .forEach((s) => s.classList.remove("active"));
+          document
+            .querySelectorAll(".nav-btn")
+            .forEach((b) => b.classList.remove("active"));
+          section.classList.add("active");
+          document.querySelectorAll(".nav-btn").forEach((b) => {
+            const onclick = b.getAttribute("onclick") || "";
+            if (onclick.includes("'" + hash + "'")) b.classList.add("active");
+          });
+        }
+      });
+    </script>
+    <script>
+      // Typing animation for title
+      function typeWriter() {
+        const text = "Hello, I am Ankit Kumar...";
+        const element = document.querySelector("h1");
+        element.innerHTML = "";
+        let i = 0;
+        function type() {
+          if (i < text.length) {
+            element.innerHTML += text.charAt(i);
+            i++;
+            setTimeout(type, 100);
+          } else {
+            element.classList.add("typing-done");
+          }
+        }
+        type();
+      }
+
+      // Initialize animations
+      document.addEventListener("DOMContentLoaded", function () {
+        setTimeout(typeWriter, 500);
+      });
+    </script>
+  </head>
+  <body>
+    <div class="bg-animation"></div>
+    <div class="container">
+      <header>
+        <h1>Hello, I am Ankit Kumar...</h1>
+
+<nav class="section-nav">
+          <a href="about.html" class="nav-btn active"
+            >About</a
+          >
+          <a href="index.html#contact" class="nav-btn"
+            >Contact</a
+          >
+          <a href="index.html#news" class="nav-btn"
+            >News</a
+          >
+          <a href="archive.html" class="nav-btn"
+            >Blog</a
+          >
+          <a href="index.html#publications" class="nav-btn"
+            >Publications</a
+          >
+          <a href="index.html#talks" class="nav-btn"
+            >Talks</a
+          >
+          <a href="index.html#teaching" class="nav-btn"
+            >Teaching</a
+          >
+          <button
+            class="theme-toggle nav-btn"
+            onclick="toggleTheme()"
+            title="Toggle Dark Mode"
+          >
+            <i class="fa fa-moon-o"></i>
+          </button>
+        </nav>
+      </header>
+
+      <main>
+<section id="intro" class="content-section active">
+          <div class="profile-section">
+            <figure class="profile-image">
+              <img src="./me.jpeg" alt="Ankit Kumar at FLoC 2022" />
+              <figcaption>
+                In Akko, during
+                <a href="https://www.floc2022.org"
+                  >Federated Logic Conference</a
+                >
+                2022.
+              </figcaption>
+            </figure>
+
+            <div class="bio">
+              <p>
+                ... an Applied Scientist at
+                <a href="https://aws.amazon.com/">Amazon Web Services</a>
+                and a recent PhD graduate from
+                <a href="https://www.khoury.northeastern.edu"
+                  >Khoury College, Northeastern University</a
+                >, advised by
+                <a href="https://www.ccs.neu.edu/~pete/"
+                  >Prof. Panagiotis Manolios</a
+                >. My research interests lie in Formal Methods, Theorem Proving
+                and Disproving, Decision Procedures, Programming Languages and
+                Distributed systems.
+              </p>
+
+              <p>
+                In my free time, I like to dabble in astrophotography as well as
+                play chess and tabletennis.
+              </p>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer>
+        <hr />
+        <p>
+          <i class="fa fa-copyright"></i> 2025 Ankit Kumar. Now powered by pure
+          HTML & CSS.
+        </p>
+      </footer>
+    </div>
+  </body>
+</html>
