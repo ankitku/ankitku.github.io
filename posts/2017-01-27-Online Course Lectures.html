@@ -49,7 +49,7 @@
 
         if (systemDarkMode && !savedTheme) {
           document.body.classList.add("dark-mode");
-          themeToggle.style.display = "none";
+          document.querySelector(".theme-toggle i").className = "fa fa-sun-o";
         } else if (savedTheme === "dark") {
           document.body.classList.add("dark-mode");
           document.querySelector(".theme-toggle i").className = "fa fa-sun-o";
