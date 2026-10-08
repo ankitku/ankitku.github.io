@@ -59,9 +59,9 @@
         const themeToggle = document.querySelector(".theme-toggle");
 
         if (systemDarkMode && !savedTheme) {
-          // System is in dark mode and user hasn't set preference - hide toggle and use dark mode
+          // System is in dark mode and user hasn't set preference - use dark mode, keep the toggle visible
           document.body.classList.add("dark-mode");
-          themeToggle.style.display = "none";
+          document.querySelector(".theme-toggle i").className = "fa fa-sun-o";
         } else if (savedTheme === "dark") {
           // User has explicitly chosen dark mode
           document.body.classList.add("dark-mode");
